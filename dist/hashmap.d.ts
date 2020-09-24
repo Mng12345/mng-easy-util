@@ -1,11 +1,13 @@
 declare type basic = number | string;
-export declare class HashMap<K extends basic | object, V> implements Map<K, V> {
+export interface HashCode {
+    hashCode(): string;
+}
+declare type Key = basic | HashCode;
+export declare class HashMap<K extends Key, V> implements Map<K, V> {
     private map;
     private keyMap;
     private readonly hashCode;
-    constructor(config?: {
-        hashCode: (object: basic | object) => basic;
-    });
+    constructor();
     [Symbol.iterator](): IterableIterator<[K, V]>;
     entries(): IterableIterator<[K, V]>;
     keys(): IterableIterator<K>;

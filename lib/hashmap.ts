@@ -1,23 +1,29 @@
 type basic = number | string
 
-export class HashMap<K extends basic | object, V> implements Map<K, V>{
+export interface HashCode {
+    hashCode(): string;
+}
+
+type Key = basic | HashCode;
+
+export class HashMap<K extends Key, V> implements Map<K, V>{
 
     private map: Map<basic, V> = new Map();
     // store key and hashcode
     private keyMap: Map<basic, K> = new Map();
 
-    private readonly hashCode: (object: basic | object) => basic = object => {
+    private readonly hashCode: (object: K) => basic = object => {
         if (typeof object === "number" || typeof object === "string") {
             return object;
         }
-        // todo need to develop better function for making the key to string
-        return JSON.stringify(object);
+        // force the object key must have hashCode method
+        if ((object as HashCode).hashCode === undefined) {
+            throw new Error(`if the type of key is object, it must have hashCode method`);
+        }
+        return (object as HashCode).hashCode();
     }
 
-    constructor(config?: {hashCode: (object: basic | object) => basic}) {
-        if (config !== undefined && config.hashCode && typeof config.hashCode === "function") {
-            this.hashCode = config.hashCode;
-        }
+    constructor() {
         this.size = this.map.size;
     }
 

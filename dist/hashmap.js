@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HashMap = void 0;
 var HashMap = /** @class */ (function () {
-    function HashMap(config) {
+    function HashMap() {
         this.map = new Map();
         // store key and hashcode
         this.keyMap = new Map();
@@ -10,12 +10,12 @@ var HashMap = /** @class */ (function () {
             if (typeof object === "number" || typeof object === "string") {
                 return object;
             }
-            // todo need to develop better function for making the key to string
-            return JSON.stringify(object);
+            // force the object key must have hashCode method
+            if (object.hashCode === undefined) {
+                throw new Error("if the type of key is object, it must have hashCode method");
+            }
+            return object.hashCode();
         };
-        if (config !== undefined && config.hashCode && typeof config.hashCode === "function") {
-            this.hashCode = config.hashCode;
-        }
         this.size = this.map.size;
     }
     HashMap.prototype[Symbol.iterator] = function () {

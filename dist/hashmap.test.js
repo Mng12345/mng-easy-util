@@ -28,14 +28,17 @@ var __read = (this && this.__read) || function (o, n) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var hashmap_1 = require("./hashmap");
+var hashCode = function () {
+    return "{a: " + this.a + ", b: " + this.b + "}";
+};
 test('new HashMap', function () {
     var map = new hashmap_1.HashMap();
     expect(map.size).toBe(0);
 });
 test('set & get', function () {
     var map = new hashmap_1.HashMap();
-    map.set({ a: 1, b: 2 }, 3);
-    var v = map.get({ a: 1, b: 2 });
+    map.set({ a: 1, b: 2, hashCode: hashCode }, 3);
+    var v = map.get({ a: 1, b: 2, hashCode: hashCode });
     expect(v).toBe(3);
 });
 test('Symbol.iterator', function () {
@@ -125,9 +128,9 @@ test('delete', function () {
     expect(map.size).toBe(1);
     map.delete(1);
     expect(map.size).toBe(0);
-    map.set({ a: 1, b: 2 }, 3);
+    map.set({ a: 1, b: 2, hashCode: hashCode }, 3);
     expect(map.size).toBe(1);
-    map.delete({ a: 1, b: 2 });
+    map.delete({ a: 1, b: 2, hashCode: hashCode });
     expect(map.size).toBe(0);
 });
 test('forEach', function () {
@@ -142,7 +145,7 @@ test('forEach', function () {
 test('has', function () {
     var map = new hashmap_1.HashMap();
     map.set(1, 2);
-    map.set({ a: 1, b: 2 }, 3);
+    map.set({ a: 1, b: 2, hashCode: hashCode }, 3);
     expect(map.has(1)).toBe(true);
-    expect(map.has({ a: 1, b: 2 })).toBe(true);
+    expect(map.has({ a: 1, b: 2, hashCode: hashCode })).toBe(true);
 });

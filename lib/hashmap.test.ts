@@ -1,4 +1,8 @@
-import {HashMap} from "./hashmap";
+import {HashCode, HashMap} from "./hashmap";
+
+const hashCode = function(this: {a: number, b: number}) {
+    return `{a: ${this.a}, b: ${this.b}}`;
+}
 
 test('new HashMap', () => {
     const map = new HashMap();
@@ -6,9 +10,9 @@ test('new HashMap', () => {
 })
 
 test('set & get', () => {
-    const map = new HashMap();
-    map.set({a: 1, b: 2}, 3);
-    const v = map.get({a: 1, b: 2});
+    const map = new HashMap<{a: number, b: number, hashCode(): string}, number>();
+    map.set({a: 1, b: 2, hashCode}, 3);
+    const v = map.get({a: 1, b: 2, hashCode});
     expect(v).toBe(3);
 })
 
@@ -56,14 +60,15 @@ test('clear', () => {
 })
 
 test('delete', () => {
-    const map = new HashMap();
+    type K = ({a: number, b: number} & HashCode) | number;
+    const map = new HashMap<K, number>();
     map.set(1, 2);
     expect(map.size).toBe(1);
     map.delete(1);
     expect(map.size).toBe(0);
-    map.set({a: 1, b: 2}, 3);
+    map.set({a: 1, b: 2, hashCode}, 3);
     expect(map.size).toBe(1);
-    map.delete({a: 1, b: 2});
+    map.delete({a: 1, b: 2, hashCode});
     expect(map.size).toBe(0);
 })
 
@@ -78,9 +83,10 @@ test('forEach', () => {
 })
 
 test('has', () => {
-    const map = new HashMap();
+    type K = ({a: number, b: number} & HashCode) | number;
+    const map = new HashMap<K, number>();
     map.set(1, 2);
-    map.set({a: 1, b: 2}, 3);
+    map.set({a: 1, b: 2, hashCode}, 3);
     expect(map.has(1)).toBe(true);
-    expect(map.has({a: 1, b: 2})).toBe(true);
+    expect(map.has({a: 1, b: 2, hashCode})).toBe(true);
 })

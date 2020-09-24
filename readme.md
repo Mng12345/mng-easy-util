@@ -9,10 +9,13 @@ type Key = {
     name: string,
     age: number
 }
+const hashCode = (this: Key): string => {
+    return `{a: ${this.name}, b: ${this.age}}`
+}
 const map = new HashMap<Key, number>();
-map.set({name: 'zm', age: 13}, 1);
-const count = map.get({name: 'zm', age: 13})
-const anoCount = map.get({name: 'zm', age: 14});
+map.set({name: 'zm', age: 13, hashCode}, 1);
+const count = map.get({name: 'zm', age: 13, hashCode})
+const anoCount = map.get({name: 'zm', age: 14, hashCode});
 console.log(`count: ${count}\nanoCount: ${anoCount}`);
 >> count: 1
 >> anoCount: undefined
