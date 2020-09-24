@@ -46,12 +46,15 @@ export class HashMap<K extends Key, V> implements Map<K, V>{
             }
         }
     }
+
     keys(): IterableIterator<K> {
         return this.keyMap.values();
     }
+
     values(): IterableIterator<V> {
         return this.map.values();
     }
+
     [Symbol.toStringTag]: string;
 
     size: number;
