@@ -12,6 +12,8 @@ type Key = {
 const map = new HashMap<Key, number>();
 map.set({name: 'zm', age: 13}, 1);
 const count = map.get({name: 'zm', age: 13})
-console.log(`count: ${count}`);
+const anoCount = map.get({name: 'zm', age: 14});
+console.log(`count: ${count}\nanoCount: ${anoCount}`);
 >> count: 1
+>> anoCount: undefined
 ```
