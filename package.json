@@ -1,0 +1,18 @@
+{
+  "name": "mng-easy-util",
+  "version": "1.0.1",
+  "description": "some useful tools for js and ts, like true HashMap...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "zhangming",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^26.0.14",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.4.0",
+    "typescript": "^4.0.3"
+  }
+}
