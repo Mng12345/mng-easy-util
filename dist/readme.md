@@ -9,7 +9,7 @@ see > ./lib/hashmap.test.ts
 #### GA general genetic algorithm
 see > ./lib/algorithm/ga.test.ts
 
-#### math randomInt, sample, mean, sum, add, multiply, ma, ema, dif, macd
+#### math randomInt, sample, mean, sum, add, multiply, ma, ema, dif, macd, round
 see > ./lib/math.test.ts
 
 #### min max find value in array by extract and comparator

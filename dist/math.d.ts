@@ -72,3 +72,9 @@ export declare function macd(data: number[], nShort: number, nLong: number, nDif
  * @param high
  */
 export declare function normalize(data: number[], low: number, high: number): number[];
+/**
+ * round float
+ * @param data
+ * @param n
+ */
+export declare function round(data: number, n: number): number;

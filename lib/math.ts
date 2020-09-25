@@ -191,3 +191,13 @@ export function normalize(data: number[], low: number, high: number): number[] {
     }
     return res;
 }
+
+/**
+ * round float
+ * @param data
+ * @param n
+ */
+export function round(data: number, n: number): number {
+    const times = Math.pow(10, n);
+    return Math.round(data * times) / times;
+}
