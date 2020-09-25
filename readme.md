@@ -1,4 +1,4 @@
-mng-easy-util contains some useful utils for js and ts developers
+mng-easy-util contains some useful utils, algorithms(Genetic algorithm, ma, ema, macd...), data structures(HashMap) for js and ts developers, worked on browser and node.js
 
 #### github
 https://github.com/Mng12345/mng-easy-util 
