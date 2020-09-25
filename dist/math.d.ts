@@ -78,3 +78,10 @@ export declare function normalize(data: number[], low: number, high: number): nu
  * @param n
  */
 export declare function round(data: number, n: number): number;
+/**
+ * calculate stock brokerage
+ * @param exchangeType
+ * @param amount
+ * @param price
+ */
+export declare function brokerage(exchangeType: "buy" | "sell", amount: number, price: number): number;

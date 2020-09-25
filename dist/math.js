@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.round = exports.normalize = exports.macd = exports.add = exports.multiply = exports.dif = exports.ema = exports.ma = exports.mean = exports.sum = exports.sample = exports.randomNIntNotRepeat = exports.randomInt = void 0;
+exports.brokerage = exports.round = exports.normalize = exports.macd = exports.add = exports.multiply = exports.dif = exports.ema = exports.ma = exports.mean = exports.sum = exports.sample = exports.randomNIntNotRepeat = exports.randomInt = void 0;
 var lodash_1 = __importDefault(require("lodash"));
 /**
  * generate random int between [low, high)
@@ -233,3 +233,17 @@ function round(data, n) {
     return Math.round(data * times) / times;
 }
 exports.round = round;
+/**
+ * calculate stock brokerage
+ * @param exchangeType
+ * @param amount
+ * @param price
+ */
+function brokerage(exchangeType, amount, price) {
+    var transactions = price * amount;
+    var stamp = exchangeType === "sell" ? transactions * 0.001 : 0;
+    var transfer = transactions * 0.00002;
+    var brokerage = transactions * 0.0003 < 5 ? 5 : transactions * 0.0003;
+    return stamp + transfer + brokerage;
+}
+exports.brokerage = brokerage;

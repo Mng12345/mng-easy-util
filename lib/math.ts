@@ -201,3 +201,17 @@ export function round(data: number, n: number): number {
     const times = Math.pow(10, n);
     return Math.round(data * times) / times;
 }
+
+/**
+ * calculate stock brokerage
+ * @param exchangeType
+ * @param amount
+ * @param price
+ */
+export function brokerage(exchangeType: "buy"|"sell", amount: number, price: number): number {
+    const transactions = price * amount;
+    const stamp = exchangeType === "sell" ? transactions * 0.001 : 0;
+    const transfer = transactions * 0.00002;
+    const brokerage = transactions * 0.0003 < 5 ? 5 : transactions * 0.0003;
+    return stamp + transfer + brokerage;
+}
