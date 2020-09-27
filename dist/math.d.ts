@@ -85,3 +85,10 @@ export declare function round(data: number, n: number): number;
  * @param price
  */
 export declare function brokerage(exchangeType: "buy" | "sell", amount: number, price: number): number;
+/**
+ * return the range between [start, end) with step
+ * @param start
+ * @param end
+ * @param step
+ */
+export declare function range(start: number, end: number, step: number): number[];

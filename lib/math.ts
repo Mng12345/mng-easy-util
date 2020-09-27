@@ -215,3 +215,17 @@ export function brokerage(exchangeType: "buy"|"sell", amount: number, price: num
     const brokerage = transactions * 0.0003 < 5 ? 5 : transactions * 0.0003;
     return stamp + transfer + brokerage;
 }
+
+/**
+ * return the range between [start, end) with step
+ * @param start
+ * @param end
+ * @param step
+ */
+export function range(start: number, end: number, step: number) {
+    const res: number[] = [];
+    for (let i=start; i<end; i+=step) {
+        res.push(i);
+    }
+    return res;
+}
