@@ -88,7 +88,7 @@ export function ema(data: number[], n: number) {
     res[0] = data[0];
     const len = data.length;
     for (let i=1; i<len; i++) {
-        res[i] = (2 / n + 1) * data[i] + ((n - 1) / (n + 1)) * res[i-1];
+        res[i] = (2 / (n + 1)) * data[i] + ((n - 1) / (n + 1)) * res[i-1];
     }
     return res;
 }
