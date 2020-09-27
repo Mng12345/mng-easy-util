@@ -1,6 +1,7 @@
 import {HashSet} from "./hashset";
 import {HashCode} from "./hashmap";
 import lodash from 'lodash';
+import {Stream} from "./stream";
 
 test('entries', () => {
     const set = new HashSet<number>();
@@ -38,6 +39,5 @@ test('keys & values', () => {
     })()).toBe(3);
     const objSet = new HashSet<Key>();
     objSet.add(new Key(1, 2)).add(new Key(3, 4));
-    // TODO 完成后续代码
-    // expect()[0].hashCode())
+    expect(Stream.of(objSet.keys()).collect()[0].hashCode()).toBe(new Key(1, 2).hashCode());
 })
