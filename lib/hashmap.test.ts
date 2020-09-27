@@ -26,12 +26,17 @@ test('Symbol.iterator', () => {
 })
 
 test('entries', () => {
-    const map = new HashMap();
-    map.set(1, 2);
+    const map = new HashMap<number, number>();
+    map.set(1, 2)
+        .set(2, 3);
+    let keySum = 0;
+    let valSum = 0;
     for (let [k, v] of map.entries()) {
-        expect(k).toBe(1);
-        expect(v).toBe(2);
+        keySum += k;
+        valSum += v;
     }
+    expect(keySum).toBe(3);
+    expect(valSum).toBe(5);
 })
 
 test('keys & values', () => {

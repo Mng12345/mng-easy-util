@@ -1,10 +1,14 @@
-type basic = number | string
+export type basic = number | string
 
 export interface HashCode {
     hashCode(): string;
 }
 
-type Key = basic | HashCode;
+export type Key = basic | HashCode;
+
+export function isBasic(obj: any): obj is basic {
+    return typeof obj === 'string' || typeof obj === 'number';
+}
 
 export class HashMap<K extends Key, V> implements Map<K, V>{
 
@@ -36,9 +40,11 @@ export class HashMap<K extends Key, V> implements Map<K, V>{
         const valueIterator = this.values();
         return new class implements IterableIterator<[K, V]> {
             next(): IteratorResult<[K, V], any> {
+                const keyItorVal = keyIterator.next();
+                const valueItorVal = valueIterator.next();
                 return {
-                    done: true,
-                    value: [keyIterator.next(), valueIterator.next()]
+                    done: keyItorVal.done,
+                    value: [keyItorVal.value, valueItorVal.value]
                 };
             }
             [Symbol.iterator](): IterableIterator<[K, V]> {
@@ -101,5 +107,4 @@ export class HashMap<K extends Key, V> implements Map<K, V>{
     }
 
 }
-
 
