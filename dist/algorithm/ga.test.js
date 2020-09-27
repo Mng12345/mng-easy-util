@@ -95,10 +95,10 @@ var Individual = /** @class */ (function (_super) {
     };
     return Individual;
 }(ga_1.AbstractIndividual));
-var ga = new ga_1.GA({ individualCross: individualCross, individualMutate: individualMutate, individualInit: individualInit });
-var trace = ga.start();
 test('start', function () {
     var e_1, _a;
+    var ga = new ga_1.GA({ individualCross: individualCross, individualMutate: individualMutate, individualInit: individualInit });
+    var trace = ga.start();
     expect(ga.bestIndividual !== undefined).toBe(true);
     var calDistance = function (d1, d2) {
         var sum = 0;
@@ -132,4 +132,12 @@ test('start', function () {
         finally { if (e_1) throw e_1.error; }
     }
     expect(generateCorrect).toBe(true);
+});
+test('select', function () {
+    var ga = new ga_1.GA({ individualCross: individualCross, individualMutate: individualMutate, individualInit: individualInit });
+    ga.initPops();
+    var meanFitness = math_1.mean(ga.individuals.map(function (item) { return item.fitness.value; }));
+    ga.select();
+    var meanFitnessAfterSelect = math_1.mean(ga.individuals.map(function (item) { return item.fitness.value; }));
+    expect(meanFitness > meanFitnessAfterSelect).toBe(true);
 });

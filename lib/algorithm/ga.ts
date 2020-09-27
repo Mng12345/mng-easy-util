@@ -86,8 +86,8 @@ export class GA<TIndividual extends AbstractIndividual<TData, TFitness>, TData, 
         // select 20% items in last 80%
         const first20 = Math.floor(0.2 * this.popSize);
         const last80 = this.popSize  - first20;
-        const leftItems = sample(this.individuals, first20);
-        const rightItems = sample(this.individuals, last80);
+        const leftItems = sample(this.individuals.slice(0, first20), last80);
+        const rightItems = sample(this.individuals.slice(first20), first20);
         this.individuals = leftItems.concat(rightItems);
     }
 

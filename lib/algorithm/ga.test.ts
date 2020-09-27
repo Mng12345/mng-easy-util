@@ -1,5 +1,5 @@
 import {AbstractIndividual, GA} from "./ga";
-import {randomInt} from "../math";
+import {mean, randomInt} from "../math";
 import {Cloneable} from "../clone";
 import {Comparable} from "../min-max";
 
@@ -55,10 +55,9 @@ class Individual extends AbstractIndividual<number[], ComparableNumber> {
 
 }
 
-const ga = new GA({individualCross, individualMutate, individualInit});
-const trace = ga.start();
-
 test('start', () => {
+    const ga = new GA({individualCross, individualMutate, individualInit});
+    const trace = ga.start();
     expect(ga.bestIndividual !== undefined).toBe(true);
     const calDistance = (d1: number[], d2: number[]) => {
         let sum = 0;
@@ -83,3 +82,11 @@ test('start', () => {
     expect(generateCorrect).toBe(true);
 })
 
+test('select', () => {
+    const ga = new GA({individualCross, individualMutate, individualInit});
+    ga.initPops();
+    const meanFitness = mean(ga.individuals.map(item => item.fitness!.value));
+    ga.select();
+    const meanFitnessAfterSelect = mean(ga.individuals.map(item => item.fitness!.value));
+    expect(meanFitness > meanFitnessAfterSelect).toBe(true);
+})

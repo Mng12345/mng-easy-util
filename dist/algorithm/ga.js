@@ -113,8 +113,8 @@ var GA = /** @class */ (function () {
         // select 20% items in last 80%
         var first20 = Math.floor(0.2 * this.popSize);
         var last80 = this.popSize - first20;
-        var leftItems = math_1.sample(this.individuals, first20);
-        var rightItems = math_1.sample(this.individuals, last80);
+        var leftItems = math_1.sample(this.individuals.slice(0, first20), last80);
+        var rightItems = math_1.sample(this.individuals.slice(first20), first20);
         this.individuals = leftItems.concat(rightItems);
     };
     /**
