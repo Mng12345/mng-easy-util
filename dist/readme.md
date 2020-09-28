@@ -19,5 +19,8 @@ see > ./lib/math.test.ts
 see > ./lib/min-max.test.ts
 
 #### Stream stream api like java8
-sett > ./lib/stream.test.ts
+see > ./lib/stream.test.ts
+
+#### merge easy to plot for echarts
+see > ./lib/algorithm/merge-axis.test.ts
 

@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HashMap = void 0;
+exports.HashMap = exports.isBasic = void 0;
+function isBasic(obj) {
+    return typeof obj === 'string' || typeof obj === 'number';
+}
+exports.isBasic = isBasic;
 var HashMap = /** @class */ (function () {
     function HashMap() {
         this.map = new Map();
@@ -28,9 +32,11 @@ var HashMap = /** @class */ (function () {
             function class_1() {
             }
             class_1.prototype.next = function () {
+                var keyItorVal = keyIterator.next();
+                var valueItorVal = valueIterator.next();
                 return {
-                    done: true,
-                    value: [keyIterator.next(), valueIterator.next()]
+                    done: keyItorVal.done,
+                    value: [keyItorVal.value, valueItorVal.value]
                 };
             };
             class_1.prototype[Symbol.iterator] = function () {

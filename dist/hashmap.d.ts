@@ -1,8 +1,9 @@
-declare type basic = number | string;
+export declare type basic = number | string;
 export interface HashCode {
     hashCode(): string;
 }
-declare type Key = basic | HashCode;
+export declare type Key = basic | HashCode;
+export declare function isBasic(obj: any): obj is basic;
 export declare class HashMap<K extends Key, V> implements Map<K, V> {
     private map;
     private keyMap;
@@ -21,4 +22,3 @@ export declare class HashMap<K extends Key, V> implements Map<K, V> {
     has(key: K): boolean;
     set(key: K, value: V): this;
 }
-export {};

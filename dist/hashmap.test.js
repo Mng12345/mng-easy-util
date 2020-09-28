@@ -63,12 +63,15 @@ test('Symbol.iterator', function () {
 test('entries', function () {
     var e_2, _a;
     var map = new hashmap_1.HashMap();
-    map.set(1, 2);
+    map.set(1, 2)
+        .set(2, 3);
+    var keySum = 0;
+    var valSum = 0;
     try {
         for (var _b = __values(map.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
             var _d = __read(_c.value, 2), k = _d[0], v = _d[1];
-            expect(k).toBe(1);
-            expect(v).toBe(2);
+            keySum += k;
+            valSum += v;
         }
     }
     catch (e_2_1) { e_2 = { error: e_2_1 }; }
@@ -78,6 +81,8 @@ test('entries', function () {
         }
         finally { if (e_2) throw e_2.error; }
     }
+    expect(keySum).toBe(3);
+    expect(valSum).toBe(5);
 });
 test('keys & values', function () {
     var e_3, _a, e_4, _b;
