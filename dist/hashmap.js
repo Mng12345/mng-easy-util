@@ -52,6 +52,7 @@ var HashMap = /** @class */ (function () {
         return this.map.values();
     };
     HashMap.prototype.clear = function () {
+        this.keyMap.clear();
         this.map.clear();
         this.size = this.map.size;
     };

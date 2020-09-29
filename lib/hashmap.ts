@@ -66,6 +66,7 @@ export class HashMap<K extends Key, V> implements Map<K, V>{
     size: number;
 
     clear(): void {
+        this.keyMap.clear();
         this.map.clear();
         this.size = this.map.size;
     }

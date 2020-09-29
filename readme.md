@@ -24,3 +24,6 @@ see > ./lib/stream.test.ts
 #### merge easy to plot for echarts
 see > ./lib/algorithm/merge-axis.test.ts
 
+#### func-util some util to statistic func call
+see > ./lib/func-util-test.ts
+
