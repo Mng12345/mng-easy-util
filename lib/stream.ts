@@ -39,13 +39,15 @@ export class Stream<T> {
         return new Stream<T>(data);
     }
 
-    each(callback: (item: T) => void): void {
+    each(callback: (item: T, index?: number) => void): void {
+        let index = 0;
         for (const item of this.iterator) {
-            callback(item);
+            callback(item, index++);
         }
     }
 
-    map<R>(callback: (item: T) => R): Stream<R> {
+    map<R>(callback: (item: T, index?: number) => R): Stream<R> {
+        let index = 0;
         const outThis = this;
         const itor = new class implements IterableIterator<R> {
             [Symbol.iterator](): IterableIterator<R> {
@@ -55,7 +57,7 @@ export class Stream<T> {
                 const value = outThis.iterator.next();
                 let res: R|undefined = undefined
                 if (!value.done) {
-                    res = callback(value.value);
+                    res = callback(value.value, index++);
                 }
                 return {
                     done: value.done,
@@ -66,7 +68,8 @@ export class Stream<T> {
         return new Stream<R>(itor);
     }
 
-    filter(callback: (item: T) => boolean): Stream<T> {
+    filter(callback: (item: T, index?: number) => boolean): Stream<T> {
+        let index = 0;
         const outThis = this;
         const itor = new class implements IterableIterator<T> {
             [Symbol.iterator](): IterableIterator<T> {
@@ -83,7 +86,7 @@ export class Stream<T> {
                         break;
                     } else {
                         // check filter
-                        if (callback(value.value)) {
+                        if (callback(value.value, index++)) {
                             valueFiltered = value;
                             break;
                         }
