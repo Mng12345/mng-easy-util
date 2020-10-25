@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.range = exports.brokerage = exports.round = exports.normalize = exports.macd = exports.add = exports.multiply = exports.dif = exports.ema = exports.ma = exports.mean = exports.sum = exports.sample = exports.randomNIntNotRepeat = exports.randomInt = void 0;
+exports.r2 = exports.correlation = exports.covariance = exports.std = exports.variance = exports.dotMultiply = exports.range = exports.brokerage = exports.round = exports.normalize = exports.macd = exports.add = exports.multiply = exports.dif = exports.ema = exports.ma = exports.mean = exports.sum = exports.sample = exports.randomNIntNotRepeat = exports.randomInt = void 0;
 var lodash_1 = __importDefault(require("lodash"));
 /**
  * generate random int between [low, high)
@@ -261,3 +261,79 @@ function range(start, end, step) {
     return res;
 }
 exports.range = range;
+/**
+ * multiply by position
+ * @param {number[]} a1
+ * @param {number[]} a2
+ * @return {number}
+ */
+function dotMultiply(a1, a2) {
+    var res = 0;
+    if (a1.length !== a2.length) {
+        throw new Error("the length of a1 and d2 must be equal");
+    }
+    for (var i = 0; i < a1.length; i++)
+        res += a1[i] * a2[i];
+    return res;
+}
+exports.dotMultiply = dotMultiply;
+/**
+ * calculate variance of data
+ * @param {number[]} data
+ * @return {number}
+ */
+function variance(data) {
+    var meanVal = mean(data);
+    var dif = add(data, -meanVal);
+    return dotMultiply(dif, dif) / (data.length - 1);
+}
+exports.variance = variance;
+/**
+ * calculate standard deviation of data
+ * @param {number[]} data
+ * @return {number}
+ */
+function std(data) {
+    return Math.sqrt(variance(data));
+}
+exports.std = std;
+/**
+ * corvation of a1 and a2
+ * @param {number[]} a1
+ * @param {number[]} a2
+ * @return {number}
+ */
+function covariance(a1, a2) {
+    if (a1.length !== a2.length)
+        throw new Error("the length of a1 and a2 must be equal");
+    return dotMultiply(add(a1, -mean(a1)), add(a2, -mean(a2))) / (a1.length - 1);
+}
+exports.covariance = covariance;
+/**
+ * calculate the correlation of a1 and a2
+ * @param {number[]} a1
+ * @param {number[]} a2
+ * @return {number}
+ */
+function correlation(a1, a2) {
+    var std1 = std(a1);
+    var std2 = std(a2);
+    if (std1 > 0 && std2 > 0) {
+        return covariance(a1, a2) / (std1 * std2);
+    }
+    else
+        return 0;
+}
+exports.correlation = correlation;
+/**
+ * calculate r square of label and predictLabel
+ * @param {number[]} label
+ * @param {number[]} predictLabel
+ * @return {number}
+ */
+function r2(label, predictLabel) {
+    var residualSum = dotMultiply(dif(label, predictLabel), dif(label, predictLabel));
+    var labelMeanDifSum = dotMultiply(add(label, -mean(label)), add(label, -mean(label)));
+    return 1 - residualSum / labelMeanDifSum;
+}
+exports.r2 = r2;

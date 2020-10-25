@@ -53,10 +53,11 @@ var Stream = /** @class */ (function () {
     };
     Stream.prototype.each = function (callback) {
         var e_1, _a;
+        var index = 0;
         try {
             for (var _b = __values(this.iterator), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var item = _c.value;
-                callback(item);
+                callback(item, index++);
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -68,6 +69,7 @@ var Stream = /** @class */ (function () {
         }
     };
     Stream.prototype.map = function (callback) {
+        var index = 0;
         var outThis = this;
         var itor = new /** @class */ (function () {
             function class_2() {
@@ -79,7 +81,7 @@ var Stream = /** @class */ (function () {
                 var value = outThis.iterator.next();
                 var res = undefined;
                 if (!value.done) {
-                    res = callback(value.value);
+                    res = callback(value.value, index++);
                 }
                 return {
                     done: value.done,
@@ -91,6 +93,7 @@ var Stream = /** @class */ (function () {
         return new Stream(itor);
     };
     Stream.prototype.filter = function (callback) {
+        var index = 0;
         var outThis = this;
         var itor = new /** @class */ (function () {
             function class_3() {
@@ -110,7 +113,7 @@ var Stream = /** @class */ (function () {
                     }
                     else {
                         // check filter
-                        if (callback(value.value)) {
+                        if (callback(value.value, index++)) {
                             valueFiltered = value;
                             break;
                         }

@@ -12,7 +12,7 @@ see > ./lib/hashset.test.ts
 #### GA general genetic algorithm
 see > ./lib/algorithm/ga.test.ts
 
-#### math randomInt, sample, mean, sum, add, multiply, ma, ema, dif, macd, round, range
+#### math randomInt, sample, mean, sum, add, multiply, ma, ema, dif, macd, round, range, dotMultiply, variance, std, covariance, correlation, r2
 see > ./lib/math.test.ts
 
 #### min max find value in array by extract and comparator

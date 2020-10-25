@@ -92,3 +92,43 @@ export declare function brokerage(exchangeType: "buy" | "sell", amount: number, 
  * @param step
  */
 export declare function range(start: number, end: number, step: number): number[];
+/**
+ * multiply by position
+ * @param {number[]} a1
+ * @param {number[]} a2
+ * @return {number}
+ */
+export declare function dotMultiply(a1: number[], a2: number[]): number;
+/**
+ * calculate variance of data
+ * @param {number[]} data
+ * @return {number}
+ */
+export declare function variance(data: number[]): number;
+/**
+ * calculate standard deviation of data
+ * @param {number[]} data
+ * @return {number}
+ */
+export declare function std(data: number[]): number;
+/**
+ * corvation of a1 and a2
+ * @param {number[]} a1
+ * @param {number[]} a2
+ * @return {number}
+ */
+export declare function covariance(a1: number[], a2: number[]): number;
+/**
+ * calculate the correlation of a1 and a2
+ * @param {number[]} a1
+ * @param {number[]} a2
+ * @return {number}
+ */
+export declare function correlation(a1: number[], a2: number[]): number;
+/**
+ * calculate r square of label and predictLabel
+ * @param {number[]} label
+ * @param {number[]} predictLabel
+ * @return {number}
+ */
+export declare function r2(label: number[], predictLabel: number[]): number;

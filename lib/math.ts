@@ -229,3 +229,77 @@ export function range(start: number, end: number, step: number) {
     }
     return res;
 }
+
+/**
+ * multiply by position
+ * @param {number[]} a1
+ * @param {number[]} a2
+ * @return {number}
+ */
+export function dotMultiply(a1: number[], a2: number[]): number {
+    let res= 0;
+    if (a1.length !== a2.length) {
+        throw new Error(`the length of a1 and d2 must be equal`);
+    }
+    for (let i=0; i<a1.length; i++)
+        res += a1[i] * a2[i];
+    return res;
+}
+
+/**
+ * calculate variance of data
+ * @param {number[]} data
+ * @return {number}
+ */
+export function variance(data: number[]): number {
+    const meanVal = mean(data);
+    const dif = add(data, -meanVal);
+    return dotMultiply(dif, dif) / (data.length - 1);
+}
+
+/**
+ * calculate standard deviation of data
+ * @param {number[]} data
+ * @return {number}
+ */
+export function std(data: number[]): number {
+    return Math.sqrt(variance(data));
+}
+
+/**
+ * corvation of a1 and a2
+ * @param {number[]} a1
+ * @param {number[]} a2
+ * @return {number}
+ */
+export function covariance(a1: number[], a2: number[]): number {
+    if (a1.length !== a2.length)
+        throw new Error(`the length of a1 and a2 must be equal`);
+    return dotMultiply(add(a1, -mean(a1)), add(a2, -mean(a2))) / (a1.length - 1);
+}
+
+/**
+ * calculate the correlation of a1 and a2
+ * @param {number[]} a1
+ * @param {number[]} a2
+ * @return {number}
+ */
+export function correlation(a1: number[], a2: number[]): number {
+    const std1 = std(a1);
+    const std2 = std(a2);
+    if (std1 > 0 && std2 > 0) {
+        return covariance(a1, a2) / (std1 * std2);
+    } else return 0;
+}
+
+/**
+ * calculate r square of label and predictLabel
+ * @param {number[]} label
+ * @param {number[]} predictLabel
+ * @return {number}
+ */
+export function r2(label: number[], predictLabel: number[]): number {
+    const residualSum = dotMultiply(dif(label, predictLabel), dif(label, predictLabel));
+    const labelMeanDifSum = dotMultiply(add(label, -mean(label)), add(label, -mean(label)));
+    return 1 - residualSum / labelMeanDifSum;
+}
