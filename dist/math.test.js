@@ -20,5 +20,5 @@ test('r2', function () {
     var a3 = [1, 1, 0];
     expect(math_1.r2(a1, a2)).toBe(1);
     var r2a13 = math_1.r2(a1, a3);
-    expect(r2a13 >= 0 && r2a13 <= 1).toBe(true);
+    expect(r2a13 <= 1).toBe(true);
 });

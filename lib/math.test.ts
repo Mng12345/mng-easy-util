@@ -21,6 +21,6 @@ test('r2', () => {
     const a3 = [1, 1, 0];
     expect(r2(a1, a2)).toBe(1);
     const r2a13 = r2(a1, a3);
-    expect(r2a13 >= 0 && r2a13 <= 1).toBe(true);
+    expect(r2a13 <= 1).toBe(true);
 })
 
