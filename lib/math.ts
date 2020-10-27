@@ -306,3 +306,17 @@ export function r2(label: number[], predictLabel: number[]): number {
     return 1 - residualSum / labelMeanDifSum;
 }
 
+/**
+ * judge whether a and b is closeable
+ * @param {number} a
+ * @param {number} b
+ * @param {number} tolerance
+ * @return {boolean}
+ */
+export const isCloseable = (a: number, b: number, tolerance?: number) => {
+    if (!tolerance)
+        tolerance = 0.01;
+    return Math.abs(a - b) < tolerance;
+};
+
+

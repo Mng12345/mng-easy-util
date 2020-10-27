@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.r2 = exports.correlation = exports.covariance = exports.std = exports.variance = exports.dotMultiply = exports.range = exports.brokerage = exports.round = exports.normalize = exports.macd = exports.add = exports.multiply = exports.dif = exports.ema = exports.ma = exports.mean = exports.sum = exports.sample = exports.randomNIntNotRepeat = exports.randomInt = void 0;
+exports.isCloseable = exports.r2 = exports.correlation = exports.covariance = exports.std = exports.variance = exports.dotMultiply = exports.range = exports.brokerage = exports.round = exports.normalize = exports.macd = exports.add = exports.multiply = exports.dif = exports.ema = exports.ma = exports.mean = exports.sum = exports.sample = exports.randomNIntNotRepeat = exports.randomInt = void 0;
 var lodash_1 = __importDefault(require("lodash"));
 /**
  * generate random int between [low, high)
@@ -339,3 +339,15 @@ function r2(label, predictLabel) {
     return 1 - residualSum / labelMeanDifSum;
 }
 exports.r2 = r2;
+/**
+ * judge whether a and b is closeable
+ * @param {number} a
+ * @param {number} b
+ * @param {number} tolerance
+ * @return {boolean}
+ */
+exports.isCloseable = function (a, b, tolerance) {
+    if (!tolerance)
+        tolerance = 0.01;
+    return Math.abs(a - b) < tolerance;
+};

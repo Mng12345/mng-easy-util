@@ -30,3 +30,6 @@ see > ./lib/func-util.test.ts
 ### file add async sleep
 see > ./lib/file.test.ts
 
+### curve-fit by GA algorithm
+see > ./lib/algorithm/curve-fit
+

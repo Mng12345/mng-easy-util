@@ -132,3 +132,11 @@ export declare function correlation(a1: number[], a2: number[]): number;
  * @return {number}
  */
 export declare function r2(label: number[], predictLabel: number[]): number;
+/**
+ * judge whether a and b is closeable
+ * @param {number} a
+ * @param {number} b
+ * @param {number} tolerance
+ * @return {boolean}
+ */
+export declare const isCloseable: (a: number, b: number, tolerance?: number | undefined) => boolean;
