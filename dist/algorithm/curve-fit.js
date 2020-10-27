@@ -110,7 +110,7 @@ exports.curveFit = function (_a) {
         }
         return new Individual(data, undefined);
     };
-    var ga = new ga_1.GA({ individualCross: individualCross, individualMutate: individualMutate, individualInit: individualInit, maxGenerationToStop: 50, popSize: 500 });
+    var ga = new ga_1.GA({ individualCross: individualCross, individualMutate: individualMutate, individualInit: individualInit, maxGenerationToStop: 100, popSize: 1000 });
     ga.generalSize = maxIterations;
     ga.initPops();
     var trace = ga.start();

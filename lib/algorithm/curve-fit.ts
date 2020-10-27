@@ -93,7 +93,7 @@ export const curveFit = ({x, y, minValues, maxValues, maxIterations = 100, toler
         return new Individual(data, undefined);
     };
 
-    const ga = new GA({individualCross, individualMutate, individualInit, maxGenerationToStop: 50, popSize: 500});
+    const ga = new GA({individualCross, individualMutate, individualInit, maxGenerationToStop: 100, popSize: 1000});
     ga.generalSize = maxIterations;
     ga.initPops();
     const trace = ga.start();

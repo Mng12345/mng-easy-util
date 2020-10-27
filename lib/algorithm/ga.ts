@@ -46,7 +46,7 @@ export class GA<TIndividual extends AbstractIndividual<TData, TFitness>, TData, 
     popSize: number = 200
     generalSize: number = 400
     pCross: number = 0.75
-    pMutate: number = 0.1
+    pMutate: number = 0.15
     individuals: TIndividual[] = []
     bestIndividual: TIndividual | undefined
     individualCross: (i1:  TIndividual, i2: TIndividual) => [TIndividual, TIndividual]
