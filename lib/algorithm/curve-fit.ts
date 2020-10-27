@@ -73,6 +73,13 @@ export const curveFit = ({x, y, minValues, maxValues, maxIterations = 100, toler
     const individualMutate = (i: Individual): Individual => {
         const newI = i.clone();
         const mutatedIndex = Math.floor(Math.random() * minValues.length);
+        if (Math.random() < 0.5) {
+            // mutate down
+            newI.data[mutatedIndex] -= Math.random() * (newI.data[mutatedIndex] - minValues[mutatedIndex]) * 0.1;
+        } else {
+            // mutate up
+            newI.data[mutatedIndex] += Math.random() * (maxValues[mutatedIndex] - newI.data[mutatedIndex]) * 0.1;
+        }
         newI.data[mutatedIndex] = Math.random() * (maxValues[mutatedIndex] - minValues[mutatedIndex])
             + minValues[mutatedIndex];
         return newI;

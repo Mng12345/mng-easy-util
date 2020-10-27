@@ -13,7 +13,7 @@ test('linear curve fit', () => {
         maxValues: [4, 4],
         fitFunc,
         maxIterations: 500,
-        tolerance: 0.5
+        tolerance: 0.2
     });
     const yPredict = x.map(item => params.func(item));
     console.log(`y: ${JSON.stringify(y)}\npredict: ${JSON.stringify(yPredict)}\nparams: ${JSON.stringify(params)}`);

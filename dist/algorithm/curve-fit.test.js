@@ -33,7 +33,7 @@ test('linear curve fit', function () {
         maxValues: [4, 4],
         fitFunc: fitFunc,
         maxIterations: 500,
-        tolerance: 0.5
+        tolerance: 0.2
     });
     var yPredict = x.map(function (item) { return params.func(item); });
     console.log("y: " + JSON.stringify(y) + "\npredict: " + JSON.stringify(yPredict) + "\nparams: " + JSON.stringify(params));
