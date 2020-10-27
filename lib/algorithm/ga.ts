@@ -1,6 +1,6 @@
 // general genetic algorithm
 
-import {randomInt, randomNIntNotRepeat, sample} from "../math";
+import {isCloseable, randomInt, randomNIntNotRepeat, sample} from "../math";
 import lodash from "lodash";
 import {Comparable, min} from "../min-max";
 import {Cloneable} from "../clone";
@@ -9,6 +9,37 @@ export abstract class AbstractIndividual<TData, TFitness> implements Cloneable {
     constructor(public data: TData, public fitness: TFitness | undefined) {}
     abstract calFitness(): TFitness;
     abstract clone(): AbstractIndividual<TData, TFitness>;
+}
+
+/**
+ * class to stop the ga algorithm
+ */
+export class Stopper {
+
+    private valueQueue: Comparable[] = [];
+
+    constructor(public maxQueueSize: number) {
+    }
+
+    feed(value: Comparable) {
+        if (this.valueQueue.length === 0) {
+            this.valueQueue.push(value);
+            return;
+        }
+        if (value.compare(this.valueQueue[this.valueQueue.length-1]) === 0) {
+            if (this.valueQueue.length >= this.maxQueueSize) {
+                this.valueQueue.pop();
+            }
+            this.valueQueue.push(value);
+        } else {
+            // new breaks value, clear the queue!
+            this.valueQueue = [value];
+        }
+    }
+
+    canStop(): boolean {
+        return this.valueQueue.length >= this.maxQueueSize;
+    }
 }
 
 export class GA<TIndividual extends AbstractIndividual<TData, TFitness>, TData, TFitness extends Comparable> {
@@ -21,11 +52,13 @@ export class GA<TIndividual extends AbstractIndividual<TData, TFitness>, TData, 
     individualCross: (i1:  TIndividual, i2: TIndividual) => [TIndividual, TIndividual]
     individualMutate: (i: TIndividual) => TIndividual
     individualInit: () => TIndividual
+    stopper: Stopper
 
     constructor(config: {popSize?: number, generalSize?: number, pCross?: number, pMutate?: number,
         individualCross: (i1:  TIndividual, i2: TIndividual) => [TIndividual, TIndividual],
         individualMutate: (i: TIndividual) => TIndividual,
-        individualInit: () => TIndividual}) {
+        individualInit: () => TIndividual,
+        maxGenerationToStop?: number}) {
         this.individualCross = config.individualCross;
         this.individualMutate = config.individualMutate;
         this.individualInit = config.individualInit;
@@ -41,6 +74,10 @@ export class GA<TIndividual extends AbstractIndividual<TData, TFitness>, TData, 
         if (config.pMutate) {
             this.pMutate = config.pMutate;
         }
+        if (!config.maxGenerationToStop) {
+            config.maxGenerationToStop = Math.min(20, this.generalSize);
+        }
+        this.stopper = new Stopper(config.maxGenerationToStop);
     }
 
     initPops() {
@@ -103,6 +140,11 @@ export class GA<TIndividual extends AbstractIndividual<TData, TFitness>, TData, 
         }
     }
 
+    canStop() {
+        this.stopper.feed(this.bestIndividual!.fitness!);
+        return this.stopper.canStop();
+    }
+
     /**
      * start genetic algorithm
      */
@@ -115,6 +157,9 @@ export class GA<TIndividual extends AbstractIndividual<TData, TFitness>, TData, 
             this.mutate();
             this.saveBest();
             res[i] = this.bestIndividual!.clone() as TIndividual;
+            if (this.canStop()) {
+                break;
+            }
         }
         return res;
     }

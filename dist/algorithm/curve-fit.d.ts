@@ -4,7 +4,7 @@ export declare type Options = {
     minValues: number[];
     maxValues: number[];
     maxIterations?: number;
-    errorTolerance?: number;
+    tolerance?: number;
     fitFunc: (...params: number[]) => (x: number) => number;
 };
 export declare type Parameter = {
@@ -13,4 +13,4 @@ export declare type Parameter = {
     iterations: number;
     func: (x: number) => number;
 };
-export declare const curveFit: ({ x, y, minValues, maxValues, maxIterations, errorTolerance, fitFunc }: Options) => Parameter;
+export declare const curveFit: ({ x, y, minValues, maxValues, maxIterations, tolerance, fitFunc }: Options) => Parameter;

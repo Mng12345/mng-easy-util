@@ -36,20 +36,28 @@ var __spread = (this && this.__spread) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.curveFit = void 0;
 var ga_1 = require("./ga");
-var ComparableNumber = /** @class */ (function () {
-    function ComparableNumber(value) {
-        this.value = value;
-    }
-    ComparableNumber.prototype.compare = function (other) {
-        return this.value - other.value;
-    };
-    ComparableNumber.prototype.clone = function () {
-        return new ComparableNumber(this.value);
-    };
-    return ComparableNumber;
-}());
+var math_1 = require("../math");
 exports.curveFit = function (_a) {
-    var x = _a.x, y = _a.y, minValues = _a.minValues, maxValues = _a.maxValues, _b = _a.maxIterations, maxIterations = _b === void 0 ? 100 : _b, _c = _a.errorTolerance, errorTolerance = _c === void 0 ? 0.001 : _c, fitFunc = _a.fitFunc;
+    var x = _a.x, y = _a.y, minValues = _a.minValues, maxValues = _a.maxValues, _b = _a.maxIterations, maxIterations = _b === void 0 ? 100 : _b, _c = _a.tolerance, tolerance = _c === void 0 ? 0.001 : _c, fitFunc = _a.fitFunc;
+    var ComparableNumber = /** @class */ (function () {
+        function ComparableNumber(value) {
+            this.value = value;
+        }
+        ComparableNumber.prototype.compare = function (other) {
+            if (this.value === other.value) {
+                return 0;
+            }
+            else if (math_1.isCloseable(this.value, other.value, tolerance)) {
+                return 0;
+            }
+            else
+                return this.value < other.value ? -1 : 1;
+        };
+        ComparableNumber.prototype.clone = function () {
+            return new ComparableNumber(this.value);
+        };
+        return ComparableNumber;
+    }());
     var Individual = /** @class */ (function (_super) {
         __extends(Individual, _super);
         function Individual() {
@@ -94,14 +102,14 @@ exports.curveFit = function (_a) {
         }
         return new Individual(data, undefined);
     };
-    var ga = new ga_1.GA({ individualCross: individualCross, individualMutate: individualMutate, individualInit: individualInit });
+    var ga = new ga_1.GA({ individualCross: individualCross, individualMutate: individualMutate, individualInit: individualInit, maxGenerationToStop: 50, popSize: 500 });
     ga.generalSize = maxIterations;
     ga.initPops();
-    ga.start();
+    var trace = ga.start();
     return {
         values: ga.bestIndividual.data,
         error: ga.bestIndividual.fitness.value,
-        iterations: maxIterations,
-        func: fitFunc.apply(void 0, __spread(ga.bestIndividual.data))
+        iterations: trace.length,
+        func: fitFunc.apply(void 0, __spread(ga.bestIndividual.data)),
     };
 };

@@ -11,9 +11,11 @@ test('linear curve fit', () => {
         x, y,
         minValues: [-1, -1],
         maxValues: [4, 4],
-        fitFunc
+        fitFunc,
+        maxIterations: 500,
+        tolerance: 0.5
     });
     const yPredict = x.map(item => params.func(item));
-    console.log(`y: ${JSON.stringify(y)}\npredict: ${JSON.stringify(yPredict)}`);
+    console.log(`y: ${JSON.stringify(y)}\npredict: ${JSON.stringify(yPredict)}\nparams: ${JSON.stringify(params)}`);
     expect(math.isCloseable(params.values[0], 2, 0.1) && math.isCloseable(params.values[1], 1, 0.1)).toBe(true);
 })

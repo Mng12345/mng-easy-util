@@ -28,7 +28,7 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GA = exports.AbstractIndividual = void 0;
+exports.GA = exports.Stopper = exports.AbstractIndividual = void 0;
 var math_1 = require("../math");
 var min_max_1 = require("../min-max");
 var AbstractIndividual = /** @class */ (function () {
@@ -39,6 +39,36 @@ var AbstractIndividual = /** @class */ (function () {
     return AbstractIndividual;
 }());
 exports.AbstractIndividual = AbstractIndividual;
+/**
+ * class to stop the ga algorithm
+ */
+var Stopper = /** @class */ (function () {
+    function Stopper(maxQueueSize) {
+        this.maxQueueSize = maxQueueSize;
+        this.valueQueue = [];
+    }
+    Stopper.prototype.feed = function (value) {
+        if (this.valueQueue.length === 0) {
+            this.valueQueue.push(value);
+            return;
+        }
+        if (value.compare(this.valueQueue[this.valueQueue.length - 1]) === 0) {
+            if (this.valueQueue.length >= this.maxQueueSize) {
+                this.valueQueue.pop();
+            }
+            this.valueQueue.push(value);
+        }
+        else {
+            // new breaks value, clear the queue!
+            this.valueQueue = [value];
+        }
+    };
+    Stopper.prototype.canStop = function () {
+        return this.valueQueue.length >= this.maxQueueSize;
+    };
+    return Stopper;
+}());
+exports.Stopper = Stopper;
 var GA = /** @class */ (function () {
     function GA(config) {
         this.popSize = 200;
@@ -61,6 +91,10 @@ var GA = /** @class */ (function () {
         if (config.pMutate) {
             this.pMutate = config.pMutate;
         }
+        if (!config.maxGenerationToStop) {
+            config.maxGenerationToStop = Math.min(20, this.generalSize);
+        }
+        this.stopper = new Stopper(config.maxGenerationToStop);
     }
     GA.prototype.initPops = function () {
         this.individuals = [];
@@ -128,6 +162,10 @@ var GA = /** @class */ (function () {
             this.individuals[index] = currBestIndividual.clone();
         }
     };
+    GA.prototype.canStop = function () {
+        this.stopper.feed(this.bestIndividual.fitness);
+        return this.stopper.canStop();
+    };
     /**
      * start genetic algorithm
      */
@@ -140,6 +178,9 @@ var GA = /** @class */ (function () {
             this.mutate();
             this.saveBest();
             res[i] = this.bestIndividual.clone();
+            if (this.canStop()) {
+                break;
+            }
         }
         return res;
     };

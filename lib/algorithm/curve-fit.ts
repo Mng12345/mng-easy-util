@@ -3,7 +3,7 @@
 import {AbstractIndividual, GA} from "./ga";
 import {Cloneable} from "../clone";
 import {Comparable} from "../min-max";
-import {randomInt} from "../math";
+import {isCloseable, randomInt} from "../math";
 
 export type Options = {
     x: number[],
@@ -11,7 +11,7 @@ export type Options = {
     minValues: number[],
     maxValues: number[],
     maxIterations?: number,
-    errorTolerance?: number,
+    tolerance?: number,
     fitFunc: (...params: number[]) => (x: number) => number
 };
 
@@ -22,20 +22,24 @@ export type Parameter = {
     func: (x: number) => number
 };
 
-class ComparableNumber implements Cloneable, Comparable {
-    constructor(public value: number) {
+export const curveFit = ({x, y, minValues, maxValues, maxIterations = 100, tolerance = 0.001, fitFunc}: Options): Parameter => {
+
+    class ComparableNumber implements Cloneable, Comparable {
+        constructor(public value: number) {
+        }
+
+        compare(this: ComparableNumber, other: ComparableNumber): number {
+            if (this.value === other.value) {
+                return 0;
+            } else if (isCloseable(this.value, other.value, tolerance)) {
+                return 0;
+            } else return this.value < other.value ? -1 : 1;
+        }
+        clone(): ComparableNumber {
+            return new ComparableNumber(this.value);
+        }
     }
 
-    compare(this: ComparableNumber, other: ComparableNumber): number {
-        return this.value - other.value;
-    }
-
-    clone(): ComparableNumber {
-        return new ComparableNumber(this.value);
-    }
-}
-
-export const curveFit = ({x, y, minValues, maxValues, maxIterations = 100, errorTolerance = 0.001, fitFunc}: Options): Parameter => {
 
     class Individual extends AbstractIndividual<number[], ComparableNumber> {
 
@@ -82,15 +86,15 @@ export const curveFit = ({x, y, minValues, maxValues, maxIterations = 100, error
         return new Individual(data, undefined);
     };
 
-    const ga = new GA({individualCross, individualMutate, individualInit});
+    const ga = new GA({individualCross, individualMutate, individualInit, maxGenerationToStop: 50, popSize: 500});
     ga.generalSize = maxIterations;
     ga.initPops();
-    ga.start();
+    const trace = ga.start();
     return {
         values: ga.bestIndividual!.data,
         error: ga.bestIndividual!.fitness!.value,
-        iterations: maxIterations,
-        func: fitFunc(...ga.bestIndividual!.data)
+        iterations: trace.length,
+        func: fitFunc(...ga.bestIndividual!.data),
     }
 
 }
