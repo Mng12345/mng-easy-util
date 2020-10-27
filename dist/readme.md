@@ -25,5 +25,8 @@ see > ./lib/stream.test.ts
 see > ./lib/algorithm/merge-axis.test.ts
 
 #### func-util some util to statistic func call
-see > ./lib/func-util-test.ts
+see > ./lib/func-util.test.ts
+
+### file add async sleep
+see > ./lib/file.test.ts
 

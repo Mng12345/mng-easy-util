@@ -332,8 +332,10 @@ exports.correlation = correlation;
  * @return {number}
  */
 function r2(label, predictLabel) {
-    var residualSum = dotMultiply(dif(label, predictLabel), dif(label, predictLabel));
-    var labelMeanDifSum = dotMultiply(add(label, -mean(label)), add(label, -mean(label)));
-    return 1 - residualSum / labelMeanDifSum;
+    var r = add(predictLabel, -mean(label));
+    var m = add(label, -mean(label));
+    var residualSum = dotMultiply(r, r);
+    var labelMeanDifSum = dotMultiply(m, m);
+    return residualSum / labelMeanDifSum;
 }
 exports.r2 = r2;

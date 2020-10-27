@@ -299,7 +299,10 @@ export function correlation(a1: number[], a2: number[]): number {
  * @return {number}
  */
 export function r2(label: number[], predictLabel: number[]): number {
-    const residualSum = dotMultiply(dif(label, predictLabel), dif(label, predictLabel));
-    const labelMeanDifSum = dotMultiply(add(label, -mean(label)), add(label, -mean(label)));
-    return 1 - residualSum / labelMeanDifSum;
+    const r = add(predictLabel, -mean(label));
+    const m = add(label, -mean(label));
+    const residualSum = dotMultiply(r, r);
+    const labelMeanDifSum = dotMultiply(m, m);
+    return residualSum / labelMeanDifSum;
 }
+
