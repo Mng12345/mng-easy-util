@@ -38,3 +38,18 @@ test('filter & index', function () {
         .collect());
     expect(filteredSumByIndex).toBe(3);
 });
+test('filter & map & collect', function () {
+    var stream = stream_1.Stream.of(math_1.range(0, 10, 1));
+    var items = stream.filter(function (item) { return item > 3; })
+        .map(function (item) { return item * 2; })
+        .collect();
+    console.log("original: ", math_1.range(0, 10, 1));
+    console.log("items: ", items);
+    expect(items[0]).toBe(8);
+});
+test('filter', function () {
+    var stream = stream_1.Stream.of([0, 1, 2, 3, 4, 5, 6]);
+    var items = stream.filter(function (item) { return item > 3; }).collect();
+    console.log("items: ", items);
+    expect(items[0]).toBe(4);
+});

@@ -1,5 +1,5 @@
 import {Stream} from "./stream";
-import {sum} from "./math";
+import {range, sum} from "./math";
 
 test('stream constructor & collect', () => {
     const stream = Stream.of([1, 2, 3]);
@@ -39,4 +39,21 @@ test('filter & index', () => {
     const filteredSumByIndex = sum(stream.filter((item, index) => index! <= 1)
         .collect());
     expect(filteredSumByIndex).toBe(3);
+});
+
+test('filter & map & collect', () => {
+    let stream = Stream.of(range(0, 10, 1));
+    const items = stream.filter(item => item > 3)
+        .map(item => item * 2)
+        .collect();
+    console.log(`original: `, range(0, 10, 1));
+    console.log(`items: `, items);
+    expect(items[0]).toBe(8);
+});
+
+test('filter', () => {
+    let stream = Stream.of([0, 1, 2, 3, 4, 5, 6]);
+    const items = stream.filter(item => item > 3).collect();
+    console.log(`items: `, items);
+    expect(items[0]).toBe(4);
 })

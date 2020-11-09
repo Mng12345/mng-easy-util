@@ -13,7 +13,7 @@ var __values = (this && this.__values) || function(o) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Stream = void 0;
 function isArrayLike(data) {
-    return data.length && data[0];
+    return data.length;
 }
 var Stream = /** @class */ (function () {
     function Stream(data) {

@@ -1,6 +1,6 @@
 
 function isArrayLike(data: any): data is ArrayLike<any> {
-    return data.length && data[0];
+    return data.length;
 }
 
 export class Stream<T> {
