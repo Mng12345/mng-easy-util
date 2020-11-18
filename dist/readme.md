@@ -39,3 +39,6 @@ see > ./lib/object.test.ts
 ### Pointer the address pointer like other language like c/c++
 see > ./lib/pointer.test.ts
 
+### event communication between components for react and vue and others...
+see > ./lib/events.test.ts
+
