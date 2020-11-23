@@ -42,3 +42,6 @@ see > ./lib/pointer.test.ts
 ### event communication between components for react and vue and others...
 see > ./lib/events.test.ts
 
+### stringifyNoCircle 
+see > ./lib/json.test.ts
+
