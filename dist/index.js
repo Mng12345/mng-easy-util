@@ -19,7 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stream = exports.pointer = exports.object = exports.minMax = exports.math = exports.json = exports.hashset = exports.hashmap = exports.funcUtil = exports.file = exports.events = exports.clone = exports.algorithm = void 0;
+exports.asyncRunners = exports.stream = exports.pointer = exports.object = exports.minMax = exports.math = exports.json = exports.hashset = exports.hashmap = exports.funcUtil = exports.file = exports.events = exports.clone = exports.algorithm = void 0;
 var algorithm = __importStar(require("./algorithm"));
 exports.algorithm = algorithm;
 var clone = __importStar(require("./clone"));
@@ -46,3 +46,5 @@ var pointer = __importStar(require("./pointer"));
 exports.pointer = pointer;
 var stream = __importStar(require("./stream"));
 exports.stream = stream;
+var asyncRunners = __importStar(require("./async-runners"));
+exports.asyncRunners = asyncRunners;
