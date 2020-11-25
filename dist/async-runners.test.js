@@ -38,6 +38,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var async_runners_1 = require("./async-runners");
 var file_1 = require("./file");
+var stream_1 = require("./stream");
+var math_1 = require("./math");
 test('runBatch & getAvailableRunners', function () { return __awaiter(void 0, void 0, void 0, function () {
     var runners, timeStart, timeEnd, _a, _b;
     return __generator(this, function (_c) {
@@ -163,3 +165,34 @@ test('runBatch & getAvailableRunners', function () { return __awaiter(void 0, vo
         }
     });
 }); });
+test('runBatch', function () {
+    (function () { return __awaiter(void 0, void 0, void 0, function () {
+        var runners;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    runners = stream_1.Stream.of(math_1.range(0, 10, 1))
+                        .map(function (i) {
+                        return new async_runners_1.Runner(function () { return __awaiter(void 0, void 0, void 0, function () {
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        console.log("i: ", i);
+                                        return [4 /*yield*/, file_1.sleep(10)];
+                                    case 1:
+                                        _a.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); }, function () { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
+                            return [2 /*return*/];
+                        }); }); });
+                    }).collect();
+                    return [4 /*yield*/, async_runners_1.runBatch(2, runners)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); })().catch(function (err) { return console.log(err); });
+});

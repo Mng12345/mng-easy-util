@@ -164,7 +164,7 @@ exports.runBatch = function (batch, runners) { return __awaiter(void 0, void 0, 
             case 3:
                 batchResult = _a.sent();
                 runnerResults.push.apply(runnerResults, __spread(batchResult));
-                runnerBatch = [];
+                runnerBatch = [runners[i]];
                 _a.label = 4;
             case 4:
                 i++;

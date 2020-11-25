@@ -1,5 +1,7 @@
 import {getAvailableRunners, runBatch, Runner, RunnerI} from "./async-runners";
 import {sleep} from "./file";
+import {Stream} from "./stream";
+import {range} from "./math";
 
 test('runBatch & getAvailableRunners', async () => {
     const runners: RunnerI<void>[] = [
@@ -53,3 +55,16 @@ test('runBatch & getAvailableRunners', async () => {
         }
     })()).toBe(true);
 });
+
+test('runBatch', () => {
+    (async () => {
+        const runners = Stream.of(range(0, 10, 1))
+            .map(i => {
+                return new Runner(async () => {
+                    console.log(`i: `, i);
+                    await sleep(10);
+                }, async () => {})
+            }).collect();
+        await runBatch(2, runners);
+    })().catch(err => console.log(err));
+})

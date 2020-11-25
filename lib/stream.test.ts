@@ -1,5 +1,6 @@
 import {Stream} from "./stream";
 import {range, sum} from "./math";
+import {stringifyNoCircle} from "./json";
 
 test('stream constructor & collect', () => {
     const stream = Stream.of([1, 2, 3]);
@@ -56,4 +57,9 @@ test('filter', () => {
     const items = stream.filter(item => item > 3).collect();
     console.log(`items: `, items);
     expect(items[0]).toBe(4);
+})
+
+test('stream & range', () => {
+    const list = Stream.of(range(0, 20, 1)).map(i => i).collect();
+    console.log(`list: `, stringifyNoCircle(list));
 })

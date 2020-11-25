@@ -72,7 +72,7 @@ export const runBatch = async <T>(batch: number, runners: RunnerI<T>[]) => {
         } else {
             const batchResult = await Promise.all(runnerBatch.map(runner => runner.run()));
             runnerResults.push(...batchResult);
-            runnerBatch = [];
+            runnerBatch = [runners[i]];
         }
     }
     if (runnerBatch.length !== 0) {

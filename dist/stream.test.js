@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var stream_1 = require("./stream");
 var math_1 = require("./math");
+var json_1 = require("./json");
 test('stream constructor & collect', function () {
     var stream = stream_1.Stream.of([1, 2, 3]);
     var list = stream.collect();
@@ -52,4 +53,8 @@ test('filter', function () {
     var items = stream.filter(function (item) { return item > 3; }).collect();
     console.log("items: ", items);
     expect(items[0]).toBe(4);
+});
+test('stream & range', function () {
+    var list = stream_1.Stream.of(math_1.range(0, 20, 1)).map(function (i) { return i; }).collect();
+    console.log("list: ", json_1.stringifyNoCircle(list));
 });
