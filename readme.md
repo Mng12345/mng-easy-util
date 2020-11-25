@@ -45,3 +45,6 @@ see > ./lib/events.test.ts
 ### stringifyNoCircle 
 see > ./lib/json.test.ts
 
+### async runners
+see > ./lib/async-runners.test.ts
+
