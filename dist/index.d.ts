@@ -12,4 +12,5 @@ import * as object from './object';
 import * as pointer from './pointer';
 import * as stream from './stream';
 import * as asyncRunners from './async-runners';
-export { algorithm, clone, events, file, funcUtil, hashmap, hashset, json, math, minMax, object, pointer, stream, asyncRunners };
+import * as promise from './promise';
+export { algorithm, clone, events, file, funcUtil, hashmap, hashset, json, math, minMax, object, pointer, stream, asyncRunners, promise };

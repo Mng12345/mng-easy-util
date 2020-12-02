@@ -11,7 +11,8 @@ import * as minMax from './min-max';
 import * as object from './object';
 import * as pointer from './pointer';
 import * as stream from './stream';
-import * as asyncRunners from './async-runners'
+import * as asyncRunners from './async-runners';
+import * as promise from './promise';
 
 export {
     algorithm,
@@ -27,5 +28,6 @@ export {
     object,
     pointer,
     stream,
-    asyncRunners
+    asyncRunners,
+    promise
 }

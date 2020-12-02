@@ -48,3 +48,12 @@ see > ./lib/json.test.ts
 ### async runners
 see > ./lib/async-runners.test.ts
 
+### change promise to be a new promise with timeout
+see > ./lib/promise.test.ts
+
+### add algorithm LinkedNode
+see > ./lib/algorithm/linked.ts
+
+### add lru cache
+see > ./lib/algorithm/cache.lru.test.ts
+
