@@ -1,5 +1,5 @@
-import { Comparable } from "../min-max";
-import { Cloneable } from "../clone";
+import { Comparable } from '../min-max';
+import { Cloneable } from '../clone';
 export declare abstract class AbstractIndividual<TData, TFitness> implements Cloneable {
     data: TData;
     fitness: TFitness | undefined;

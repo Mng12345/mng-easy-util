@@ -23,9 +23,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var merge_axis_1 = require("./merge-axis");
 test('merge input string', function () {
     var lines1 = [
-        [['1', '2', '3'], [4, 5, 6]],
-        [['2', '3', '4'], [4.1, 5, 6.2]],
-        [['0', '1'], [3, 3.9]]
+        [
+            ['1', '2', '3'],
+            [4, 5, 6],
+        ],
+        [
+            ['2', '3', '4'],
+            [4.1, 5, 6.2],
+        ],
+        [
+            ['0', '1'],
+            [3, 3.9],
+        ],
     ];
     var mergedLines1 = merge_axis_1.merge.apply(void 0, __spread(lines1));
     var newXLine = mergedLines1[0];
@@ -48,9 +57,18 @@ test('merge input string', function () {
 });
 test('merge input number', function () {
     var lines1 = [
-        [[1, 2, 3], [4, 5, 6]],
-        [[2, 3, 4], [4.1, 5, 6.2]],
-        [[0, 1], [3, 3.9]]
+        [
+            [1, 2, 3],
+            [4, 5, 6],
+        ],
+        [
+            [2, 3, 4],
+            [4.1, 5, 6.2],
+        ],
+        [
+            [0, 1],
+            [3, 3.9],
+        ],
     ];
     var mergedLines1 = merge_axis_1.merge.apply(void 0, __spread(lines1));
     var newXLine = mergedLines1[0];

@@ -11,7 +11,7 @@ var HashMap = /** @class */ (function () {
         // store key and hashcode
         this.keyMap = new Map();
         this.hashCode = function (object) {
-            if (typeof object === "number" || typeof object === "string") {
+            if (typeof object === 'number' || typeof object === 'string') {
                 return object;
             }
             // force the object key must have hashCode method
@@ -28,7 +28,7 @@ var HashMap = /** @class */ (function () {
     HashMap.prototype.entries = function () {
         var keyIterator = this.keys();
         var valueIterator = this.values();
-        return new /** @class */ (function () {
+        return new (/** @class */ (function () {
             function class_1() {
             }
             class_1.prototype.next = function () {
@@ -36,14 +36,14 @@ var HashMap = /** @class */ (function () {
                 var valueItorVal = valueIterator.next();
                 return {
                     done: keyItorVal.done,
-                    value: [keyItorVal.value, valueItorVal.value]
+                    value: [keyItorVal.value, valueItorVal.value],
                 };
             };
             class_1.prototype[Symbol.iterator] = function () {
                 return this;
             };
             return class_1;
-        }());
+        }()))();
     };
     HashMap.prototype.keys = function () {
         return this.keyMap.values();

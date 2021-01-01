@@ -22,3 +22,8 @@ test('r2', function () {
     var r2a13 = math_1.r2(a1, a3);
     expect(r2a13 <= 1).toBe(true);
 });
+test('toBNumber', function () {
+    console.log(math_1.toBNumber(12, 4));
+    console.log(math_1.toBNumber(12, 8));
+    // console.log(toBNumber(12, 2))
+});

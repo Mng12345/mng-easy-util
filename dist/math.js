@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isCloseable = exports.r2 = exports.correlation = exports.covariance = exports.std = exports.variance = exports.dotMultiply = exports.range = exports.brokerage = exports.round = exports.normalize = exports.macd = exports.add = exports.multiply = exports.dif = exports.ema = exports.ma = exports.mean = exports.sum = exports.sample = exports.randomNIntNotRepeat = exports.randomInt = void 0;
+exports.toBNumber = exports.isCloseable = exports.r2 = exports.correlation = exports.covariance = exports.std = exports.variance = exports.dotMultiply = exports.range = exports.brokerage = exports.round = exports.normalize = exports.macd = exports.add = exports.multiply = exports.dif = exports.ema = exports.ma = exports.mean = exports.sum = exports.sample = exports.randomNIntNotRepeat = exports.randomInt = void 0;
 var lodash_1 = __importDefault(require("lodash"));
 /**
  * generate random int between [low, high)
@@ -63,7 +63,7 @@ exports.sample = sample;
  */
 function sum(data) {
     var e_1, _a;
-    var sumVal = 0.;
+    var sumVal = 0;
     try {
         for (var data_1 = __values(data), data_1_1 = data_1.next(); !data_1_1.done; data_1_1 = data_1.next()) {
             var item = data_1_1.value;
@@ -143,13 +143,13 @@ exports.dif = dif;
  */
 function multiply(data, v) {
     var res = [];
-    if (typeof v === "number") {
+    if (typeof v === 'number') {
         for (var i = 0; i < data.length; i++) {
             res[i] = data[i] * v;
         }
         return res;
     }
-    else if (v && v.length && typeof v[0] === "number") {
+    else if (v && v.length && typeof v[0] === 'number') {
         if (data.length !== v.length) {
             throw new Error("the length of data must equals to v");
         }
@@ -170,13 +170,13 @@ exports.multiply = multiply;
  */
 function add(data, v) {
     var res = [];
-    if (typeof v === "number") {
+    if (typeof v === 'number') {
         for (var i = 0; i < data.length; i++) {
             res[i] = data[i] + v;
         }
         return res;
     }
-    else if (v && v.length && typeof v[0] === "number") {
+    else if (v && v.length && typeof v[0] === 'number') {
         if (data.length !== v.length) {
             throw new Error("the length of data must equals to v");
         }
@@ -241,7 +241,7 @@ exports.round = round;
  */
 function brokerage(exchangeType, amount, price) {
     var transactions = price * amount;
-    var stamp = exchangeType === "sell" ? transactions * 0.001 : 0;
+    var stamp = exchangeType === 'sell' ? transactions * 0.001 : 0;
     var transfer = transactions * 0.00002;
     var brokerage = transactions * 0.0003 < 5 ? 5 : transactions * 0.0003;
     return stamp + transfer + brokerage;
@@ -350,4 +350,27 @@ exports.isCloseable = function (a, b, tolerance) {
     if (!tolerance)
         tolerance = 0.01;
     return Math.abs(a - b) < tolerance;
+};
+/**
+ * convert num to binary number
+ * @param {number} num
+ * @param {number} bitLen
+ * @return {number[]}
+ */
+exports.toBNumber = function (num, bitLen) {
+    var bNumArray = [];
+    var div = Math.abs(num);
+    while (true) {
+        var left_1 = div % 2;
+        div = (div - left_1) / 2;
+        bNumArray.push(left_1);
+        if (div === 0)
+            break;
+    }
+    if (bitLen < bNumArray.length)
+        throw new Error("the length of binary value of " + num + " is " + bNumArray.length + ", which is bigger than " + bitLen);
+    var left = bitLen - bNumArray.length;
+    for (var i = 0; i < left; i++)
+        bNumArray.push(0);
+    return bNumArray.reverse();
 };

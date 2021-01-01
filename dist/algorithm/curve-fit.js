@@ -36,28 +36,9 @@ var __spread = (this && this.__spread) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.curveFit = void 0;
 var ga_1 = require("./ga");
-var math_1 = require("../math");
+var min_max_1 = require("../min-max");
 exports.curveFit = function (_a) {
     var x = _a.x, y = _a.y, minValues = _a.minValues, maxValues = _a.maxValues, _b = _a.maxIterations, maxIterations = _b === void 0 ? 100 : _b, _c = _a.tolerance, tolerance = _c === void 0 ? 0.001 : _c, fitFunc = _a.fitFunc;
-    var ComparableNumber = /** @class */ (function () {
-        function ComparableNumber(value) {
-            this.value = value;
-        }
-        ComparableNumber.prototype.compare = function (other) {
-            if (this.value === other.value) {
-                return 0;
-            }
-            else if (math_1.isCloseable(this.value, other.value, tolerance)) {
-                return 0;
-            }
-            else
-                return this.value < other.value ? -1 : 1;
-        };
-        ComparableNumber.prototype.clone = function () {
-            return new ComparableNumber(this.value);
-        };
-        return ComparableNumber;
-    }());
     var Individual = /** @class */ (function (_super) {
         __extends(Individual, _super);
         function Individual() {
@@ -70,7 +51,7 @@ exports.curveFit = function (_a) {
                 var yPredictItem = func(x[i]);
                 err += Math.abs(y[i] - yPredictItem);
             }
-            this.fitness = new ComparableNumber(err);
+            this.fitness = new min_max_1.ComparableNumber(err, tolerance);
             return this.fitness;
         };
         Individual.prototype.clone = function () {
@@ -93,14 +74,21 @@ exports.curveFit = function (_a) {
         var mutatedIndex = Math.floor(Math.random() * minValues.length);
         if (Math.random() < 0.5) {
             // mutate down
-            newI.data[mutatedIndex] -= Math.random() * (newI.data[mutatedIndex] - minValues[mutatedIndex]) * 0.1;
+            newI.data[mutatedIndex] -=
+                Math.random() *
+                    (newI.data[mutatedIndex] - minValues[mutatedIndex]) *
+                    0.1;
         }
         else {
             // mutate up
-            newI.data[mutatedIndex] += Math.random() * (maxValues[mutatedIndex] - newI.data[mutatedIndex]) * 0.1;
+            newI.data[mutatedIndex] +=
+                Math.random() *
+                    (maxValues[mutatedIndex] - newI.data[mutatedIndex]) *
+                    0.1;
         }
-        newI.data[mutatedIndex] = Math.random() * (maxValues[mutatedIndex] - minValues[mutatedIndex])
-            + minValues[mutatedIndex];
+        newI.data[mutatedIndex] =
+            Math.random() * (maxValues[mutatedIndex] - minValues[mutatedIndex]) +
+                minValues[mutatedIndex];
         return newI;
     };
     var individualInit = function () {
@@ -110,7 +98,13 @@ exports.curveFit = function (_a) {
         }
         return new Individual(data, undefined);
     };
-    var ga = new ga_1.GA({ individualCross: individualCross, individualMutate: individualMutate, individualInit: individualInit, maxGenerationToStop: 100, popSize: 1000 });
+    var ga = new ga_1.GA({
+        individualCross: individualCross,
+        individualMutate: individualMutate,
+        individualInit: individualInit,
+        maxGenerationToStop: 100,
+        popSize: 1000,
+    });
     ga.generalSize = maxIterations;
     ga.initPops();
     var trace = ga.start();

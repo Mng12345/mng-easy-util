@@ -19,7 +19,7 @@ var Stream = /** @class */ (function () {
     function Stream(data) {
         if (isArrayLike(data)) {
             var index_1 = 0;
-            this.iterator = new /** @class */ (function () {
+            this.iterator = new (/** @class */ (function () {
                 function class_1() {
                 }
                 class_1.prototype.next = function () {
@@ -28,13 +28,13 @@ var Stream = /** @class */ (function () {
                         index_1++;
                         return {
                             done: false,
-                            value: value
+                            value: value,
                         };
                     }
                     else {
                         return {
                             done: true,
-                            value: value
+                            value: value,
                         };
                     }
                 };
@@ -42,7 +42,7 @@ var Stream = /** @class */ (function () {
                     return this;
                 };
                 return class_1;
-            }());
+            }()))();
         }
         else {
             this.iterator = data;
@@ -71,7 +71,7 @@ var Stream = /** @class */ (function () {
     Stream.prototype.map = function (callback) {
         var index = 0;
         var outThis = this;
-        var itor = new /** @class */ (function () {
+        var itor = new (/** @class */ (function () {
             function class_2() {
             }
             class_2.prototype[Symbol.iterator] = function () {
@@ -85,17 +85,17 @@ var Stream = /** @class */ (function () {
                 }
                 return {
                     done: value.done,
-                    value: res
+                    value: res,
                 };
             };
             return class_2;
-        }());
+        }()))();
         return new Stream(itor);
     };
     Stream.prototype.filter = function (callback) {
         var index = 0;
         var outThis = this;
-        var itor = new /** @class */ (function () {
+        var itor = new (/** @class */ (function () {
             function class_3() {
             }
             class_3.prototype[Symbol.iterator] = function () {
@@ -122,7 +122,7 @@ var Stream = /** @class */ (function () {
                 return valueFiltered;
             };
             return class_3;
-        }());
+        }()))();
         return new Stream(itor);
     };
     Stream.prototype.collect = function () {

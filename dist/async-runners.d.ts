@@ -7,7 +7,7 @@ export interface RunnerI<T> {
 export declare class Runner<T> implements RunnerI<T> {
     runHook: () => Promise<T>;
     initHook: () => Promise<void>;
-    status: "pending" | "done" | "reject" | "init";
+    status: 'pending' | 'done' | 'reject' | 'init';
     constructor(runHook: () => Promise<T>, initHook: () => Promise<void>);
     run(...args: any[]): Promise<T>;
     init(): Promise<void>;

@@ -13,21 +13,21 @@ var HashSet = /** @class */ (function () {
     };
     HashSet.prototype.entries = function () {
         var valueIterator = this.hashCodeObjMap.values();
-        return new /** @class */ (function () {
+        return new (/** @class */ (function () {
             function class_1() {
             }
             class_1.prototype.next = function () {
                 var value = valueIterator.next();
                 return {
                     done: value.done,
-                    value: [value.value, value.value]
+                    value: [value.value, value.value],
                 };
             };
             class_1.prototype[Symbol.iterator] = function () {
                 return this;
             };
             return class_1;
-        }());
+        }()))();
     };
     HashSet.prototype.keys = function () {
         return this.hashCodeObjMap.values();

@@ -1,4 +1,4 @@
-import { LinkedNode } from "./linked";
+import { LinkedNode } from './linked';
 declare type Entry<K, V> = {
     key: K;
     value: V;

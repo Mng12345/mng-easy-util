@@ -1,111 +1,114 @@
 export type basic = number | string
 
 export interface HashCode {
-    hashCode(): string;
+  hashCode(): string
 }
 
-export type Key = basic | HashCode;
+export type Key = basic | HashCode
 
 export function isBasic(obj: any): obj is basic {
-    return typeof obj === 'string' || typeof obj === 'number';
+  return typeof obj === 'string' || typeof obj === 'number'
 }
 
-export class HashMap<K extends Key, V> implements Map<K, V>{
+export class HashMap<K extends Key, V> implements Map<K, V> {
+  private map: Map<basic, V> = new Map()
+  // store key and hashcode
+  private keyMap: Map<basic, K> = new Map()
 
-    private map: Map<basic, V> = new Map();
-    // store key and hashcode
-    private keyMap: Map<basic, K> = new Map();
+  private readonly hashCode: (object: K) => basic = (object) => {
+    if (typeof object === 'number' || typeof object === 'string') {
+      return object
+    }
+    // force the object key must have hashCode method
+    if ((object as HashCode).hashCode === undefined) {
+      throw new Error(
+        `if the type of key is object, it must have hashCode method`
+      )
+    }
+    return (object as HashCode).hashCode()
+  }
 
-    private readonly hashCode: (object: K) => basic = object => {
-        if (typeof object === "number" || typeof object === "string") {
-            return object;
+  constructor() {
+    this.size = this.map.size
+  }
+
+  [Symbol.iterator](): IterableIterator<[K, V]> {
+    return this.entries()
+  }
+
+  entries(): IterableIterator<[K, V]> {
+    const keyIterator = this.keys()
+    const valueIterator = this.values()
+    return new (class implements IterableIterator<[K, V]> {
+      next(): IteratorResult<[K, V], any> {
+        const keyItorVal = keyIterator.next()
+        const valueItorVal = valueIterator.next()
+        return {
+          done: keyItorVal.done,
+          value: [keyItorVal.value, valueItorVal.value],
         }
-        // force the object key must have hashCode method
-        if ((object as HashCode).hashCode === undefined) {
-            throw new Error(`if the type of key is object, it must have hashCode method`);
-        }
-        return (object as HashCode).hashCode();
-    }
+      }
 
-    constructor() {
-        this.size = this.map.size;
-    }
+      [Symbol.iterator](): IterableIterator<[K, V]> {
+        return this
+      }
+    })()
+  }
 
-    [Symbol.iterator](): IterableIterator<[K, V]> {
-        return this.entries();
-    }
+  keys(): IterableIterator<K> {
+    return this.keyMap.values()
+  }
 
-    entries (): IterableIterator<[K, V]> {
-        const keyIterator = this.keys();
-        const valueIterator = this.values();
-        return new class implements IterableIterator<[K, V]> {
-            next(): IteratorResult<[K, V], any> {
-                const keyItorVal = keyIterator.next();
-                const valueItorVal = valueIterator.next();
-                return {
-                    done: keyItorVal.done,
-                    value: [keyItorVal.value, valueItorVal.value]
-                };
-            }
-            [Symbol.iterator](): IterableIterator<[K, V]> {
-                return this;
-            }
-        }
-    }
+  values(): IterableIterator<V> {
+    return this.map.values()
+  }
 
-    keys(): IterableIterator<K> {
-        return this.keyMap.values();
-    }
+  [Symbol.toStringTag]: string
 
-    values(): IterableIterator<V> {
-        return this.map.values();
-    }
+  size: number
 
-    [Symbol.toStringTag]: string;
+  clear(): void {
+    this.keyMap.clear()
+    this.map.clear()
+    this.size = this.map.size
+  }
 
-    size: number;
+  delete(key: K): boolean {
+    const hashCode = this.hashCode(key)
+    this.keyMap.delete(hashCode)
+    const deleteFlag = this.map.delete(this.hashCode(key))
+    this.size = this.map.size
+    return deleteFlag
+  }
 
-    clear(): void {
-        this.keyMap.clear();
-        this.map.clear();
-        this.size = this.map.size;
-    }
+  forEach(
+    callbackfn: (value: V, key: K, map: Map<K, V>) => void,
+    thisArg?: any
+  ): void {
+    this.map.forEach((value1, key1, map1) => {
+      // get key
+      const originalKey = this.keyMap.get(key1)
+      if (typeof originalKey === undefined) {
+        throw new Error(`can not find key ${key1} in HashMap's map`)
+      }
+      callbackfn(value1, originalKey!, (this as unknown) as Map<K, V>)
+    })
+  }
 
-    delete(key: K): boolean {
-        const hashCode = this.hashCode(key);
-        this.keyMap.delete(hashCode);
-        const deleteFlag = this.map.delete(this.hashCode(key));
-        this.size = this.map.size;
-        return deleteFlag;
-    }
+  get(key: K): V | undefined {
+    return this.map.get(this.hashCode(key))
+  }
 
-    forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void {
-        this.map.forEach((value1, key1, map1) => {
-            // get key
-            const originalKey = this.keyMap.get(key1);
-            if (typeof originalKey === undefined) {
-                throw new Error(`can not find key ${key1} in HashMap's map`);
-            }
-            callbackfn(value1, originalKey!, this as unknown as Map<K, V>);
-        })
-    }
+  has(key: K): boolean {
+    const hashCode = this.hashCode(key)
+    return this.keyMap.has(hashCode)
+  }
 
-    get(key: K): V | undefined{
-        return this.map.get(this.hashCode(key))
-    }
-
-    has(key: K): boolean {
-        const hashCode = this.hashCode(key);
-        return this.keyMap.has(hashCode);
-    }
-
-    set(key: K, value: V): this {
-        const hashCode = this.hashCode(key);
-        this.keyMap.set(hashCode, key);
-        this.map.set(hashCode, value);
-        this.size = this.map.size;
-        return this;
-    }
-
+  set(key: K, value: V): this {
+    const hashCode = this.hashCode(key)
+    this.keyMap.set(hashCode, key)
+    this.map.set(hashCode, value)
+    this.size = this.map.size
+    return this
+  }
 }
-

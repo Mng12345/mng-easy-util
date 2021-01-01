@@ -63,8 +63,7 @@ test('Symbol.iterator', function () {
 test('entries', function () {
     var e_2, _a;
     var map = new hashmap_1.HashMap();
-    map.set(1, 2)
-        .set(2, 3);
+    map.set(1, 2).set(2, 3);
     var keySum = 0;
     var valSum = 0;
     try {
@@ -142,10 +141,10 @@ test('forEach', function () {
     var map = new hashmap_1.HashMap();
     map.set(1, 2);
     map.set(2, 3);
-    map.forEach((function (value, key, map) {
+    map.forEach(function (value, key, map) {
         expect(value === 2 || value === 3).toBe(true);
         expect(key === 1 || key === 2).toBe(true);
-    }));
+    });
 });
 test('has', function () {
     var map = new hashmap_1.HashMap();

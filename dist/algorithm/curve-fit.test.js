@@ -28,14 +28,16 @@ test('linear curve fit', function () {
     };
     var y = x.map(function (item) { return fitFunc(2, 1)(item); });
     var params = curve_fit_1.curveFit({
-        x: x, y: y,
+        x: x,
+        y: y,
         minValues: [-1, -1],
         maxValues: [4, 4],
         fitFunc: fitFunc,
         maxIterations: 500,
-        tolerance: 0.2
+        tolerance: 0.2,
     });
     var yPredict = x.map(function (item) { return params.func(item); });
     console.log("y: " + JSON.stringify(y) + "\npredict: " + JSON.stringify(yPredict) + "\nparams: " + JSON.stringify(params));
-    expect(math.isCloseable(params.values[0], 2, 0.1) && math.isCloseable(params.values[1], 1, 0.1)).toBe(true);
+    expect(math.isCloseable(params.values[0], 2, 0.1) &&
+        math.isCloseable(params.values[1], 1, 0.1)).toBe(true);
 });

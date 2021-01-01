@@ -26,7 +26,9 @@ var Lru = /** @class */ (function () {
         }
         var keyStr = this.keyExtractor(key);
         var node = new linked_1.LinkedNode({
-            key: key, value: value, keyStr: keyStr
+            key: key,
+            value: value,
+            keyStr: keyStr,
         });
         if (this.headNode === undefined || this.tailNode === undefined) {
             this.headNode = node;

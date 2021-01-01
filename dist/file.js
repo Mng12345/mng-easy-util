@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sleep = void 0;
+exports.download = exports.sleep = void 0;
 /**
  * async sleep
  * @param {number} timeout
@@ -52,3 +52,16 @@ exports.sleep = function (timeout) { return __awaiter(void 0, void 0, void 0, fu
             })];
     });
 }); };
+/**
+ * download file which is Uint8Array
+ * @param {Uint8Array[]} data
+ * @param {string} filename
+ * @param {string} type
+ */
+exports.download = function (data, filename, type) {
+    var file = new Blob(data.map(function (item) { return item.buffer; }), { type: type });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(file);
+    a.download = filename;
+    a.dispatchEvent(new MouseEvent('click'));
+};

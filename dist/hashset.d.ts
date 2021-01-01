@@ -1,4 +1,4 @@
-import { basic, Key } from "./hashmap";
+import { basic, Key } from './hashmap';
 export declare class HashSet<K extends Key> implements Set<K> {
     private hashCodeSet;
     private hashCodeObjMap;

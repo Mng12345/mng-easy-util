@@ -95,7 +95,7 @@ test('runBatch & getAvailableRunners', function () { return __awaiter(void 0, vo
                         });
                     }); }, function () { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
                         return [2 /*return*/];
-                    }); }); })
+                    }); }); }),
                 ];
                 timeStart = new Date().getTime();
                 return [4 /*yield*/, async_runners_1.runBatch(2, runners)];
@@ -105,7 +105,9 @@ test('runBatch & getAvailableRunners', function () { return __awaiter(void 0, vo
                 console.log("time use: " + (timeEnd - timeStart));
                 expect(timeEnd - timeStart < 5000).toBe(true);
                 // restore the status of all runners
-                return [4 /*yield*/, Promise.all(runners.map(function (runner) { return runner.init(); }))];
+                return [4 /*yield*/, Promise.all(runners.map(function (runner) { return runner.init(); }))
+                    // let the runner run at least 2 seconds
+                ];
             case 2:
                 // restore the status of all runners
                 _c.sent();
@@ -166,6 +168,7 @@ test('runBatch & getAvailableRunners', function () { return __awaiter(void 0, vo
     });
 }); });
 test('runBatch', function () {
+    ;
     (function () { return __awaiter(void 0, void 0, void 0, function () {
         var runners;
         return __generator(this, function (_a) {
@@ -187,7 +190,8 @@ test('runBatch', function () {
                         }); }, function () { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
                             return [2 /*return*/];
                         }); }); });
-                    }).collect();
+                    })
+                        .collect();
                     return [4 /*yield*/, async_runners_1.runBatch(2, runners)];
                 case 1:
                     _a.sent();

@@ -4,7 +4,7 @@ var json_1 = require("./json");
 test('stringify', function () {
     var a = {
         x: 1,
-        obj: undefined
+        obj: undefined,
     };
     a.obj = a;
     try {

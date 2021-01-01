@@ -41,6 +41,7 @@ exports.withTimeout = void 0;
 exports.withTimeout = function (promise, timeout) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         return [2 /*return*/, new Promise(function (resolve, reject) {
+                ;
                 (function () { return __awaiter(void 0, void 0, void 0, function () {
                     var timer, t;
                     return __generator(this, function (_a) {

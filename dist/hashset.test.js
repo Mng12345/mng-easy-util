@@ -18,7 +18,7 @@ test('entries', function () {
     set.add(1).add(2);
     expect((function () {
         var e_1, _a;
-        var sum = 0.;
+        var sum = 0;
         try {
             for (var set_1 = __values(set), set_1_1 = set_1.next(); !set_1_1.done; set_1_1 = set_1.next()) {
                 var item = set_1_1.value;
@@ -53,7 +53,7 @@ test('keys & values', function () {
     set.add(1).add(2);
     expect((function () {
         var e_2, _a;
-        var sum = 0.;
+        var sum = 0;
         try {
             for (var set_2 = __values(set), set_2_1 = set_2.next(); !set_2_1.done; set_2_1 = set_2.next()) {
                 var item = set_2_1.value;

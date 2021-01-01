@@ -1,4 +1,4 @@
-import lodash from "lodash";
+import lodash from 'lodash'
 
 /**
  * generate random int between [low, high)
@@ -6,7 +6,7 @@ import lodash from "lodash";
  * @param high
  */
 export function randomInt(low: number, high: number) {
-    return Math.floor((high - low) * Math.random()) + low;
+  return Math.floor((high - low) * Math.random()) + low
 }
 
 /**
@@ -15,16 +15,20 @@ export function randomInt(low: number, high: number) {
  * @param high
  * @param n
  */
-export function randomNIntNotRepeat(low: number, high: number, n: number): number[] {
-    const nums: {[index: number]: undefined} = {};
-    while (true) {
-        const index = randomInt(low, high);
-        nums[index] = undefined;
-        if (Object.keys(nums).length >= n) {
-            break;
-        }
+export function randomNIntNotRepeat(
+  low: number,
+  high: number,
+  n: number
+): number[] {
+  const nums: { [index: number]: undefined } = {}
+  while (true) {
+    const index = randomInt(low, high)
+    nums[index] = undefined
+    if (Object.keys(nums).length >= n) {
+      break
     }
-    return Object.keys(nums).map(item => parseInt(item));
+  }
+  return Object.keys(nums).map((item) => parseInt(item))
 }
 
 /**
@@ -33,12 +37,12 @@ export function randomNIntNotRepeat(low: number, high: number, n: number): numbe
  * @param n
  */
 export function sample<T>(data: T[], n: number): T[] {
-    const res: T[] = [];
-    const len = data.length;
-    for (let i=0; i<n; i++) {
-        res[i] = data[randomInt(0, len)];
-    }
-    return res;
+  const res: T[] = []
+  const len = data.length
+  for (let i = 0; i < n; i++) {
+    res[i] = data[randomInt(0, len)]
+  }
+  return res
 }
 
 /**
@@ -46,11 +50,11 @@ export function sample<T>(data: T[], n: number): T[] {
  * @param data
  */
 export function sum(data: number[]): number {
-    let sumVal = 0.;
-    for (let item of data) {
-        sumVal += item;
-    }
-    return sumVal;
+  let sumVal = 0
+  for (let item of data) {
+    sumVal += item
+  }
+  return sumVal
 }
 
 /**
@@ -58,7 +62,7 @@ export function sum(data: number[]): number {
  * @param data
  */
 export function mean(data: number[]) {
-    return sum(data) / data.length;
+  return sum(data) / data.length
 }
 
 /**
@@ -67,15 +71,15 @@ export function mean(data: number[]) {
  * @param n
  */
 export function ma(data: number[], n: number) {
-    let sumVal = sum(data.slice(0, n));
-    const res: number[] = [sumVal / n];
-    const len = data.length;
-    let index = 0;
-    for (let i=n; i<len; i++) {
-        sumVal += data[i] - data[i-n];
-        res[++index] = sumVal / n;
-    }
-    return res;
+  let sumVal = sum(data.slice(0, n))
+  const res: number[] = [sumVal / n]
+  const len = data.length
+  let index = 0
+  for (let i = n; i < len; i++) {
+    sumVal += data[i] - data[i - n]
+    res[++index] = sumVal / n
+  }
+  return res
 }
 
 /**
@@ -84,13 +88,13 @@ export function ma(data: number[], n: number) {
  * @param n
  */
 export function ema(data: number[], n: number) {
-    const res: number[] = [];
-    res[0] = data[0];
-    const len = data.length;
-    for (let i=1; i<len; i++) {
-        res[i] = (2 / (n + 1)) * data[i] + ((n - 1) / (n + 1)) * res[i-1];
-    }
-    return res;
+  const res: number[] = []
+  res[0] = data[0]
+  const len = data.length
+  for (let i = 1; i < len; i++) {
+    res[i] = (2 / (n + 1)) * data[i] + ((n - 1) / (n + 1)) * res[i - 1]
+  }
+  return res
 }
 
 /**
@@ -99,14 +103,14 @@ export function ema(data: number[], n: number) {
  * @param d2
  */
 export function dif(d1: number[], d2: number[]): number[] {
-    if (d1.length !== d2.length) {
-        throw new Error(`the length of d1 must equals to d2`);
-    }
-    const res: number[] = [];
-    for (let i=0; i<d1.length; i++) {
-        res[i] = d1[i] - d2[i];
-    }
-    return res;
+  if (d1.length !== d2.length) {
+    throw new Error(`the length of d1 must equals to d2`)
+  }
+  const res: number[] = []
+  for (let i = 0; i < d1.length; i++) {
+    res[i] = d1[i] - d2[i]
+  }
+  return res
 }
 
 /**
@@ -114,24 +118,24 @@ export function dif(d1: number[], d2: number[]): number[] {
  * @param data
  * @param v
  */
-export function multiply(data: number[], v: number|number[]): number[] {
-    const res: number[] = [];
-    if (typeof v === "number") {
-        for (let i=0; i<data.length; i++) {
-            res[i] = data[i] * v;
-        }
-        return res;
-    } else if (v && v.length && typeof v[0] === "number") {
-        if (data.length !== v.length) {
-            throw new Error(`the length of data must equals to v`)
-        }
-        for (let i=0; i<data.length; i++) {
-            res[i] = data[i] * v[i];
-        }
-        return res;
-    } else {
-        throw Error(`typeof v must be number|number[]`);
+export function multiply(data: number[], v: number | number[]): number[] {
+  const res: number[] = []
+  if (typeof v === 'number') {
+    for (let i = 0; i < data.length; i++) {
+      res[i] = data[i] * v
     }
+    return res
+  } else if (v && v.length && typeof v[0] === 'number') {
+    if (data.length !== v.length) {
+      throw new Error(`the length of data must equals to v`)
+    }
+    for (let i = 0; i < data.length; i++) {
+      res[i] = data[i] * v[i]
+    }
+    return res
+  } else {
+    throw Error(`typeof v must be number|number[]`)
+  }
 }
 
 /**
@@ -139,24 +143,24 @@ export function multiply(data: number[], v: number|number[]): number[] {
  * @param data
  * @param v
  */
-export function add(data: number[], v: number|number[]): number[] {
-    const res: number[] = [];
-    if (typeof v === "number") {
-        for (let i=0; i<data.length; i++) {
-            res[i] = data[i] + v;
-        }
-        return res;
-    } else if (v && v.length && typeof v[0] === "number") {
-        if (data.length !== v.length) {
-            throw new Error(`the length of data must equals to v`);
-        }
-        for (let i=0; i<data.length; i++) {
-            res[i] = data[i] + v[i];
-        }
-        return res;
-    } else {
-        throw new Error(`typeof v must be number|number[]`);
+export function add(data: number[], v: number | number[]): number[] {
+  const res: number[] = []
+  if (typeof v === 'number') {
+    for (let i = 0; i < data.length; i++) {
+      res[i] = data[i] + v
     }
+    return res
+  } else if (v && v.length && typeof v[0] === 'number') {
+    if (data.length !== v.length) {
+      throw new Error(`the length of data must equals to v`)
+    }
+    for (let i = 0; i < data.length; i++) {
+      res[i] = data[i] + v[i]
+    }
+    return res
+  } else {
+    throw new Error(`typeof v must be number|number[]`)
+  }
 }
 
 /**
@@ -166,12 +170,17 @@ export function add(data: number[], v: number|number[]): number[] {
  * @param nLong
  * @param nDif
  */
-export function macd(data: number[], nShort: number, nLong: number, nDif: number): number[] {
-    const emaShort = ema(data, nShort);
-    const emaLong = ema(data, nLong);
-    const difSL = dif(emaShort, emaLong);
-    const dea = ema(difSL, nDif);
-    return multiply(dif(difSL, dea), 2);
+export function macd(
+  data: number[],
+  nShort: number,
+  nLong: number,
+  nDif: number
+): number[] {
+  const emaShort = ema(data, nShort)
+  const emaLong = ema(data, nLong)
+  const difSL = dif(emaShort, emaLong)
+  const dea = ema(difSL, nDif)
+  return multiply(dif(difSL, dea), 2)
 }
 
 /**
@@ -181,15 +190,15 @@ export function macd(data: number[], nShort: number, nLong: number, nDif: number
  * @param high
  */
 export function normalize(data: number[], low: number, high: number): number[] {
-    const minVal = lodash.min(data)!;
-    const maxVal = lodash.max(data)!;
-    const width = maxVal - minVal;
-    const widthTransform = high - low;
-    const res: number[] = [];
-    for (let i=0; i<data.length; i++) {
-        res[i] = ((data[i] - minVal) / width) * widthTransform + low;
-    }
-    return res;
+  const minVal = lodash.min(data)!
+  const maxVal = lodash.max(data)!
+  const width = maxVal - minVal
+  const widthTransform = high - low
+  const res: number[] = []
+  for (let i = 0; i < data.length; i++) {
+    res[i] = ((data[i] - minVal) / width) * widthTransform + low
+  }
+  return res
 }
 
 /**
@@ -198,8 +207,8 @@ export function normalize(data: number[], low: number, high: number): number[] {
  * @param n
  */
 export function round(data: number, n: number): number {
-    const times = Math.pow(10, n);
-    return Math.round(data * times) / times;
+  const times = Math.pow(10, n)
+  return Math.round(data * times) / times
 }
 
 /**
@@ -208,12 +217,16 @@ export function round(data: number, n: number): number {
  * @param amount
  * @param price
  */
-export function brokerage(exchangeType: "buy"|"sell", amount: number, price: number): number {
-    const transactions = price * amount;
-    const stamp = exchangeType === "sell" ? transactions * 0.001 : 0;
-    const transfer = transactions * 0.00002;
-    const brokerage = transactions * 0.0003 < 5 ? 5 : transactions * 0.0003;
-    return stamp + transfer + brokerage;
+export function brokerage(
+  exchangeType: 'buy' | 'sell',
+  amount: number,
+  price: number
+): number {
+  const transactions = price * amount
+  const stamp = exchangeType === 'sell' ? transactions * 0.001 : 0
+  const transfer = transactions * 0.00002
+  const brokerage = transactions * 0.0003 < 5 ? 5 : transactions * 0.0003
+  return stamp + transfer + brokerage
 }
 
 /**
@@ -223,11 +236,11 @@ export function brokerage(exchangeType: "buy"|"sell", amount: number, price: num
  * @param step
  */
 export function range(start: number, end: number, step: number) {
-    const res: number[] = [];
-    for (let i=start; i<end; i+=step) {
-        res.push(i);
-    }
-    return res;
+  const res: number[] = []
+  for (let i = start; i < end; i += step) {
+    res.push(i)
+  }
+  return res
 }
 
 /**
@@ -237,13 +250,12 @@ export function range(start: number, end: number, step: number) {
  * @return {number}
  */
 export function dotMultiply(a1: number[], a2: number[]): number {
-    let res= 0;
-    if (a1.length !== a2.length) {
-        throw new Error(`the length of a1 and d2 must be equal`);
-    }
-    for (let i=0; i<a1.length; i++)
-        res += a1[i] * a2[i];
-    return res;
+  let res = 0
+  if (a1.length !== a2.length) {
+    throw new Error(`the length of a1 and d2 must be equal`)
+  }
+  for (let i = 0; i < a1.length; i++) res += a1[i] * a2[i]
+  return res
 }
 
 /**
@@ -252,9 +264,9 @@ export function dotMultiply(a1: number[], a2: number[]): number {
  * @return {number}
  */
 export function variance(data: number[]): number {
-    const meanVal = mean(data);
-    const dif = add(data, -meanVal);
-    return dotMultiply(dif, dif) / (data.length - 1);
+  const meanVal = mean(data)
+  const dif = add(data, -meanVal)
+  return dotMultiply(dif, dif) / (data.length - 1)
 }
 
 /**
@@ -263,7 +275,7 @@ export function variance(data: number[]): number {
  * @return {number}
  */
 export function std(data: number[]): number {
-    return Math.sqrt(variance(data));
+  return Math.sqrt(variance(data))
 }
 
 /**
@@ -273,9 +285,9 @@ export function std(data: number[]): number {
  * @return {number}
  */
 export function covariance(a1: number[], a2: number[]): number {
-    if (a1.length !== a2.length)
-        throw new Error(`the length of a1 and a2 must be equal`);
-    return dotMultiply(add(a1, -mean(a1)), add(a2, -mean(a2))) / (a1.length - 1);
+  if (a1.length !== a2.length)
+    throw new Error(`the length of a1 and a2 must be equal`)
+  return dotMultiply(add(a1, -mean(a1)), add(a2, -mean(a2))) / (a1.length - 1)
 }
 
 /**
@@ -285,11 +297,11 @@ export function covariance(a1: number[], a2: number[]): number {
  * @return {number}
  */
 export function correlation(a1: number[], a2: number[]): number {
-    const std1 = std(a1);
-    const std2 = std(a2);
-    if (std1 > 0 && std2 > 0) {
-        return covariance(a1, a2) / (std1 * std2);
-    } else return 0;
+  const std1 = std(a1)
+  const std2 = std(a2)
+  if (std1 > 0 && std2 > 0) {
+    return covariance(a1, a2) / (std1 * std2)
+  } else return 0
 }
 
 /**
@@ -299,11 +311,11 @@ export function correlation(a1: number[], a2: number[]): number {
  * @return {number}
  */
 export function r2(label: number[], predictLabel: number[]): number {
-    const r = dif(predictLabel, label);
-    const m = add(label, -mean(label));
-    const residualSum = dotMultiply(r, r);
-    const labelMeanDifSum = dotMultiply(m, m);
-    return 1 - residualSum / labelMeanDifSum;
+  const r = dif(predictLabel, label)
+  const m = add(label, -mean(label))
+  const residualSum = dotMultiply(r, r)
+  const labelMeanDifSum = dotMultiply(m, m)
+  return 1 - residualSum / labelMeanDifSum
 }
 
 /**
@@ -314,9 +326,30 @@ export function r2(label: number[], predictLabel: number[]): number {
  * @return {boolean}
  */
 export const isCloseable = (a: number, b: number, tolerance?: number) => {
-    if (!tolerance)
-        tolerance = 0.01;
-    return Math.abs(a - b) < tolerance;
-};
+  if (!tolerance) tolerance = 0.01
+  return Math.abs(a - b) < tolerance
+}
 
-
+/**
+ * convert num to binary number
+ * @param {number} num
+ * @param {number} bitLen
+ * @return {number[]}
+ */
+export const toBNumber = (num: number, bitLen: number): number[] => {
+  const bNumArray = []
+  let div = Math.abs(num)
+  while (true) {
+    const left = div % 2
+    div = (div - left) / 2
+    bNumArray.push(left)
+    if (div === 0) break
+  }
+  if (bitLen < bNumArray.length)
+    throw new Error(
+      `the length of binary value of ${num} is ${bNumArray.length}, which is bigger than ${bitLen}`
+    )
+  const left = bitLen - bNumArray.length
+  for (let i = 0; i < left; i++) bNumArray.push(0)
+  return bNumArray.reverse()
+}

@@ -84,7 +84,7 @@ export declare function round(data: number, n: number): number;
  * @param amount
  * @param price
  */
-export declare function brokerage(exchangeType: "buy" | "sell", amount: number, price: number): number;
+export declare function brokerage(exchangeType: 'buy' | 'sell', amount: number, price: number): number;
 /**
  * return the range between [start, end) with step
  * @param start
@@ -140,3 +140,10 @@ export declare function r2(label: number[], predictLabel: number[]): number;
  * @return {boolean}
  */
 export declare const isCloseable: (a: number, b: number, tolerance?: number | undefined) => boolean;
+/**
+ * convert num to binary number
+ * @param {number} num
+ * @param {number} bitLen
+ * @return {number[]}
+ */
+export declare const toBNumber: (num: number, bitLen: number) => number[];

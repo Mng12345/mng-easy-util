@@ -24,7 +24,11 @@ function isSingleMergeStringInput(lines) {
     try {
         for (var lines_1 = __values(lines), lines_1_1 = lines_1.next(); !lines_1_1.done; lines_1_1 = lines_1.next()) {
             var line = lines_1_1.value;
-            if (!(line.length && line.length === 2 && line[0].length && line[0].length >= 1 && typeof line[0][0] === 'string')) {
+            if (!(line.length &&
+                line.length === 2 &&
+                line[0].length &&
+                line[0].length >= 1 &&
+                typeof line[0][0] === 'string')) {
                 flag = false;
                 break;
             }
@@ -45,7 +49,11 @@ function isSingleMergeNumberInput(lines) {
     try {
         for (var lines_2 = __values(lines), lines_2_1 = lines_2.next(); !lines_2_1.done; lines_2_1 = lines_2.next()) {
             var line = lines_2_1.value;
-            if (!(line.length && line.length === 2 && line[0].length && line[0].length >= 1 && typeof line[0][0] === 'number')) {
+            if (!(line.length &&
+                line.length === 2 &&
+                line[0].length &&
+                line[0].length >= 1 &&
+                typeof line[0][0] === 'number')) {
                 flag = false;
                 break;
             }
