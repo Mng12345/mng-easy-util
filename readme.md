@@ -53,7 +53,7 @@ see > ./lib/object.test.ts
 
 see > ./lib/pointer.test.ts
 
-### event communication between components for react and vue and others...
+### event communication between components for react and vue and others..., add fireAsync for async handlers
 
 see > ./lib/events.test.ts
 

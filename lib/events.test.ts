@@ -1,4 +1,5 @@
 import { Observer } from './events'
+import { sleep } from './file'
 
 test('on & fire', () => {
   const observer = new Observer()
@@ -18,3 +19,29 @@ test('on & fire', () => {
   observer.fire('event2')
   observer.fire('event2', 'a', 'b', 'c')
 })
+
+test('fire & fireAsync', async () => {
+  const observer = new Observer()
+  observer.on('fire async and sync events', () => {
+    console.log(`fire sync event1`)
+  })
+  observer.on('fire async and sync events', () => {
+    console.log(`fire sync event2`)
+  })
+  observer.on('fire async and sync events', async () => {
+    await sleep(1000)
+    console.log(`fire async event3`)
+  })
+  observer.on('fire async and sync events', () => {
+    console.log(`fire sync event4`)
+  })
+  observer.on('fire async and sync events', async () => {
+    await sleep(1000)
+    console.log(`fire async event5`)
+  })
+  // console.log(`test fire events`)
+  // observer.fire('fire async and sync events')
+  // console.log(`test fireAsync events`)
+  await observer
+    .fireAsync('fire async and sync events')
+}, 10000)
