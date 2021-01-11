@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.withTimeout = void 0;
-exports.withTimeout = function (promise, timeout) { return __awaiter(void 0, void 0, void 0, function () {
+var withTimeout = function (promise, timeout) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         return [2 /*return*/, new Promise(function (resolve, reject) {
                 ;
@@ -62,3 +62,4 @@ exports.withTimeout = function (promise, timeout) { return __awaiter(void 0, voi
             })];
     });
 }); };
+exports.withTimeout = withTimeout;

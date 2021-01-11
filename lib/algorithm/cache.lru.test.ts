@@ -23,4 +23,7 @@ test('constructor & put & get', () => {
     lru.headNode!.toArray().map((item) => item.value)
   )
   expect(lru.headNode!.value.value).toBe(3)
+  const strLru = new Lru<string, number>(5, (key: string) => key)
+  strLru.put('abc', 123)
+  expect(strLru.get('abc')).toBe(123)
 })

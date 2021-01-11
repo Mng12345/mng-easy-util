@@ -200,3 +200,54 @@ test('runBatch', function () {
         });
     }); })().catch(function (err) { return console.log(err); });
 });
+test('AsyncRunner', function () { return __awaiter(void 0, void 0, void 0, function () {
+    var asyncRunner, runner1, runner2, runner3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                asyncRunner = new async_runners_1.AsyncRunners(3, []);
+                runner1 = function () { return __awaiter(void 0, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, file_1.sleep(1000)];
+                            case 1:
+                                _a.sent();
+                                return [2 /*return*/, 1];
+                        }
+                    });
+                }); };
+                runner2 = function () { return __awaiter(void 0, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, file_1.sleep(2000)];
+                            case 1:
+                                _a.sent();
+                                return [2 /*return*/, 2];
+                        }
+                    });
+                }); };
+                runner3 = function () { return __awaiter(void 0, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, file_1.sleep(3000)];
+                            case 1:
+                                _a.sent();
+                                return [2 /*return*/, 3];
+                        }
+                    });
+                }); };
+                asyncRunner.add(runner1, runner2, runner3, runner1, runner3, runner2);
+                asyncRunner.run();
+                // wait runner1 and runner2 and runner3 run completed
+                return [4 /*yield*/, file_1.sleep(3500)];
+            case 1:
+                // wait runner1 and runner2 and runner3 run completed
+                _a.sent();
+                return [4 /*yield*/, asyncRunner.stop()];
+            case 2:
+                _a.sent();
+                console.log(asyncRunner.result);
+                return [2 /*return*/];
+        }
+    });
+}); }, 10000);

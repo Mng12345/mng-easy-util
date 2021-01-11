@@ -60,7 +60,7 @@ var defaultFitFunc = function () {
         return sum;
     };
 };
-exports.fit = function (_a) {
+var fit = function (_a) {
     var x = _a.x, y = _a.y, initValues = _a.initValues, _b = _a.fitFunc, fitFunc = _b === void 0 ? defaultFitFunc : _b, _c = _a.maxIterations, maxIterations = _c === void 0 ? 500 : _c, _d = _a.tolerance, tolerance = _d === void 0 ? 0.01 : _d;
     var Individual = /** @class */ (function (_super) {
         __extends(Individual, _super);
@@ -133,3 +133,4 @@ exports.fit = function (_a) {
         iterations: trace.length,
     };
 };
+exports.fit = fit;

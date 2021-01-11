@@ -1,5 +1,10 @@
 // async runner utils
 
+import {sleep} from "./file";
+
+/**
+ * @deprecated
+ */
 export interface RunnerI<T> {
   status: 'pending' | 'done' | 'reject' | 'init'
 
@@ -12,6 +17,9 @@ export interface RunnerI<T> {
   ): Promise<void> /**wait runner to completed with timeout*/
 }
 
+/**
+ * @deprecated
+ */
 export class Runner<T> implements RunnerI<T> {
   status: 'pending' | 'done' | 'reject' | 'init' = 'init'
 
@@ -63,6 +71,7 @@ export class Runner<T> implements RunnerI<T> {
 
 /**
  * async run the runners with batch
+ * @deprecated
  * @template T
  * @param {number} batch
  * @param {RunnerI<T>[]} runners
@@ -96,6 +105,7 @@ export const runBatch = async <T>(batch: number, runners: RunnerI<T>[]) => {
 
 /**
  * get num available runners within timeout ms
+ * @deprecated
  * @template T
  * @param {RunnerI<T>[]} runners
  * @param {number} num
@@ -132,3 +142,73 @@ export const getAvailableRunners = async <T>(
     getRunners()
   })
 }
+
+export type RunnerFunc<T> = () => Promise<T>
+
+/**
+ * AsyncRunners for easy use
+ */
+export class AsyncRunners<T> {
+
+  private status: 'init' | 'running' | 'stopped' | 'stopping' = 'init'
+  private calledReset = false
+  result: T[] = []
+
+  constructor(public batch: number, public runners: RunnerFunc<T>[]) {
+  }
+
+  async reset() {
+    if (this.calledReset) return
+    this.calledReset = true
+    if (this.status === 'running') {
+      await this.stop()
+    } else if (this.status === 'stopping') {
+      // async wait for status to be 'stopped'
+      // @ts-ignore
+      while (this.status !== 'stopped') {
+        await sleep(10)
+      }
+    }
+    this.runners = []
+    this.result = []
+    this.status = 'init'
+  }
+
+  add(...runner: RunnerFunc<T>[]) {
+    this.runners.push(...runner)
+    return this
+  }
+
+  async stop() {
+    this.status = 'stopping'
+    while (this.status !== 'stopping') {
+      await sleep(10)
+    }
+  }
+
+  async run(): Promise<T[]> {
+    this.status = 'running'
+    let unitRunners: RunnerFunc<T>[] = []
+    while (this.runners.length > 0) {
+      // @ts-ignore
+      if (this.status === 'stopping') {
+        break
+      }
+      if (unitRunners.length < this.batch) {
+        const headRunner = this.runners.shift()!
+        unitRunners.push(headRunner)
+      } else {
+        const unitResult = await Promise.all(unitRunners.map(runner => runner()))
+        this.result.push(...unitResult)
+        unitRunners = []
+      }
+    }
+    if (unitRunners.length > 0 && this.status === 'running') {
+      const unitResult = await Promise.all(unitRunners.map(runner => runner()))
+      this.result.push(...unitResult)
+    }
+    this.status = 'stopped'
+    return this.result
+  }
+}
+

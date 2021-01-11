@@ -346,18 +346,19 @@ exports.r2 = r2;
  * @param {number} tolerance
  * @return {boolean}
  */
-exports.isCloseable = function (a, b, tolerance) {
+var isCloseable = function (a, b, tolerance) {
     if (!tolerance)
         tolerance = 0.01;
     return Math.abs(a - b) < tolerance;
 };
+exports.isCloseable = isCloseable;
 /**
  * convert num to binary number
  * @param {number} num
  * @param {number} bitLen
  * @return {number[]}
  */
-exports.toBNumber = function (num, bitLen) {
+var toBNumber = function (num, bitLen) {
     var bNumArray = [];
     var div = Math.abs(num);
     while (true) {
@@ -374,3 +375,4 @@ exports.toBNumber = function (num, bitLen) {
         bNumArray.push(0);
     return bNumArray.reverse();
 };
+exports.toBNumber = toBNumber;

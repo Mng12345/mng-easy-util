@@ -1,7 +1,7 @@
-import { getAvailableRunners, runBatch, Runner, RunnerI } from './async-runners'
+import {AsyncRunners, getAvailableRunners, runBatch, Runner, RunnerI} from './async-runners'
 import { sleep } from './file'
 import { Stream } from './stream'
-import { range } from './math'
+import {r2, range} from './math'
 
 test('runBatch & getAvailableRunners', async () => {
   const runners: RunnerI<void>[] = [
@@ -99,3 +99,25 @@ test('runBatch', () => {
     await runBatch(2, runners)
   })().catch((err) => console.log(err))
 })
+
+test('AsyncRunner', async () => {
+  const asyncRunner = new AsyncRunners<number>(3, [])
+  const runner1 = async () => {
+    await sleep(1000)
+    return 1
+  }
+  const runner2 = async () => {
+    await sleep(2000)
+    return 2
+  }
+  const runner3 = async () => {
+    await sleep(3000)
+    return 3
+  }
+  asyncRunner.add(runner1, runner2, runner3, runner1, runner3, runner2)
+  asyncRunner.run()
+  // wait runner1 and runner2 and runner3 run completed
+  await sleep(3500)
+  await asyncRunner.stop()
+  console.log(asyncRunner.result)
+}, 10000)

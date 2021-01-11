@@ -57,7 +57,11 @@ var __spread = (this && this.__spread) || function () {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAvailableRunners = exports.runBatch = exports.Runner = void 0;
+exports.AsyncRunners = exports.getAvailableRunners = exports.runBatch = exports.Runner = void 0;
+var file_1 = require("./file");
+/**
+ * @deprecated
+ */
 var Runner = /** @class */ (function () {
     function Runner(runHook, initHook) {
         this.runHook = runHook;
@@ -138,12 +142,13 @@ var Runner = /** @class */ (function () {
 exports.Runner = Runner;
 /**
  * async run the runners with batch
+ * @deprecated
  * @template T
  * @param {number} batch
  * @param {RunnerI<T>[]} runners
  * @return {Promise<T[]>}
  */
-exports.runBatch = function (batch, runners) { return __awaiter(void 0, void 0, void 0, function () {
+var runBatch = function (batch, runners) { return __awaiter(void 0, void 0, void 0, function () {
     var runnerBatch, runnerResults, i, batchResult, batchResult;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -180,14 +185,16 @@ exports.runBatch = function (batch, runners) { return __awaiter(void 0, void 0, 
         }
     });
 }); };
+exports.runBatch = runBatch;
 /**
  * get num available runners within timeout ms
+ * @deprecated
  * @template T
  * @param {RunnerI<T>[]} runners
  * @param {number} num
  * @param {number} timeout
  */
-exports.getAvailableRunners = function (runners, num, timeout) { return __awaiter(void 0, void 0, void 0, function () {
+var getAvailableRunners = function (runners, num, timeout) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         if (num > runners.length) {
             throw new Error("can not get more than the length of runners available runners");
@@ -213,3 +220,117 @@ exports.getAvailableRunners = function (runners, num, timeout) { return __awaite
             })];
     });
 }); };
+exports.getAvailableRunners = getAvailableRunners;
+/**
+ * AsyncRunners for easy use
+ */
+var AsyncRunners = /** @class */ (function () {
+    function AsyncRunners(batch, runners) {
+        this.batch = batch;
+        this.runners = runners;
+        this.status = 'init';
+        this.calledReset = false;
+        this.result = [];
+    }
+    AsyncRunners.prototype.reset = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (this.calledReset)
+                            return [2 /*return*/];
+                        this.calledReset = true;
+                        if (!(this.status === 'running')) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.stop()];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 5];
+                    case 2:
+                        if (!(this.status === 'stopping')) return [3 /*break*/, 5];
+                        _a.label = 3;
+                    case 3:
+                        if (!(this.status !== 'stopped')) return [3 /*break*/, 5];
+                        return [4 /*yield*/, file_1.sleep(10)];
+                    case 4:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 5:
+                        this.runners = [];
+                        this.result = [];
+                        this.status = 'init';
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AsyncRunners.prototype.add = function () {
+        var _a;
+        var runner = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            runner[_i] = arguments[_i];
+        }
+        (_a = this.runners).push.apply(_a, __spread(runner));
+        return this;
+    };
+    AsyncRunners.prototype.stop = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.status = 'stopping';
+                        _a.label = 1;
+                    case 1:
+                        if (!(this.status !== 'stopping')) return [3 /*break*/, 3];
+                        return [4 /*yield*/, file_1.sleep(10)];
+                    case 2:
+                        _a.sent();
+                        return [3 /*break*/, 1];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AsyncRunners.prototype.run = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var unitRunners, headRunner, unitResult, unitResult;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        this.status = 'running';
+                        unitRunners = [];
+                        _c.label = 1;
+                    case 1:
+                        if (!(this.runners.length > 0)) return [3 /*break*/, 5];
+                        // @ts-ignore
+                        if (this.status === 'stopping') {
+                            return [3 /*break*/, 5];
+                        }
+                        if (!(unitRunners.length < this.batch)) return [3 /*break*/, 2];
+                        headRunner = this.runners.shift();
+                        unitRunners.push(headRunner);
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, Promise.all(unitRunners.map(function (runner) { return runner(); }))];
+                    case 3:
+                        unitResult = _c.sent();
+                        (_a = this.result).push.apply(_a, __spread(unitResult));
+                        unitRunners = [];
+                        _c.label = 4;
+                    case 4: return [3 /*break*/, 1];
+                    case 5:
+                        if (!(unitRunners.length > 0 && this.status === 'running')) return [3 /*break*/, 7];
+                        return [4 /*yield*/, Promise.all(unitRunners.map(function (runner) { return runner(); }))];
+                    case 6:
+                        unitResult = _c.sent();
+                        (_b = this.result).push.apply(_b, __spread(unitResult));
+                        _c.label = 7;
+                    case 7:
+                        this.status = 'stopped';
+                        return [2 /*return*/, this.result];
+                }
+            });
+        });
+    };
+    return AsyncRunners;
+}());
+exports.AsyncRunners = AsyncRunners;

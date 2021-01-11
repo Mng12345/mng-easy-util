@@ -37,7 +37,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.curveFit = void 0;
 var ga_1 = require("./ga");
 var min_max_1 = require("../min-max");
-exports.curveFit = function (_a) {
+var curveFit = function (_a) {
     var x = _a.x, y = _a.y, minValues = _a.minValues, maxValues = _a.maxValues, _b = _a.maxIterations, maxIterations = _b === void 0 ? 100 : _b, _c = _a.tolerance, tolerance = _c === void 0 ? 0.001 : _c, fitFunc = _a.fitFunc;
     var Individual = /** @class */ (function (_super) {
         __extends(Individual, _super);
@@ -115,3 +115,4 @@ exports.curveFit = function (_a) {
         func: fitFunc.apply(void 0, __spread(ga.bestIndividual.data)),
     };
 };
+exports.curveFit = curveFit;

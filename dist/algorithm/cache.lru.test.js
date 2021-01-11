@@ -15,4 +15,7 @@ test('constructor & put & get', function () {
     lru.put(5, 5);
     console.log("values:", lru.headNode.toArray().map(function (item) { return item.value; }));
     expect(lru.headNode.value.value).toBe(3);
+    var strLru = new cache_lru_1.Lru(5, function (key) { return key; });
+    strLru.put('abc', 123);
+    expect(strLru.get('abc')).toBe(123);
 });

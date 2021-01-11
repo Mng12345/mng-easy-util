@@ -43,7 +43,7 @@ exports.download = exports.sleep = void 0;
  * @param {number} timeout
  * @return {Promise<void>}
  */
-exports.sleep = function (timeout) { return __awaiter(void 0, void 0, void 0, function () {
+var sleep = function (timeout) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         return [2 /*return*/, new Promise(function (resolve, reject) {
                 setTimeout(function () {
@@ -52,16 +52,18 @@ exports.sleep = function (timeout) { return __awaiter(void 0, void 0, void 0, fu
             })];
     });
 }); };
+exports.sleep = sleep;
 /**
  * download file which is Uint8Array
  * @param {Uint8Array[]} data
  * @param {string} filename
  * @param {string} type
  */
-exports.download = function (data, filename, type) {
+var download = function (data, filename, type) {
     var file = new Blob(data.map(function (item) { return item.buffer; }), { type: type });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(file);
     a.download = filename;
     a.dispatchEvent(new MouseEvent('click'));
 };
+exports.download = download;

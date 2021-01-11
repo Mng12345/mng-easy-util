@@ -61,7 +61,7 @@ see > ./lib/events.test.ts
 
 see > ./lib/json.test.ts
 
-### async runners
+### async runners, AsyncRunner
 
 see > ./lib/async-runners.test.ts
 
