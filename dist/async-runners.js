@@ -57,7 +57,7 @@ var __spread = (this && this.__spread) || function () {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AsyncRunners = exports.getAvailableRunners = exports.runBatch = exports.Runner = void 0;
+exports.AsyncRunner = exports.getAvailableRunners = exports.runBatch = exports.Runner = void 0;
 var file_1 = require("./file");
 /**
  * @deprecated
@@ -224,15 +224,15 @@ exports.getAvailableRunners = getAvailableRunners;
 /**
  * AsyncRunners for easy use
  */
-var AsyncRunners = /** @class */ (function () {
-    function AsyncRunners(batch, runners) {
+var AsyncRunner = /** @class */ (function () {
+    function AsyncRunner(batch, runners) {
         this.batch = batch;
         this.runners = runners;
         this.status = 'init';
         this.calledReset = false;
         this.result = [];
     }
-    AsyncRunners.prototype.reset = function () {
+    AsyncRunner.prototype.reset = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -263,7 +263,7 @@ var AsyncRunners = /** @class */ (function () {
             });
         });
     };
-    AsyncRunners.prototype.add = function () {
+    AsyncRunner.prototype.add = function () {
         var _a;
         var runner = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -272,7 +272,7 @@ var AsyncRunners = /** @class */ (function () {
         (_a = this.runners).push.apply(_a, __spread(runner));
         return this;
     };
-    AsyncRunners.prototype.stop = function () {
+    AsyncRunner.prototype.stop = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -290,7 +290,7 @@ var AsyncRunners = /** @class */ (function () {
             });
         });
     };
-    AsyncRunners.prototype.run = function () {
+    AsyncRunner.prototype.run = function () {
         return __awaiter(this, void 0, void 0, function () {
             var unitRunners, headRunner, unitResult, unitResult;
             var _a, _b;
@@ -331,6 +331,6 @@ var AsyncRunners = /** @class */ (function () {
             });
         });
     };
-    return AsyncRunners;
+    return AsyncRunner;
 }());
-exports.AsyncRunners = AsyncRunners;
+exports.AsyncRunner = AsyncRunner;

@@ -41,7 +41,7 @@ export declare type RunnerFunc<T> = () => Promise<T>;
 /**
  * AsyncRunners for easy use
  */
-export declare class AsyncRunners<T> {
+export declare class AsyncRunner<T> {
     batch: number;
     runners: RunnerFunc<T>[];
     private status;

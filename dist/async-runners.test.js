@@ -205,7 +205,7 @@ test('AsyncRunner', function () { return __awaiter(void 0, void 0, void 0, funct
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                asyncRunner = new async_runners_1.AsyncRunners(3, []);
+                asyncRunner = new async_runners_1.AsyncRunner(3, []);
                 runner1 = function () { return __awaiter(void 0, void 0, void 0, function () {
                     return __generator(this, function (_a) {
                         switch (_a.label) {

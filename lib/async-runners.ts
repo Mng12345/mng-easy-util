@@ -148,7 +148,7 @@ export type RunnerFunc<T> = () => Promise<T>
 /**
  * AsyncRunners for easy use
  */
-export class AsyncRunners<T> {
+export class AsyncRunner<T> {
 
   private status: 'init' | 'running' | 'stopped' | 'stopping' = 'init'
   private calledReset = false

@@ -1,4 +1,4 @@
-import {AsyncRunners, getAvailableRunners, runBatch, Runner, RunnerI} from './async-runners'
+import {AsyncRunner, getAvailableRunners, runBatch, Runner, RunnerI} from './async-runners'
 import { sleep } from './file'
 import { Stream } from './stream'
 import {r2, range} from './math'
@@ -101,7 +101,7 @@ test('runBatch', () => {
 })
 
 test('AsyncRunner', async () => {
-  const asyncRunner = new AsyncRunners<number>(3, [])
+  const asyncRunner = new AsyncRunner<number>(3, [])
   const runner1 = async () => {
     await sleep(1000)
     return 1
