@@ -277,6 +277,8 @@ var AsyncRunner = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (this.status === 'stopped')
+                            return [2 /*return*/];
                         this.status = 'stopping';
                         _a.label = 1;
                     case 1:

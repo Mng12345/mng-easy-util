@@ -180,6 +180,7 @@ export class AsyncRunner<T> {
   }
 
   async stop() {
+    if (this.status === 'stopped') return
     this.status = 'stopping'
     while (this.status === 'stopping') {
       await sleep(10)

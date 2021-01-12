@@ -252,6 +252,10 @@ test('AsyncRunner', function () { return __awaiter(void 0, void 0, void 0, funct
             case 3:
                 _a.sent();
                 console.log(asyncRunner.result);
+                return [4 /*yield*/, asyncRunner.stop()];
+            case 4:
+                _a.sent();
+                console.log(asyncRunner.result);
                 return [2 /*return*/];
         }
     });

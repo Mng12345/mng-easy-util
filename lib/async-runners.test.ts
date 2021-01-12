@@ -123,4 +123,6 @@ test('AsyncRunner', async () => {
   console.log(asyncRunner.result)
   await sleep(3000)
   console.log(asyncRunner.result)
+  await asyncRunner.stop()
+  console.log(asyncRunner.result)
 }, 10000)
