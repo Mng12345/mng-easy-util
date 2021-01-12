@@ -181,7 +181,7 @@ export class AsyncRunners<T> {
 
   async stop() {
     this.status = 'stopping'
-    while (this.status !== 'stopping') {
+    while (this.status === 'stopping') {
       await sleep(10)
     }
   }

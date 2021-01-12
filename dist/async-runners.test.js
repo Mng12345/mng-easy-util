@@ -201,7 +201,7 @@ test('runBatch', function () {
     }); })().catch(function (err) { return console.log(err); });
 });
 test('AsyncRunner', function () { return __awaiter(void 0, void 0, void 0, function () {
-    var asyncRunner, runner1, runner2, runner3;
+    var asyncRunner, runner1, runner2, runner3, timeStart;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -236,8 +236,9 @@ test('AsyncRunner', function () { return __awaiter(void 0, void 0, void 0, funct
                         }
                     });
                 }); };
-                asyncRunner.add(runner1, runner2, runner3, runner1, runner3, runner2);
-                asyncRunner.run();
+                asyncRunner.add(runner1, runner2, runner3, runner1, runner3, runner2, runner3, runner1, runner2);
+                timeStart = new Date().getTime();
+                asyncRunner.run().catch(function (err) { throw err; });
                 // wait runner1 and runner2 and runner3 run completed
                 return [4 /*yield*/, file_1.sleep(3500)];
             case 1:
@@ -245,6 +246,10 @@ test('AsyncRunner', function () { return __awaiter(void 0, void 0, void 0, funct
                 _a.sent();
                 return [4 /*yield*/, asyncRunner.stop()];
             case 2:
+                _a.sent();
+                console.log(asyncRunner.result);
+                return [4 /*yield*/, file_1.sleep(3000)];
+            case 3:
                 _a.sent();
                 console.log(asyncRunner.result);
                 return [2 /*return*/];

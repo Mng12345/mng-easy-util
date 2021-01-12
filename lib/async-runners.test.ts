@@ -114,10 +114,13 @@ test('AsyncRunner', async () => {
     await sleep(3000)
     return 3
   }
-  asyncRunner.add(runner1, runner2, runner3, runner1, runner3, runner2)
-  asyncRunner.run()
+  asyncRunner.add(runner1, runner2, runner3, runner1, runner3, runner2, runner3, runner1, runner2)
+  const timeStart = new Date().getTime()
+  asyncRunner.run().catch(err => {throw err})
   // wait runner1 and runner2 and runner3 run completed
   await sleep(3500)
   await asyncRunner.stop()
+  console.log(asyncRunner.result)
+  await sleep(3000)
   console.log(asyncRunner.result)
 }, 10000)

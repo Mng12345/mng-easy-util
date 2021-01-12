@@ -280,7 +280,7 @@ var AsyncRunners = /** @class */ (function () {
                         this.status = 'stopping';
                         _a.label = 1;
                     case 1:
-                        if (!(this.status !== 'stopping')) return [3 /*break*/, 3];
+                        if (!(this.status === 'stopping')) return [3 /*break*/, 3];
                         return [4 /*yield*/, file_1.sleep(10)];
                     case 2:
                         _a.sent();
