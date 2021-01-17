@@ -39,3 +39,9 @@ export class FuncClassTrace {
     }
   }
 }
+
+export const copyFunc = (func: (...args: any[]) => any) => {
+  return (...args: any[]) => {
+    func(...args)
+  }
+}

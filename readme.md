@@ -33,7 +33,7 @@ see > ./lib/stream.test.ts
 
 see > ./lib/algorithm/merge-axis.test.ts
 
-#### func-util some util to statistic func call
+#### func-util some util to statistic func call, copyFunc
 
 see > ./lib/func-util.test.ts
 

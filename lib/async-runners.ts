@@ -180,7 +180,8 @@ export class AsyncRunner<T> {
   }
 
   async stop() {
-    if (this.status === 'stopped') return
+    if (this.status === 'stopped')
+      return
     this.status = 'stopping'
     while (this.status === 'stopping') {
       await sleep(10)
@@ -190,6 +191,7 @@ export class AsyncRunner<T> {
   async run(): Promise<T[]> {
     this.status = 'running'
     let unitRunners: RunnerFunc<T>[] = []
+    this.result = []
     while (this.runners.length > 0) {
       // @ts-ignore
       if (this.status === 'stopping') {

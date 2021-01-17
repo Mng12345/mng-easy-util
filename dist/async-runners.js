@@ -301,6 +301,7 @@ var AsyncRunner = /** @class */ (function () {
                     case 0:
                         this.status = 'running';
                         unitRunners = [];
+                        this.result = [];
                         _c.label = 1;
                     case 1:
                         if (!(this.runners.length > 0)) return [3 /*break*/, 5];

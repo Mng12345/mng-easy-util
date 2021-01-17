@@ -137,6 +137,28 @@ var Observer = /** @class */ (function () {
             });
         });
     };
+    Observer.prototype.free = function (_a) {
+        var event = _a.event, handler = _a.handler;
+        if (event === undefined) { // free all
+            this.handlers = {};
+            return;
+        }
+        else {
+            if (this.handlers[event] === undefined)
+                return;
+            if (handler === undefined) { // free event all
+                this.handlers[event] = [];
+            }
+            else { // free event with single handler
+                var handlers = this.handlers[event];
+                var index = handlers.indexOf(handler);
+                if (index !== undefined) {
+                    handlers.splice(index, 1);
+                    this.handlers[event] = handlers;
+                }
+            }
+        }
+    };
     return Observer;
 }());
 exports.Observer = Observer;

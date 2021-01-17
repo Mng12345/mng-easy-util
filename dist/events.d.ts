@@ -6,4 +6,8 @@ export declare class Observer {
     on(event: string, fn: Handler | AsyncHandler): void;
     fire(event: string, ...args: any[]): void;
     fireAsync(event: string, ...args: any[]): Promise<void>;
+    free({ event, handler }: {
+        event?: string;
+        handler?: Handler | AsyncHandler;
+    }): void;
 }

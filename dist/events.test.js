@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var events_1 = require("./events");
 var file_1 = require("./file");
+var func_util_1 = require("./func-util");
 test('on & fire', function () {
     var observer = new events_1.Observer();
     observer.on('event1', function () {
@@ -107,3 +108,25 @@ test('fire & fireAsync', function () { return __awaiter(void 0, void 0, void 0, 
         }
     });
 }); }, 10000);
+test('free', function () {
+    var observer = new events_1.Observer();
+    var handler = function () { return console.log("on fire handler"); };
+    var handler1 = func_util_1.copyFunc(handler);
+    observer.on('event1', handler);
+    observer.on('event1', handler1);
+    // observer.free({
+    //   event: 'event1',
+    //   handler
+    // })
+    // observer.fire('event1')
+    // observer.free({
+    //   event: 'event1',
+    //   handler: handler1
+    // })
+    // observer.fire('event1')
+    // observer.free({
+    //   event: 'event1'
+    // })
+    observer.free({});
+    observer.fire('event1');
+});

@@ -34,4 +34,26 @@ export class Observer {
       }
     }
   }
+
+  free({event, handler}: {
+    event?: string,
+    handler?: Handler | AsyncHandler
+  }) {
+    if (event === undefined) { // free all
+      this.handlers = {}
+      return
+    } else {
+      if (this.handlers[event] === undefined) return;
+      if (handler === undefined) { // free event all
+        this.handlers[event] = []
+      } else { // free event with single handler
+        const handlers = this.handlers[event]
+        const index = handlers.indexOf(handler)
+        if (index !== undefined) {
+          handlers.splice(index, 1)
+          this.handlers[event] = handlers
+        }
+      }
+    }
+  }
 }

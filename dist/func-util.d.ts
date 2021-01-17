@@ -8,3 +8,4 @@ export declare class FuncClassTrace {
     static clear(name?: string): void;
     static callCount(func: () => void, name: string): void;
 }
+export declare const copyFunc: (func: (...args: any[]) => any) => (...args: any[]) => void;
