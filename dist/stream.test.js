@@ -59,3 +59,18 @@ test('stream & range', function () {
         .collect();
     console.log("list: ", json_1.stringifyNoCircle(list));
 });
+test('stream & flatMap & groupBy', function () {
+    var dict = stream_1.Stream.of([1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 8, 8]).groupBy(function (item) { return item; }).toDict();
+    console.log("dict:", JSON.stringify(dict));
+    stream_1.Stream.of([1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 8, 8]).groupBy(function (item) { return item; })
+        .forEach(function (item) { return console.log(item); });
+    stream_1.Stream.of([1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 8, 8]).groupBy(function (item) { return item; })
+        .flatMap(function (item) { return item[1]; })
+        .forEach(function (item) { return console.log(item); });
+    var flatValue = stream_1.Stream.of([1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 8, 8]).groupBy(function (item) { return item; })
+        .map(function (item) { return item[1]; }).flatMap(function (item) { return item; }).collect();
+    console.log("flatValue:", JSON.stringify(flatValue));
+    var collapsedValue = stream_1.Stream.of([1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 8, 8]).groupBy(function (item) { return item; })
+        .map(function (item) { return item[1]; }).collect();
+    console.log("collapsedValue:", JSON.stringify(collapsedValue));
+});

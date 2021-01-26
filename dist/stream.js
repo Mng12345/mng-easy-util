@@ -1,4 +1,17 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -10,8 +23,28 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Stream = void 0;
+exports.DictionaryStream = exports.Stream = void 0;
 function isArrayLike(data) {
     return data.length;
 }
@@ -68,6 +101,9 @@ var Stream = /** @class */ (function () {
             finally { if (e_1) throw e_1.error; }
         }
     };
+    Stream.prototype.forEach = function (callback) {
+        this.each(callback);
+    };
     Stream.prototype.map = function (callback) {
         var index = 0;
         var outThis = this;
@@ -92,16 +128,66 @@ var Stream = /** @class */ (function () {
         }()))();
         return new Stream(itor);
     };
-    Stream.prototype.filter = function (callback) {
+    Stream.prototype.flatMap = function (callback) {
         var index = 0;
         var outThis = this;
-        var itor = new (/** @class */ (function () {
+        var currentValue = { done: false, value: [] };
+        var iterator = new (/** @class */ (function () {
             function class_3() {
             }
             class_3.prototype[Symbol.iterator] = function () {
                 return this;
             };
             class_3.prototype.next = function () {
+                if (currentValue.value.length > 0) { // already read a value from the result which is parsed from out iterator and the left result.length > 1
+                    var value = currentValue.value.shift();
+                    return {
+                        done: false,
+                        value: value
+                    };
+                }
+                else {
+                    var value = outThis.iterator.next(); // second branch read a value from out iterator
+                    if (value.done) { // the out iterator is empty
+                        return {
+                            done: true,
+                            value: undefined
+                        };
+                    }
+                    // get result from out iterator
+                    currentValue = {
+                        value: __spread(callback(value.value, index++)),
+                        done: value.done,
+                    };
+                    if (currentValue.value.length === 0) { // current result from out iterator is [], go to the second branch again
+                        return {
+                            done: false,
+                            value: undefined
+                        };
+                    }
+                    else { // current result.length > 1, shift one element, go to the first branch
+                        return {
+                            done: false,
+                            value: currentValue.value.shift()
+                        };
+                    }
+                }
+            };
+            return class_3;
+        }()))();
+        // genius work!
+        return new Stream(iterator).filter(function (item) { return item !== undefined; });
+    };
+    Stream.prototype.filter = function (callback) {
+        var index = 0;
+        var outThis = this;
+        var itor = new (/** @class */ (function () {
+            function class_4() {
+            }
+            class_4.prototype[Symbol.iterator] = function () {
+                return this;
+            };
+            class_4.prototype.next = function () {
                 var valueFiltered;
                 while (true) {
                     var value = outThis.iterator.next();
@@ -121,7 +207,7 @@ var Stream = /** @class */ (function () {
                 }
                 return valueFiltered;
             };
-            return class_3;
+            return class_4;
         }()))();
         return new Stream(itor);
     };
@@ -143,6 +229,40 @@ var Stream = /** @class */ (function () {
         }
         return res;
     };
+    Stream.prototype.groupBy = function (callback) {
+        var result = {};
+        var keys = [];
+        this.each(function (item, index) {
+            var key = callback(item, index);
+            var value = result[key];
+            if (value) {
+                value.push(item);
+            }
+            else {
+                result[key] = [item];
+                keys.push(key);
+            }
+        });
+        return new DictionaryStream(Stream.of(keys).map(function (key) {
+            var value = [key, result[key]];
+            return value;
+        }));
+    };
     return Stream;
 }());
 exports.Stream = Stream;
+var DictionaryStream = /** @class */ (function (_super) {
+    __extends(DictionaryStream, _super);
+    function DictionaryStream(stream) {
+        return _super.call(this, stream.iterator) || this;
+    }
+    DictionaryStream.prototype.toDict = function () {
+        var result = {};
+        this.each(function (item) {
+            result[item[0]] = item[1];
+        });
+        return result;
+    };
+    return DictionaryStream;
+}(Stream));
+exports.DictionaryStream = DictionaryStream;
