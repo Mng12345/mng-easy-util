@@ -130,3 +130,16 @@ test('free', function () {
     observer.free({});
     observer.fire('event1');
 });
+test('priority', function () {
+    var observer = new events_1.Observer();
+    observer.on('test', function () {
+        console.log("event1");
+    });
+    observer.on('test', function () {
+        console.log("event2");
+    }, 2);
+    observer.on('test', function () {
+        console.log("event3");
+    }, 1);
+    observer.fire('test');
+});

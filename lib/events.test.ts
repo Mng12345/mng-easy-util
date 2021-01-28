@@ -69,3 +69,17 @@ test('free', () => {
   observer.free({})
   observer.fire('event1')
 })
+
+test('priority', () => {
+  const observer = new Observer()
+  observer.on('test', () => {
+    console.log(`event1`)
+  })
+  observer.on('test', () => {
+    console.log(`event2`)
+  }, 2)
+  observer.on('test', () => {
+    console.log(`event3`)
+  }, 1)
+  observer.fire('test')
+})

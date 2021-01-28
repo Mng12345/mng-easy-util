@@ -1,43 +1,47 @@
 // event communication between components
 
+import lodash from "lodash";
+
 export type Handler = (...args: any[]) => void
 export type AsyncHandler = (...args: any[]) => Promise<void>
 
 export class Observer {
-  private handlers: { [index: string]: (Handler | AsyncHandler)[] } = {}
+  private handlers: { [index: string]: {fn: Handler | AsyncHandler, priority: number}[] } = {}
 
   constructor() {}
 
-  on(event: string, fn: Handler | AsyncHandler) {
+  on(event: string, fn: Handler | AsyncHandler, priority: number = 0) {
     let handlers = this.handlers[event]
     if (handlers === undefined) {
       handlers = []
     }
-    handlers.push(fn)
+    handlers.push({fn, priority})
     this.handlers[event] = handlers
   }
 
   fire(event: string, ...args: any[]) {
-    const handlers = this.handlers[event]
-    if (handlers !== undefined) {
-      handlers.forEach((handler) => {
-        handler(...args)
-      })
-    }
+    let handlers = this.handlers[event]
+    if (handlers === undefined) return
+    // sort by priority
+    handlers = lodash.sortBy(handlers, handler => handler.priority)
+    handlers.forEach((handler) => {
+      handler.fn(...args)
+    })
   }
 
   async fireAsync(event: string, ...args: any[]) {
-    const handlers = this.handlers[event]
-    if (handlers !== undefined) {
-      for (let handler of handlers) {
-        await handler(...args)
-      }
+    let handlers = this.handlers[event]
+    if (handlers === undefined) return
+    handlers = lodash.sortBy(handlers, handler => handler.priority)
+    for (let handler of handlers) {
+      await handler.fn(...args)
     }
   }
 
-  free({event, handler}: {
+  free({event, handler, priority}: {
     event?: string,
     handler?: Handler | AsyncHandler
+    priority?: number
   }) {
     if (event === undefined) { // free all
       this.handlers = {}
@@ -48,10 +52,23 @@ export class Observer {
         this.handlers[event] = []
       } else { // free event with single handler
         const handlers = this.handlers[event]
-        const index = handlers.indexOf(handler)
-        if (index !== undefined) {
-          handlers.splice(index, 1)
-          this.handlers[event] = handlers
+        if (priority === undefined) {
+          const newHandlers: {fn: Handler | AsyncHandler, priority: number}[] = []
+          for (let i=0; i<handlers.length; i++) {
+            if (handlers[i].fn !== handler) {
+              newHandlers.push(handlers[i])
+            }
+          }
+          this.handlers[event] = newHandlers
+        } else {
+          const newHandlers: {fn: Handler | AsyncHandler, priority: number}[] = []
+          for (let i=0; i<handlers.length; i++) {
+            const item = handlers[i]
+            if (item.fn !== handler || item.priority !== priority) {
+              newHandlers.push(item)
+            }
+          }
+          this.handlers[event] = newHandlers
         }
       }
     }

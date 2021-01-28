@@ -67,18 +67,23 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Observer = void 0;
+var lodash_1 = __importDefault(require("lodash"));
 var Observer = /** @class */ (function () {
     function Observer() {
         this.handlers = {};
     }
-    Observer.prototype.on = function (event, fn) {
+    Observer.prototype.on = function (event, fn, priority) {
+        if (priority === void 0) { priority = 0; }
         var handlers = this.handlers[event];
         if (handlers === undefined) {
             handlers = [];
         }
-        handlers.push(fn);
+        handlers.push({ fn: fn, priority: priority });
         this.handlers[event] = handlers;
     };
     Observer.prototype.fire = function (event) {
@@ -87,11 +92,13 @@ var Observer = /** @class */ (function () {
             args[_i - 1] = arguments[_i];
         }
         var handlers = this.handlers[event];
-        if (handlers !== undefined) {
-            handlers.forEach(function (handler) {
-                handler.apply(void 0, __spread(args));
-            });
-        }
+        if (handlers === undefined)
+            return;
+        // sort by priority
+        handlers = lodash_1.default.sortBy(handlers, function (handler) { return handler.priority; });
+        handlers.forEach(function (handler) {
+            handler.fn.apply(handler, __spread(args));
+        });
     };
     Observer.prototype.fireAsync = function (event) {
         var args = [];
@@ -105,7 +112,9 @@ var Observer = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         handlers = this.handlers[event];
-                        if (!(handlers !== undefined)) return [3 /*break*/, 8];
+                        if (handlers === undefined)
+                            return [2 /*return*/];
+                        handlers = lodash_1.default.sortBy(handlers, function (handler) { return handler.priority; });
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 6, 7, 8]);
@@ -114,7 +123,7 @@ var Observer = /** @class */ (function () {
                     case 2:
                         if (!!handlers_1_1.done) return [3 /*break*/, 5];
                         handler = handlers_1_1.value;
-                        return [4 /*yield*/, handler.apply(void 0, __spread(args))];
+                        return [4 /*yield*/, handler.fn.apply(handler, __spread(args))];
                     case 3:
                         _b.sent();
                         _b.label = 4;
@@ -138,7 +147,7 @@ var Observer = /** @class */ (function () {
         });
     };
     Observer.prototype.free = function (_a) {
-        var event = _a.event, handler = _a.handler;
+        var event = _a.event, handler = _a.handler, priority = _a.priority;
         if (event === undefined) { // free all
             this.handlers = {};
             return;
@@ -151,10 +160,24 @@ var Observer = /** @class */ (function () {
             }
             else { // free event with single handler
                 var handlers = this.handlers[event];
-                var index = handlers.indexOf(handler);
-                if (index !== undefined) {
-                    handlers.splice(index, 1);
-                    this.handlers[event] = handlers;
+                if (priority === undefined) {
+                    var newHandlers = [];
+                    for (var i = 0; i < handlers.length; i++) {
+                        if (handlers[i].fn !== handler) {
+                            newHandlers.push(handlers[i]);
+                        }
+                    }
+                    this.handlers[event] = newHandlers;
+                }
+                else {
+                    var newHandlers = [];
+                    for (var i = 0; i < handlers.length; i++) {
+                        var item = handlers[i];
+                        if (item.fn !== handler || item.priority !== priority) {
+                            newHandlers.push(item);
+                        }
+                    }
+                    this.handlers[event] = newHandlers;
                 }
             }
         }
