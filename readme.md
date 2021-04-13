@@ -77,3 +77,6 @@ see > ./lib/algorithm/linked.ts
 
 see > ./lib/algorithm/cache.lru.test.ts
 
+### add retry for sync and async functions
+see > ./lib/retry.test.ts
+
