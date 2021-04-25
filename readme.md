@@ -80,3 +80,6 @@ see > ./lib/algorithm/cache.lru.test.ts
 ### add retry for sync and async functions
 see > ./lib/retry.test.ts
 
+### add AsyncPool for pooling async tasks 
+see > ./lib/co.test.ts
+
