@@ -147,3 +147,21 @@ export declare const isCloseable: (a: number, b: number, tolerance?: number | un
  * @return {number[]}
  */
 export declare const toBNumber: (num: number, bitLen: number) => number[];
+/**
+ * convert color num to hex number array
+ * @param {number} num
+ * @return {number[]}
+ */
+export declare const convertColorToHexNumberArray: (num: number) => number[];
+/**
+ * convert color num to hex char array
+ * @param {number} num
+ * @return {string[]}
+ */
+export declare const convertColorToHexCharArray: (num: number) => string[];
+/**
+ * parse hex string into number, return NaN if parse num failed
+ * @param {string} num
+ * @return {number}
+ */
+export declare const parseHexColorToNumber: (num: string) => number;

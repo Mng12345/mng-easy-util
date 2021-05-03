@@ -353,3 +353,93 @@ export const toBNumber = (num: number, bitLen: number): number[] => {
   for (let i = 0; i < left; i++) bNumArray.push(0)
   return bNumArray.reverse()
 }
+
+/**
+ * convert color num to hex number array
+ * @param {number} num
+ * @return {number[]}
+ */
+export const convertColorToHexNumberArray = (num: number): number[] => {
+  const res = [] as number[]
+  let div = num
+  for (;;) {
+    const leftNum = div % 16
+    div = (div - leftNum) / 16
+    res.push(leftNum)
+    if (div === 0) break
+  }
+  while (res.length < 6) {
+    res.push(0)
+  }
+  return res.reverse()
+}
+
+/**
+ * convert color num to hex char array
+ * @param {number} num
+ * @return {string[]}
+ */
+export const convertColorToHexCharArray = (num: number): string[] => {
+  const charMap: {[index: number]: string} = {
+    0: '0',
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: '5',
+    6: '6',
+    7: '7',
+    8: '8',
+    9: '9',
+    10: 'a',
+    11: 'b',
+    12: 'c',
+    13: 'd',
+    14: 'e',
+    15: 'f'
+  }
+  const nums = convertColorToHexNumberArray(num)
+  const res = [] as string[]
+  for (let num of nums) {
+    res.push(charMap[num])
+  }
+  return res
+}
+
+/**
+ * parse hex string into number, return NaN if parse num failed
+ * @param {string} num
+ * @return {number}
+ */
+export const parseHexColorToNumber = (num: string): number => {
+  num = num.toLowerCase().trim()
+  const pattern = /^0x([a-f]|\d){6}$/
+  if (!pattern.test(num)) {
+    return NaN
+  }
+  const charMap: {[index: string]: number} = {
+    '0': 0,
+    '1': 1,
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9,
+    'a': 10,
+    'b': 11,
+    'c': 12,
+    'd': 13,
+    'e': 14,
+    'f': 15
+  }
+  num = num.slice(2)
+  let value = 0
+  for (let i=0; i<6; i++) {
+    const c = num[5-i]
+    value += charMap[c] * Math.pow(16, i)
+  }
+  return value
+}

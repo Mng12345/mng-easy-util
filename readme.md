@@ -17,7 +17,7 @@ see > ./lib/hashset.test.ts
 
 see > ./lib/algorithm/ga.test.ts
 
-#### math randomInt, sample, mean, sum, add, multiply, ma, ema, dif, macd, round, range, dotMultiply, variance, std, covariance, correlation, r2
+#### math randomInt, sample, mean, sum, add, multiply, ma, ema, dif, macd, round, range, dotMultiply, variance, std, covariance, correlation, r2, convertColorToHexNumberArray, convertColorToHexCharArray, parseHexColorToNumber
 
 see > ./lib/math.test.ts
 

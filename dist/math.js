@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.toBNumber = exports.isCloseable = exports.r2 = exports.correlation = exports.covariance = exports.std = exports.variance = exports.dotMultiply = exports.range = exports.brokerage = exports.round = exports.normalize = exports.macd = exports.add = exports.multiply = exports.dif = exports.ema = exports.ma = exports.mean = exports.sum = exports.sample = exports.randomNIntNotRepeat = exports.randomInt = void 0;
+exports.parseHexColorToNumber = exports.convertColorToHexCharArray = exports.convertColorToHexNumberArray = exports.toBNumber = exports.isCloseable = exports.r2 = exports.correlation = exports.covariance = exports.std = exports.variance = exports.dotMultiply = exports.range = exports.brokerage = exports.round = exports.normalize = exports.macd = exports.add = exports.multiply = exports.dif = exports.ema = exports.ma = exports.mean = exports.sum = exports.sample = exports.randomNIntNotRepeat = exports.randomInt = void 0;
 var lodash_1 = __importDefault(require("lodash"));
 /**
  * generate random int between [low, high)
@@ -376,3 +376,105 @@ var toBNumber = function (num, bitLen) {
     return bNumArray.reverse();
 };
 exports.toBNumber = toBNumber;
+/**
+ * convert color num to hex number array
+ * @param {number} num
+ * @return {number[]}
+ */
+var convertColorToHexNumberArray = function (num) {
+    var res = [];
+    var div = num;
+    for (;;) {
+        var leftNum = div % 16;
+        div = (div - leftNum) / 16;
+        res.push(leftNum);
+        if (div === 0)
+            break;
+    }
+    while (res.length < 6) {
+        res.push(0);
+    }
+    return res.reverse();
+};
+exports.convertColorToHexNumberArray = convertColorToHexNumberArray;
+/**
+ * convert color num to hex char array
+ * @param {number} num
+ * @return {string[]}
+ */
+var convertColorToHexCharArray = function (num) {
+    var e_2, _a;
+    var charMap = {
+        0: '0',
+        1: '1',
+        2: '2',
+        3: '3',
+        4: '4',
+        5: '5',
+        6: '6',
+        7: '7',
+        8: '8',
+        9: '9',
+        10: 'a',
+        11: 'b',
+        12: 'c',
+        13: 'd',
+        14: 'e',
+        15: 'f'
+    };
+    var nums = exports.convertColorToHexNumberArray(num);
+    var res = [];
+    try {
+        for (var nums_1 = __values(nums), nums_1_1 = nums_1.next(); !nums_1_1.done; nums_1_1 = nums_1.next()) {
+            var num_1 = nums_1_1.value;
+            res.push(charMap[num_1]);
+        }
+    }
+    catch (e_2_1) { e_2 = { error: e_2_1 }; }
+    finally {
+        try {
+            if (nums_1_1 && !nums_1_1.done && (_a = nums_1.return)) _a.call(nums_1);
+        }
+        finally { if (e_2) throw e_2.error; }
+    }
+    return res;
+};
+exports.convertColorToHexCharArray = convertColorToHexCharArray;
+/**
+ * parse hex string into number, return NaN if parse num failed
+ * @param {string} num
+ * @return {number}
+ */
+var parseHexColorToNumber = function (num) {
+    num = num.toLowerCase().trim();
+    var pattern = /^0x([a-f]|\d){6}$/;
+    if (!pattern.test(num)) {
+        return NaN;
+    }
+    var charMap = {
+        '0': 0,
+        '1': 1,
+        '2': 2,
+        '3': 3,
+        '4': 4,
+        '5': 5,
+        '6': 6,
+        '7': 7,
+        '8': 8,
+        '9': 9,
+        'a': 10,
+        'b': 11,
+        'c': 12,
+        'd': 13,
+        'e': 14,
+        'f': 15
+    };
+    num = num.slice(2);
+    var value = 0;
+    for (var i = 0; i < 6; i++) {
+        var c = num[5 - i];
+        value += charMap[c] * Math.pow(16, i);
+    }
+    return value;
+};
+exports.parseHexColorToNumber = parseHexColorToNumber;

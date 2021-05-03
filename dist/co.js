@@ -35,16 +35,40 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AsyncPool = void 0;
 var lodash_1 = require("lodash");
 var file_1 = require("./file");
+var chalk_1 = __importDefault(require("chalk"));
 var throttleLog = lodash_1.throttle(function () {
     var data = [];
     for (var _i = 0; _i < arguments.length; _i++) {
         data[_i] = arguments[_i];
     }
-    return console.log(data);
+    return console.log.apply(console, __spread(data));
 }, 2000);
 var AsyncPool = /** @class */ (function () {
     function AsyncPool(size) {
@@ -57,7 +81,7 @@ var AsyncPool = /** @class */ (function () {
     AsyncPool.prototype.pushInner = function (task, taskId) {
         var _this = this;
         if (this.taskMap.has(taskId)) {
-            console.log("%c warning: task with taskId[" + taskId + "] already exists, please check your code!", 'color: #faad14');
+            console.log(chalk_1.default.red("warning: task with taskId[" + taskId + "] already exists, please check your code!"));
             return;
         }
         var voidTask = function () { return __awaiter(_this, void 0, void 0, function () {
@@ -82,7 +106,7 @@ var AsyncPool = /** @class */ (function () {
                             result: undefined,
                             error: e_1
                         });
-                        console.log("%c task[" + taskId + "] has failed with error:\n", 'color: #f5222d');
+                        console.log(chalk_1.default.yellow("task[" + taskId + "] has failed with error:\n"));
                         console.log(e_1);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
@@ -121,11 +145,12 @@ var AsyncPool = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 1:
                         if (!(this.taskMap.size === 0 && this.buffer.length === 0)) return [3 /*break*/, 2];
-                        console.log("%c async pool status: " + this.taskMap.size + " tasks running, " + this.buffer.length + " tasks waiting, already processed " + this.resultMap.size + "/" + this.taskCount + ".", 'color: #52c41a');
-                        console.log("%c all tasks done.", 'color: #52c41a');
+                        throttleLog("async pool status: " + chalk_1.default.greenBright(this.taskMap.size) + " tasks running, " + chalk_1.default.yellow(this.buffer.length) + " tasks waiting, already processed " + chalk_1.default.blue(this.resultMap.size + "/" + this.taskCount) + ".");
+                        console.log(chalk_1.default.green("all tasks done."));
                         return [3 /*break*/, 5];
                     case 2:
-                        throttleLog("%c async pool status: " + this.taskMap.size + " tasks running, " + this.buffer.length + " tasks waiting, already processed " + this.resultMap.size + "/" + this.taskCount + ".", 'color: #52c41a');
+                        throttleLog("async pool status: " + chalk_1.default.greenBright(this.taskMap.size) + " tasks running, " + chalk_1.default.yellow(this.buffer.length) + " tasks waiting, already processed " + chalk_1.default.blue(this.resultMap.size + "/" + this.taskCount) + ".");
+                        console.log("async pool status: " + this.taskMap.size + " tasks running, " + this.buffer.length + " tasks waiting, already processed " + chalk_1.default.blue(this.resultMap.size + "/" + this.taskCount) + ".");
                         return [4 /*yield*/, file_1.sleep(50)];
                     case 3:
                         _a.sent();

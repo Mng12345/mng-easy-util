@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var math_1 = require("./math");
+var index_1 = require("./index");
 test('ema', function () {
     var data = [5.1, 5.2, 5.0, 4.9, 5.3, 5.5, 4.8];
     var emaData = math_1.ema(data, 4);
@@ -26,4 +27,20 @@ test('toBNumber', function () {
     console.log(math_1.toBNumber(12, 4));
     console.log(math_1.toBNumber(12, 8));
     // console.log(toBNumber(12, 2))
+});
+test('convertColorToHexNumberArray', function () {
+    var array1 = index_1.math.convertColorToHexNumberArray(0x00ff12);
+    expect(array1[0]).toBe(0);
+    expect(array1[2]).toBe(15);
+    expect(array1[5]).toBe(2);
+});
+test('convertColorToHexCharArray', function () {
+    var array1 = index_1.math.convertColorToHexCharArray(0x00ff12);
+    expect(array1[0]).toBe('0');
+    expect(array1[2]).toBe('f');
+    expect(array1[5]).toBe('2');
+});
+test('parseHexColorToNumber', function () {
+    var value = index_1.math.parseHexColorToNumber('0x00ff12');
+    expect(value).toBe(0x00ff12);
 });
