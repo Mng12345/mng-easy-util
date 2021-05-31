@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var queue_1 = require("./queue");
+test('queue', function () {
+    var queue = new queue_1.SimpleQueue();
+    queue.add(1);
+    queue.add(2);
+    queue.add(3);
+    expect(queue.size).toBe(3);
+    var v1 = queue.take();
+    expect(queue.size).toBe(2);
+    expect(v1).toBe(1);
+    var v2 = queue.take();
+    expect(queue.size).toBe(1);
+    expect(v2).toBe(2);
+    var v3 = queue.take();
+    expect(queue.size).toBe(0);
+    expect(v3).toBe(3);
+    var v4 = queue.take();
+    expect(queue.size).toBe(0);
+    expect(v4).toBe(null);
+});

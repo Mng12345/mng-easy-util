@@ -83,3 +83,9 @@ see > ./lib/retry.test.ts
 ### add AsyncPool for pooling async tasks 
 see > ./lib/co.test.ts
 
+### add async LineReadr
+see > ./lib/io.test.ts
+
+### add Queue SimpleQueue
+
+see > ./lib/queue.test.ts

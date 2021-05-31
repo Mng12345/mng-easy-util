@@ -32,3 +32,4 @@ export const download = (data: Uint8Array[], filename: string, type: string) => 
   a.download = filename
   a.dispatchEvent(new MouseEvent('click'))
 }
+
