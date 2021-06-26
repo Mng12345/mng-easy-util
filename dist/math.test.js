@@ -44,3 +44,12 @@ test('parseHexColorToNumber', function () {
     var value = index_1.math.parseHexColorToNumber('0x00ff12');
     expect(value).toBe(0x00ff12);
 });
+test('ma', function () {
+    var data = [1, 2, 3, 4, 5];
+    var n = 3;
+    var ma = index_1.math.ma(data, 3);
+    expect(ma[0]).toBe(index_1.math.sum([1, 2, 3]) / n);
+    expect(ma[1]).toBe(index_1.math.sum([2, 3, 4]) / n);
+    expect(ma[2]).toBe(index_1.math.sum([3, 4, 5]) / n);
+    expect(ma.length).toBe(3);
+});

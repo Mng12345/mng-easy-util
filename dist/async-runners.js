@@ -52,9 +52,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AsyncRunner = exports.getAvailableRunners = exports.runBatch = exports.Runner = void 0;
@@ -168,7 +169,7 @@ var runBatch = function (batch, runners) { return __awaiter(void 0, void 0, void
             case 2: return [4 /*yield*/, Promise.all(runnerBatch.map(function (runner) { return runner.run(); }))];
             case 3:
                 batchResult = _a.sent();
-                runnerResults.push.apply(runnerResults, __spread(batchResult));
+                runnerResults.push.apply(runnerResults, __spreadArray([], __read(batchResult)));
                 runnerBatch = [runners[i]];
                 _a.label = 4;
             case 4:
@@ -179,7 +180,7 @@ var runBatch = function (batch, runners) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, Promise.all(runnerBatch.map(function (runner) { return runner.run(); }))];
             case 6:
                 batchResult = _a.sent();
-                runnerResults.push.apply(runnerResults, __spread(batchResult));
+                runnerResults.push.apply(runnerResults, __spreadArray([], __read(batchResult)));
                 _a.label = 7;
             case 7: return [2 /*return*/, runnerResults];
         }
@@ -269,7 +270,7 @@ var AsyncRunner = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             runner[_i] = arguments[_i];
         }
-        (_a = this.runners).push.apply(_a, __spread(runner));
+        (_a = this.runners).push.apply(_a, __spreadArray([], __read(runner)));
         return this;
     };
     AsyncRunner.prototype.stop = function () {
@@ -316,7 +317,7 @@ var AsyncRunner = /** @class */ (function () {
                     case 2: return [4 /*yield*/, Promise.all(unitRunners.map(function (runner) { return runner(); }))];
                     case 3:
                         unitResult = _c.sent();
-                        (_a = this.result).push.apply(_a, __spread(unitResult));
+                        (_a = this.result).push.apply(_a, __spreadArray([], __read(unitResult)));
                         unitRunners = [];
                         _c.label = 4;
                     case 4: return [3 /*break*/, 1];
@@ -325,7 +326,7 @@ var AsyncRunner = /** @class */ (function () {
                         return [4 /*yield*/, Promise.all(unitRunners.map(function (runner) { return runner(); }))];
                     case 6:
                         unitResult = _c.sent();
-                        (_b = this.result).push.apply(_b, __spread(unitResult));
+                        (_b = this.result).push.apply(_b, __spreadArray([], __read(unitResult)));
                         _c.label = 7;
                     case 7:
                         this.status = 'stopped';

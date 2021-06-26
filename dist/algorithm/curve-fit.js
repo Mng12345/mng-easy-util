@@ -8,6 +8,8 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -29,9 +31,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.curveFit = void 0;
@@ -45,7 +48,7 @@ var curveFit = function (_a) {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         Individual.prototype.calFitness = function () {
-            var func = fitFunc.apply(void 0, __spread(this.data));
+            var func = fitFunc.apply(void 0, __spreadArray([], __read(this.data)));
             var err = 0;
             for (var i = 0; i < x.length; i++) {
                 var yPredictItem = func(x[i]);
@@ -55,7 +58,7 @@ var curveFit = function (_a) {
             return this.fitness;
         };
         Individual.prototype.clone = function () {
-            var data = __spread(this.data);
+            var data = __spreadArray([], __read(this.data));
             var fitness = this.fitness && this.fitness.clone();
             return new Individual(data, fitness);
         };
@@ -112,7 +115,7 @@ var curveFit = function (_a) {
         values: ga.bestIndividual.data,
         error: ga.bestIndividual.fitness.value,
         iterations: trace.length,
-        func: fitFunc.apply(void 0, __spread(ga.bestIndividual.data)),
+        func: fitFunc.apply(void 0, __spreadArray([], __read(ga.bestIndividual.data))),
     };
 };
 exports.curveFit = curveFit;

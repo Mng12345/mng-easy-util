@@ -13,6 +13,11 @@ import * as pointer from './pointer'
 import * as stream from './stream'
 import * as asyncRunners from './async-runners'
 import * as promise from './promise'
+import * as option from './option'
+import * as io from './io'
+import * as queue from './queue'
+import * as retry from './retry'
+import * as co from './co'
 
 export {
   algorithm,
@@ -30,4 +35,9 @@ export {
   stream,
   asyncRunners,
   promise,
+  option,
+  io,
+  queue,
+  retry,
+  co,
 }

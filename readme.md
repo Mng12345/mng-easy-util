@@ -78,14 +78,21 @@ see > ./lib/algorithm/linked.ts
 see > ./lib/algorithm/cache.lru.test.ts
 
 ### add retry for sync and async functions
+
 see > ./lib/retry.test.ts
 
-### add AsyncPool for pooling async tasks 
+### add AsyncPool for pooling async tasks
+
 see > ./lib/co.test.ts
 
 ### add async LineReadr
+
 see > ./lib/io.test.ts
 
 ### add Queue SimpleQueue
 
 see > ./lib/queue.test.ts
+
+### add Option
+
+see > ./lib/option.test.ts

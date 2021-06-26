@@ -51,9 +51,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.retry = void 0;
@@ -78,7 +79,7 @@ function retry(_a) {
                             _a.label = 2;
                         case 2:
                             _a.trys.push([2, 4, , 5]);
-                            return [4 /*yield*/, func.apply(void 0, __spread(args))];
+                            return [4 /*yield*/, func.apply(void 0, __spreadArray([], __read(args)))];
                         case 3: return [2 /*return*/, _a.sent()];
                         case 4:
                             e_1 = _a.sent();
@@ -101,7 +102,7 @@ function retry(_a) {
             }
             for (var i = 0; i < times; i++) {
                 try {
-                    return func.apply(void 0, __spread(args));
+                    return func.apply(void 0, __spreadArray([], __read(args)));
                 }
                 catch (e) {
                     errCb(e);

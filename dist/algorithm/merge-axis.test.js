@@ -15,9 +15,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var merge_axis_1 = require("./merge-axis");
@@ -36,7 +37,7 @@ test('merge input string', function () {
             [3, 3.9],
         ],
     ];
-    var mergedLines1 = merge_axis_1.merge.apply(void 0, __spread(lines1));
+    var mergedLines1 = merge_axis_1.merge.apply(void 0, __spreadArray([], __read(lines1)));
     var newXLine = mergedLines1[0];
     var newYLine1 = mergedLines1[1];
     var newYLine2 = mergedLines1[2];
@@ -70,7 +71,7 @@ test('merge input number', function () {
             [3, 3.9],
         ],
     ];
-    var mergedLines1 = merge_axis_1.merge.apply(void 0, __spread(lines1));
+    var mergedLines1 = merge_axis_1.merge.apply(void 0, __spreadArray([], __read(lines1)));
     var newXLine = mergedLines1[0];
     var newYLine1 = mergedLines1[1];
     var newYLine2 = mergedLines1[2];

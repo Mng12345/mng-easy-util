@@ -8,7 +8,7 @@ import {
   toBNumber,
   variance,
 } from './math'
-import {math} from "./index";
+import { math } from './index'
 
 test('ema', () => {
   const data = [5.1, 5.2, 5.0, 4.9, 5.3, 5.5, 4.8]
@@ -59,4 +59,14 @@ test('convertColorToHexCharArray', () => {
 test('parseHexColorToNumber', () => {
   const value = math.parseHexColorToNumber('0x00ff12')
   expect(value).toBe(0x00ff12)
+})
+
+test('ma', () => {
+  const data = [1, 2, 3, 4, 5] as number[]
+  const n = 3
+  const ma = math.ma(data, 3)
+  expect(ma[0]).toBe(math.sum([1, 2, 3]) / n)
+  expect(ma[1]).toBe(math.sum([2, 3, 4]) / n)
+  expect(ma[2]).toBe(math.sum([3, 4, 5]) / n)
+  expect(ma.length).toBe(3)
 })
