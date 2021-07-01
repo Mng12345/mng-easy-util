@@ -97,7 +97,7 @@ var AsyncPool = /** @class */ (function () {
                         this.resultMap.set(taskId, {
                             taskId: taskId,
                             result: result,
-                            error: undefined
+                            error: undefined,
                         });
                         return [3 /*break*/, 3];
                     case 2:
@@ -105,7 +105,7 @@ var AsyncPool = /** @class */ (function () {
                         this.resultMap.set(taskId, {
                             taskId: taskId,
                             result: undefined,
-                            error: e_1
+                            error: e_1,
                         });
                         console.log(chalk_1.default.yellow("task[" + taskId + "] has failed with error:\n"));
                         console.log(e_1);
@@ -117,7 +117,7 @@ var AsyncPool = /** @class */ (function () {
         if (this.taskMap.size < this.size) {
             this.taskMap.set(taskId, {
                 taskId: taskId,
-                status: 'running'
+                status: 'running',
             });
             voidTask().finally(function () {
                 _this.taskMap.delete(taskId);
@@ -126,7 +126,7 @@ var AsyncPool = /** @class */ (function () {
         else {
             this.buffer.push({
                 taskId: taskId,
-                task: task
+                task: task,
             });
         }
     };
@@ -143,21 +143,25 @@ var AsyncPool = /** @class */ (function () {
                         if (!(this.taskMap.size < this.size && this.buffer.length > 0)) return [3 /*break*/, 1];
                         wrappedTask = this.buffer.shift();
                         this.pushInner(wrappedTask.task, wrappedTask.taskId);
-                        return [3 /*break*/, 4];
-                    case 1:
-                        if (!(this.taskMap.size === 0 && this.buffer.length === 0)) return [3 /*break*/, 2];
-                        throttleLog("async pool status: " + chalk_1.default.greenBright(this.taskMap.size) + " tasks running, " + chalk_1.default.yellow(this.buffer.length) + " tasks waiting, already processed " + chalk_1.default.blue(this.resultMap.size + "/" + this.taskCount) + ".");
-                        console.log(chalk_1.default.green("all tasks done."));
                         return [3 /*break*/, 5];
-                    case 2:
+                    case 1:
+                        if (!(this.taskMap.size === 0 && this.buffer.length === 0)) return [3 /*break*/, 3];
+                        // all task done.
                         throttleLog("async pool status: " + chalk_1.default.greenBright(this.taskMap.size) + " tasks running, " + chalk_1.default.yellow(this.buffer.length) + " tasks waiting, already processed " + chalk_1.default.blue(this.resultMap.size + "/" + this.taskCount) + ".");
-                        console.log("async pool status: " + this.taskMap.size + " tasks running, " + this.buffer.length + " tasks waiting, already processed " + chalk_1.default.blue(this.resultMap.size + "/" + this.taskCount) + ".");
-                        return [4 /*yield*/, file_1.sleep(50)];
-                    case 3:
+                        return [4 /*yield*/, file_1.sleep(2000)];
+                    case 2:
                         _a.sent();
-                        _a.label = 4;
-                    case 4: return [3 /*break*/, 0];
-                    case 5: return [2 /*return*/];
+                        console.log(chalk_1.default.green("all tasks done."));
+                        return [3 /*break*/, 6];
+                    case 3:
+                        // wait for all task done.
+                        throttleLog("async pool status: " + chalk_1.default.greenBright(this.taskMap.size) + " tasks running, " + chalk_1.default.yellow(this.buffer.length) + " tasks waiting, already processed " + chalk_1.default.blue(this.resultMap.size + "/" + this.taskCount) + ".");
+                        return [4 /*yield*/, file_1.sleep(50)];
+                    case 4:
+                        _a.sent();
+                        _a.label = 5;
+                    case 5: return [3 /*break*/, 0];
+                    case 6: return [2 /*return*/];
                 }
             });
         });

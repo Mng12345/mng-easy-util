@@ -49,7 +49,7 @@ test('AsyncPool', function () { return __awaiter(void 0, void 0, void 0, functio
                 pool.push(function () { return __awaiter(void 0, void 0, void 0, function () {
                     return __generator(this, function (_a) {
                         switch (_a.label) {
-                            case 0: return [4 /*yield*/, file_1.sleep(3000)];
+                            case 0: return [4 /*yield*/, file_1.sleep(300)];
                             case 1:
                                 _a.sent();
                                 return [2 /*return*/, 1];
@@ -59,7 +59,7 @@ test('AsyncPool', function () { return __awaiter(void 0, void 0, void 0, functio
                 pool.push(function () { return __awaiter(void 0, void 0, void 0, function () {
                     return __generator(this, function (_a) {
                         switch (_a.label) {
-                            case 0: return [4 /*yield*/, file_1.sleep(8000)];
+                            case 0: return [4 /*yield*/, file_1.sleep(800)];
                             case 1:
                                 _a.sent();
                                 return [2 /*return*/, 2];
@@ -69,7 +69,7 @@ test('AsyncPool', function () { return __awaiter(void 0, void 0, void 0, functio
                 pool.push(function () { return __awaiter(void 0, void 0, void 0, function () {
                     return __generator(this, function (_a) {
                         switch (_a.label) {
-                            case 0: return [4 /*yield*/, file_1.sleep(4000)];
+                            case 0: return [4 /*yield*/, file_1.sleep(400)];
                             case 1:
                                 _a.sent();
                                 return [2 /*return*/, 3];
@@ -79,7 +79,7 @@ test('AsyncPool', function () { return __awaiter(void 0, void 0, void 0, functio
                 pool.push(function () { return __awaiter(void 0, void 0, void 0, function () {
                     return __generator(this, function (_a) {
                         switch (_a.label) {
-                            case 0: return [4 /*yield*/, file_1.sleep(3000)];
+                            case 0: return [4 /*yield*/, file_1.sleep(300)];
                             case 1:
                                 _a.sent();
                                 return [2 /*return*/, 4];
@@ -89,10 +89,10 @@ test('AsyncPool', function () { return __awaiter(void 0, void 0, void 0, functio
                 pool.push(function () { return __awaiter(void 0, void 0, void 0, function () {
                     return __generator(this, function (_a) {
                         switch (_a.label) {
-                            case 0: return [4 /*yield*/, file_1.sleep(3000)];
+                            case 0: return [4 /*yield*/, file_1.sleep(12000)];
                             case 1:
                                 _a.sent();
-                                throw "error";
+                                throw 'error';
                         }
                     });
                 }); }, 'task-5');
@@ -104,4 +104,4 @@ test('AsyncPool', function () { return __awaiter(void 0, void 0, void 0, functio
                 return [2 /*return*/];
         }
     });
-}); }, 12000);
+}); }, 28000);
