@@ -1,6 +1,6 @@
-import {Interface} from "readline";
-import readline from "readline";
-import fs from "fs";
+import { Interface } from 'readline'
+import readline from 'readline'
+import fs from 'fs'
 
 export class LineReader {
   private readonly readInterface: Interface
@@ -16,5 +16,8 @@ export class LineReader {
     } else {
       return value.value
     }
+  }
+  close() {
+    this.readInterface.close()
   }
 }

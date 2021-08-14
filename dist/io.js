@@ -67,6 +67,9 @@ var LineReader = /** @class */ (function () {
             });
         });
     };
+    LineReader.prototype.close = function () {
+        this.readInterface.close();
+    };
     return LineReader;
 }());
 exports.LineReader = LineReader;

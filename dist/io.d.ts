@@ -4,4 +4,5 @@ export declare class LineReader {
     private iter;
     constructor(path: string);
     read(): Promise<string | null>;
+    close(): void;
 }

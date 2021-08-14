@@ -1,10 +1,11 @@
 {
   "name": "mng-easy-util",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "some useful tools for js and ts, like true HashMap...",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "zhangming",

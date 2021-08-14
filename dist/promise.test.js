@@ -70,3 +70,39 @@ test('withTimeout', function () { return __awaiter(void 0, void 0, void 0, funct
         }
     });
 }); }, 10000);
+test('promise', function () { return __awaiter(void 0, void 0, void 0, function () {
+    var f1, f2, f3, pf1, pf2, pf3, r1, r2, r3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                f1 = function () { return 1; };
+                f2 = function () { return Promise.resolve(1); };
+                f3 = function () { return __awaiter(void 0, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, file_1.sleep(1000)];
+                            case 1:
+                                _a.sent();
+                                return [2 /*return*/, 1];
+                        }
+                    });
+                }); };
+                pf1 = promise_1.promisify(f1);
+                pf2 = promise_1.promisify(f2);
+                pf3 = promise_1.promisify(f3);
+                return [4 /*yield*/, pf1()];
+            case 1:
+                r1 = _a.sent();
+                return [4 /*yield*/, pf2()];
+            case 2:
+                r2 = _a.sent();
+                return [4 /*yield*/, pf3()];
+            case 3:
+                r3 = _a.sent();
+                expect(r1).toBe(1);
+                expect(r2).toBe(1);
+                expect(r3).toBe(1);
+                return [2 /*return*/];
+        }
+    });
+}); }, 3000);

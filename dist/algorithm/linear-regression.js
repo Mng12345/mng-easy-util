@@ -9,8 +9,6 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -32,10 +30,9 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fit = void 0;
@@ -71,17 +68,17 @@ var fit = function (_a) {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         Individual.prototype.calFitness = function () {
-            var func = fitFunc.apply(void 0, __spreadArray([], __read(this.data)));
+            var func = fitFunc.apply(void 0, __spread(this.data));
             var err = 0;
             for (var i = 0; i < x.length; i++) {
-                var yPredictItem = func.apply(void 0, __spreadArray([], __read(x[i])));
+                var yPredictItem = func.apply(void 0, __spread(x[i]));
                 err += Math.abs(y[i] - yPredictItem);
             }
             this.fitness = new min_max_1.ComparableNumber(err, tolerance);
             return this.fitness;
         };
         Individual.prototype.clone = function () {
-            var data = __spreadArray([], __read(this.data));
+            var data = __spread(this.data);
             var fitness = this.fitness && this.fitness.clone();
             return new Individual(data, fitness);
         };
