@@ -12,7 +12,16 @@ export const stringifyNoCircle = (obj: any): string => {
         return
       }
       cache!.add(value)
-      return value.toString()
+      const fStr = value.toString()
+      if (fStr.indexOf('function') === 0) {
+        return value.toString()
+      } else {
+        return `function(...args) {
+          const fStr = \`${fStr}\`
+          const f = eval(\`(\${fStr})\`)
+          return f(...args)
+        }`
+      }
     }
     return value
   })

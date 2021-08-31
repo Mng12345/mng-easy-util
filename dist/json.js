@@ -16,7 +16,13 @@ var stringifyNoCircle = function (obj) {
                 return;
             }
             cache.add(value);
-            return value.toString();
+            var fStr = value.toString();
+            if (fStr.indexOf('function') === 0) {
+                return value.toString();
+            }
+            else {
+                return "function(...args) {\n          const fStr = `" + fStr + "`\n          const f = eval(`(${fStr})`)\n          return f(...args)\n        }";
+            }
         }
         return value;
     });
