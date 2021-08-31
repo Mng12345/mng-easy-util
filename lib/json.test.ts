@@ -1,4 +1,4 @@
-import { stringifyNoCircle } from './json'
+import { JSONUtil, stringifyNoCircle } from './json'
 
 test('stringify', () => {
   type A = {
@@ -21,4 +21,23 @@ test('stringify', () => {
   } catch (e) {
     throw e
   }
+})
+
+test('JSONUtil', () => {
+  const obj = {
+    a: 1,
+    f: function () {
+      return 'f'
+    },
+    c: () => {
+      return 'c'
+    },
+  }
+  const objStr = JSONUtil.stringify(obj)
+  console.log(objStr)
+  const objValue = JSONUtil.parse(objStr)
+  const fValue = objValue.f()
+  const cValue = objValue.c()
+  expect(fValue).toBe('f')
+  expect(cValue).toBe('c')
 })

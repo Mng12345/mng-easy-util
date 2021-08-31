@@ -52,9 +52,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -97,7 +98,7 @@ var Observer = /** @class */ (function () {
         // sort by priority
         handlers = lodash_1.default.sortBy(handlers, function (handler) { return handler.priority; });
         handlers.forEach(function (handler) {
-            handler.fn.apply(handler, __spread(args));
+            handler.fn.apply(handler, __spreadArray([], __read(args)));
         });
     };
     Observer.prototype.fireAsync = function (event) {
@@ -123,7 +124,7 @@ var Observer = /** @class */ (function () {
                     case 2:
                         if (!!handlers_1_1.done) return [3 /*break*/, 5];
                         handler = handlers_1_1.value;
-                        return [4 /*yield*/, handler.fn.apply(handler, __spread(args))];
+                        return [4 /*yield*/, handler.fn.apply(handler, __spreadArray([], __read(args)))];
                     case 3:
                         _b.sent();
                         _b.label = 4;

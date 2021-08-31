@@ -51,9 +51,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -68,7 +69,7 @@ var throttleLog = lodash_1.throttle(function () {
     for (var _i = 0; _i < arguments.length; _i++) {
         data[_i] = arguments[_i];
     }
-    return console.log.apply(console, __spread(data));
+    return console.log.apply(console, __spreadArray([], __read(data)));
 }, 2000);
 var AsyncPool = /** @class */ (function () {
     function AsyncPool(size) {

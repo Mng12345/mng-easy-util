@@ -52,9 +52,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.promisify = exports.withTimeout = void 0;
@@ -93,7 +94,7 @@ function promisify(f) {
         return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, f.apply(void 0, __spread(args))];
+                    case 0: return [4 /*yield*/, f.apply(void 0, __spreadArray([], __read(args)))];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

@@ -21,3 +21,21 @@ test('stringify', function () {
         throw e;
     }
 });
+test('JSONUtil', function () {
+    var obj = {
+        a: 1,
+        f: function () {
+            return 'f';
+        },
+        c: function () {
+            return 'c';
+        },
+    };
+    var objStr = json_1.JSONUtil.stringify(obj);
+    console.log(objStr);
+    var objValue = json_1.JSONUtil.parse(objStr);
+    var fValue = objValue.f();
+    var cValue = objValue.c();
+    expect(fValue).toBe('f');
+    expect(cValue).toBe('c');
+});
