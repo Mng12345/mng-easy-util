@@ -1,6 +1,6 @@
 {
   "name": "mng-easy-util",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "description": "some useful tools for js and ts, like true HashMap...",
   "main": "index.js",
   "scripts": {

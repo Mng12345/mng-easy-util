@@ -4,14 +4,18 @@ test('stringify', () => {
   type A = {
     x: number
     obj: undefined | A
+    y: null
   }
   const a: A = {
     x: 1,
     obj: undefined,
+    y: null,
   }
+  console.log(`a json: ${JSONUtil.stringify(a)}`)
   a.obj = a
   try {
-    JSON.stringify(a)
+    const aJSON = JSON.stringify(a)
+    console.log(`a json: ${aJSON}`)
   } catch (e) {
     expect(e !== undefined && e !== null).toBe(true)
   }

@@ -5,10 +5,13 @@ test('stringify', function () {
     var a = {
         x: 1,
         obj: undefined,
+        y: null,
     };
+    console.log("a json: " + json_1.JSONUtil.stringify(a));
     a.obj = a;
     try {
-        JSON.stringify(a);
+        var aJSON = JSON.stringify(a);
+        console.log("a json: " + aJSON);
     }
     catch (e) {
         expect(e !== undefined && e !== null).toBe(true);
