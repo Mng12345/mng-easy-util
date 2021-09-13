@@ -1,0 +1,2 @@
+// Cloneable interface
+export {};
