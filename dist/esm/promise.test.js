@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { sleep } from './file';
+import { sleep } from './sleep';
 import { promisify, withTimeout } from './promise';
 test('withTimeout', () => __awaiter(void 0, void 0, void 0, function* () {
     const makePromise = () => __awaiter(void 0, void 0, void 0, function* () {

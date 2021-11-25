@@ -1,7 +1,7 @@
 // test for co
 
 import { AsyncPool } from './co'
-import { sleep } from './file'
+import { sleep } from './sleep'
 
 test('AsyncPool', async () => {
   const pool = new AsyncPool<number>(3)

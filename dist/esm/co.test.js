@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { AsyncPool } from './co';
-import { sleep } from './file';
+import { sleep } from './sleep';
 test('AsyncPool', () => __awaiter(void 0, void 0, void 0, function* () {
     const pool = new AsyncPool(3);
     console.time();

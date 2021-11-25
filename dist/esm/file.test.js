@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { sleep } from './file';
+import { sleep } from './sleep';
 test('sleep', () => __awaiter(void 0, void 0, void 0, function* () {
     const timeStart = new Date().getTime();
     yield sleep(1000);

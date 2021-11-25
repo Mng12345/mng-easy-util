@@ -1,5 +1,6 @@
 /**
  * async sleep
+ * @deprecated
  * @param {number} timeout
  * @return {Promise<void>}
  */

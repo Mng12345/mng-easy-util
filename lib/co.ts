@@ -1,5 +1,5 @@
 import { throttle } from 'lodash'
-import { sleep } from './file'
+import { sleep } from './sleep'
 import chalk from 'chalk'
 
 export type MetaTask = {

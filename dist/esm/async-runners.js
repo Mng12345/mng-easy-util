@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { sleep } from "./file";
+import { sleep } from './sleep';
 /**
  * @deprecated
  */
@@ -184,13 +184,13 @@ export class AsyncRunner {
                     unitRunners.push(headRunner);
                 }
                 else {
-                    const unitResult = yield Promise.all(unitRunners.map(runner => runner()));
+                    const unitResult = yield Promise.all(unitRunners.map((runner) => runner()));
                     this.result.push(...unitResult);
                     unitRunners = [];
                 }
             }
             if (unitRunners.length > 0 && this.status === 'running') {
-                const unitResult = yield Promise.all(unitRunners.map(runner => runner()));
+                const unitResult = yield Promise.all(unitRunners.map((runner) => runner()));
                 this.result.push(...unitResult);
             }
             this.status = 'stopped';

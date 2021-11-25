@@ -1,4 +1,3 @@
-// io with async/await
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -10,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /**
  * async sleep
+ * @deprecated
  * @param {number} timeout
  * @return {Promise<void>}
  */
@@ -31,5 +31,6 @@ export const download = (data, filename, type) => {
     const a = document.createElement('a');
     a.href = URL.createObjectURL(file);
     a.download = filename;
-    a.dispatchEvent(new MouseEvent('click'));
+    a.click();
+    a.remove();
 };

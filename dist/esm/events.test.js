@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { Observer } from './events';
-import { sleep } from './file';
-import { copyFunc } from "./func-util";
+import { sleep } from './sleep';
+import { copyFunc } from './func-util';
 test('on & fire', () => {
     const observer = new Observer();
     observer.on('event1', () => {
@@ -50,8 +50,7 @@ test('fire & fireAsync', () => __awaiter(void 0, void 0, void 0, function* () {
     // console.log(`test fire events`)
     // observer.fire('fire async and sync events')
     // console.log(`test fireAsync events`)
-    yield observer
-        .fireAsync('fire async and sync events');
+    yield observer.fireAsync('fire async and sync events');
 }), 10000);
 test('free', () => {
     const observer = new Observer();

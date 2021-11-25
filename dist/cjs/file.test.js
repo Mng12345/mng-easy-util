@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const file_1 = require("./file");
+const sleep_1 = require("./sleep");
 test('sleep', () => __awaiter(void 0, void 0, void 0, function* () {
     const timeStart = new Date().getTime();
-    yield file_1.sleep(1000);
+    yield sleep_1.sleep(1000);
     const timeEnd = new Date().getTime();
     expect(timeEnd - timeStart > 1000).toBe(true);
 }));

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { throttle } from 'lodash';
-import { sleep } from './file';
+import { sleep } from './sleep';
 import chalk from 'chalk';
 const throttleLog = throttle((...data) => console.log(...data), 2000);
 export class AsyncPool {

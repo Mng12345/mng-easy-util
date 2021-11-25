@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { AsyncRunner, getAvailableRunners, runBatch, Runner } from './async-runners';
-import { sleep } from './file';
+import { AsyncRunner, getAvailableRunners, runBatch, Runner, } from './async-runners';
+import { sleep } from './sleep';
 import { Stream } from './stream';
 import { range } from './math';
 test('runBatch & getAvailableRunners', () => __awaiter(void 0, void 0, void 0, function* () {
@@ -95,7 +95,9 @@ test('AsyncRunner', () => __awaiter(void 0, void 0, void 0, function* () {
     });
     asyncRunner.add(runner1, runner2, runner3, runner1, runner3, runner2, runner3, runner1, runner2);
     const timeStart = new Date().getTime();
-    asyncRunner.run().catch(err => { throw err; });
+    asyncRunner.run().catch((err) => {
+        throw err;
+    });
     // wait runner1 and runner2 and runner3 run completed
     yield sleep(3500);
     yield asyncRunner.stop();

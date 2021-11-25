@@ -9,30 +9,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const file_1 = require("./file");
+const sleep_1 = require("./sleep");
 const retry_1 = require("./retry");
 test('retry1', () => __awaiter(void 0, void 0, void 0, function* () {
     const f1 = () => __awaiter(void 0, void 0, void 0, function* () {
-        yield file_1.sleep(500);
+        yield sleep_1.sleep(500);
         return 1;
     });
     const fRetry1 = retry_1.retry({
         func: f1,
         times: 3,
         errCb: (e) => console.log(e),
-        isAsync: true
+        isAsync: true,
     });
     const res1 = yield fRetry1();
     expect(res1).toBe(1);
     const f2 = () => __awaiter(void 0, void 0, void 0, function* () {
-        yield file_1.sleep(500);
+        yield sleep_1.sleep(500);
         throw `err`;
     });
     const fRetry2 = retry_1.retry({
         func: f2,
         times: 3,
         errCb: (e) => console.log(`retrying...`),
-        isAsync: true
+        isAsync: true,
     });
     try {
         const res2 = yield fRetry2();
@@ -41,14 +41,14 @@ test('retry1', () => __awaiter(void 0, void 0, void 0, function* () {
         console.log(e);
     }
     const f3 = (a) => __awaiter(void 0, void 0, void 0, function* () {
-        yield file_1.sleep(500);
+        yield sleep_1.sleep(500);
         return a + 1;
     });
     const fRetry3 = retry_1.retry({
         func: f3,
         times: 3,
         errCb: (e) => console.log(e),
-        isAsync: true
+        isAsync: true,
     });
     const res3 = yield fRetry3(3);
     expect(res3).toBe(4);
@@ -60,7 +60,7 @@ test('retry2', () => {
     const fRetry1 = retry_1.retry({
         func: f1,
         times: 3,
-        errCb: (e) => console.log(e)
+        errCb: (e) => console.log(e),
     });
     const res1 = fRetry1();
     expect(res1).toBe(1);
@@ -70,7 +70,7 @@ test('retry2', () => {
     const fRetry2 = retry_1.retry({
         func: f2,
         times: 3,
-        errCb: (e) => console.log(`retrying...`)
+        errCb: (e) => console.log(`retrying...`),
     });
     try {
         const res2 = fRetry2();
@@ -84,7 +84,7 @@ test('retry2', () => {
     const fRetry3 = retry_1.retry({
         func: f3,
         times: 3,
-        errCb: (e) => console.log(e)
+        errCb: (e) => console.log(e),
     });
     const res3 = fRetry3(3);
     expect(res3).toBe(4);

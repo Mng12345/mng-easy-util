@@ -1,6 +1,6 @@
 // async runner utils
 
-import {sleep} from "./file";
+import { sleep } from './sleep'
 
 /**
  * @deprecated
@@ -149,13 +149,11 @@ export type RunnerFunc<T> = () => Promise<T>
  * AsyncRunners for easy use
  */
 export class AsyncRunner<T> {
-
   private status: 'init' | 'running' | 'stopped' | 'stopping' = 'init'
   private calledReset = false
   result: T[] = []
 
-  constructor(public batch: number, public runners: RunnerFunc<T>[]) {
-  }
+  constructor(public batch: number, public runners: RunnerFunc<T>[]) {}
 
   async reset() {
     if (this.calledReset) return
@@ -180,8 +178,7 @@ export class AsyncRunner<T> {
   }
 
   async stop() {
-    if (this.status === 'stopped')
-      return
+    if (this.status === 'stopped') return
     this.status = 'stopping'
     while (this.status === 'stopping') {
       await sleep(10)
@@ -201,17 +198,20 @@ export class AsyncRunner<T> {
         const headRunner = this.runners.shift()!
         unitRunners.push(headRunner)
       } else {
-        const unitResult = await Promise.all(unitRunners.map(runner => runner()))
+        const unitResult = await Promise.all(
+          unitRunners.map((runner) => runner())
+        )
         this.result.push(...unitResult)
         unitRunners = []
       }
     }
     if (unitRunners.length > 0 && this.status === 'running') {
-      const unitResult = await Promise.all(unitRunners.map(runner => runner()))
+      const unitResult = await Promise.all(
+        unitRunners.map((runner) => runner())
+      )
       this.result.push(...unitResult)
     }
     this.status = 'stopped'
     return this.result
   }
 }
-

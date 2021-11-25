@@ -1,5 +1,5 @@
 import { ema, r2, std, toBNumber, variance, } from './math';
-import { math } from './index';
+import * as math from './math';
 test('ema', () => {
     const data = [5.1, 5.2, 5.0, 4.9, 5.3, 5.5, 4.8];
     const emaData = ema(data, 4);

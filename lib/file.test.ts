@@ -1,4 +1,4 @@
-import { sleep } from './file'
+import { sleep } from './sleep'
 import * as fs from 'fs'
 import * as path from 'path'
 

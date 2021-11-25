@@ -1,4 +1,4 @@
-import { sleep } from './file'
+import { sleep } from './sleep'
 import { promisify, withTimeout } from './promise'
 
 test('withTimeout', async () => {

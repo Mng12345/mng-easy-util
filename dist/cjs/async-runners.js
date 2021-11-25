@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AsyncRunner = exports.getAvailableRunners = exports.runBatch = exports.Runner = void 0;
-const file_1 = require("./file");
+const sleep_1 = require("./sleep");
 /**
  * @deprecated
  */
@@ -153,7 +153,7 @@ class AsyncRunner {
                 // async wait for status to be 'stopped'
                 // @ts-ignore
                 while (this.status !== 'stopped') {
-                    yield file_1.sleep(10);
+                    yield sleep_1.sleep(10);
                 }
             }
             this.runners = [];
@@ -171,7 +171,7 @@ class AsyncRunner {
                 return;
             this.status = 'stopping';
             while (this.status === 'stopping') {
-                yield file_1.sleep(10);
+                yield sleep_1.sleep(10);
             }
         });
     }
@@ -190,13 +190,13 @@ class AsyncRunner {
                     unitRunners.push(headRunner);
                 }
                 else {
-                    const unitResult = yield Promise.all(unitRunners.map(runner => runner()));
+                    const unitResult = yield Promise.all(unitRunners.map((runner) => runner()));
                     this.result.push(...unitResult);
                     unitRunners = [];
                 }
             }
             if (unitRunners.length > 0 && this.status === 'running') {
-                const unitResult = yield Promise.all(unitRunners.map(runner => runner()));
+                const unitResult = yield Promise.all(unitRunners.map((runner) => runner()));
                 this.result.push(...unitResult);
             }
             this.status = 'stopped';

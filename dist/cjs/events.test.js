@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const events_1 = require("./events");
-const file_1 = require("./file");
+const sleep_1 = require("./sleep");
 const func_util_1 = require("./func-util");
 test('on & fire', () => {
     const observer = new events_1.Observer();
@@ -39,21 +39,20 @@ test('fire & fireAsync', () => __awaiter(void 0, void 0, void 0, function* () {
         console.log(`fire sync event2`);
     });
     observer.on('fire async and sync events', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield file_1.sleep(1000);
+        yield sleep_1.sleep(1000);
         console.log(`fire async event3`);
     }));
     observer.on('fire async and sync events', () => {
         console.log(`fire sync event4`);
     });
     observer.on('fire async and sync events', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield file_1.sleep(1000);
+        yield sleep_1.sleep(1000);
         console.log(`fire async event5`);
     }));
     // console.log(`test fire events`)
     // observer.fire('fire async and sync events')
     // console.log(`test fireAsync events`)
-    yield observer
-        .fireAsync('fire async and sync events');
+    yield observer.fireAsync('fire async and sync events');
 }), 10000);
 test('free', () => {
     const observer = new events_1.Observer();

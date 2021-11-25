@@ -1,0 +1,9 @@
+[0m2021.11.24 22:32:04 INFO  Started: Metals version 0.10.9 in workspace 'E:\IdeaProjects\mng-easy-util' for client Visual Studio Code 1.62.3.[0m
+[0m2021.11.24 22:32:06 INFO  time: initialize in 1.96s[0m
+[0m2021.11.24 22:32:09 WARN  Build server is not auto-connectable.[0m
+[0m2021.11.24 22:32:09 WARN  no build tool detected in workspace 'E:\IdeaProjects\mng-easy-util'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.11.24 22:42:58 INFO  shutting down Metals[0m
+[0m2021.11.24 22:48:38 INFO  Started: Metals version 0.10.9 in workspace 'E:\IdeaProjects\mng-easy-util' for client Visual Studio Code 1.62.3.[0m
+[0m2021.11.24 22:48:39 INFO  time: initialize in 1.74s[0m
+[0m2021.11.24 22:48:41 WARN  Build server is not auto-connectable.[0m
+[0m2021.11.24 22:48:41 WARN  no build tool detected in workspace 'E:\IdeaProjects\mng-easy-util'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m

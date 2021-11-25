@@ -10,25 +10,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const async_runners_1 = require("./async-runners");
-const file_1 = require("./file");
+const sleep_1 = require("./sleep");
 const stream_1 = require("./stream");
 const math_1 = require("./math");
 test('runBatch & getAvailableRunners', () => __awaiter(void 0, void 0, void 0, function* () {
     const runners = [
         new async_runners_1.Runner(() => __awaiter(void 0, void 0, void 0, function* () {
-            return yield file_1.sleep(1000);
+            return yield sleep_1.sleep(1000);
         }), () => __awaiter(void 0, void 0, void 0, function* () { })),
         new async_runners_1.Runner(() => __awaiter(void 0, void 0, void 0, function* () {
-            return yield file_1.sleep(1000);
+            return yield sleep_1.sleep(1000);
         }), () => __awaiter(void 0, void 0, void 0, function* () { })),
         new async_runners_1.Runner(() => __awaiter(void 0, void 0, void 0, function* () {
-            return yield file_1.sleep(1000);
+            return yield sleep_1.sleep(1000);
         }), () => __awaiter(void 0, void 0, void 0, function* () { })),
         new async_runners_1.Runner(() => __awaiter(void 0, void 0, void 0, function* () {
-            return yield file_1.sleep(1000);
+            return yield sleep_1.sleep(1000);
         }), () => __awaiter(void 0, void 0, void 0, function* () { })),
         new async_runners_1.Runner(() => __awaiter(void 0, void 0, void 0, function* () {
-            return yield file_1.sleep(1000);
+            return yield sleep_1.sleep(1000);
         }), () => __awaiter(void 0, void 0, void 0, function* () { })),
     ];
     const timeStart = new Date().getTime();
@@ -74,7 +74,7 @@ test('runBatch', () => {
             .map((i) => {
             return new async_runners_1.Runner(() => __awaiter(void 0, void 0, void 0, function* () {
                 console.log(`i: `, i);
-                yield file_1.sleep(10);
+                yield sleep_1.sleep(10);
             }), () => __awaiter(void 0, void 0, void 0, function* () { }));
         })
             .collect();
@@ -84,25 +84,27 @@ test('runBatch', () => {
 test('AsyncRunner', () => __awaiter(void 0, void 0, void 0, function* () {
     const asyncRunner = new async_runners_1.AsyncRunner(3, []);
     const runner1 = () => __awaiter(void 0, void 0, void 0, function* () {
-        yield file_1.sleep(1000);
+        yield sleep_1.sleep(1000);
         return 1;
     });
     const runner2 = () => __awaiter(void 0, void 0, void 0, function* () {
-        yield file_1.sleep(2000);
+        yield sleep_1.sleep(2000);
         return 2;
     });
     const runner3 = () => __awaiter(void 0, void 0, void 0, function* () {
-        yield file_1.sleep(3000);
+        yield sleep_1.sleep(3000);
         return 3;
     });
     asyncRunner.add(runner1, runner2, runner3, runner1, runner3, runner2, runner3, runner1, runner2);
     const timeStart = new Date().getTime();
-    asyncRunner.run().catch(err => { throw err; });
+    asyncRunner.run().catch((err) => {
+        throw err;
+    });
     // wait runner1 and runner2 and runner3 run completed
-    yield file_1.sleep(3500);
+    yield sleep_1.sleep(3500);
     yield asyncRunner.stop();
     console.log(asyncRunner.result);
-    yield file_1.sleep(3000);
+    yield sleep_1.sleep(3000);
     console.log(asyncRunner.result);
     yield asyncRunner.stop();
     console.log(asyncRunner.result);

@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AsyncPool = void 0;
 const lodash_1 = require("lodash");
-const file_1 = require("./file");
+const sleep_1 = require("./sleep");
 const chalk_1 = __importDefault(require("chalk"));
 const throttleLog = lodash_1.throttle((...data) => console.log(...data), 2000);
 class AsyncPool {
@@ -79,14 +79,14 @@ class AsyncPool {
                 else if (this.taskMap.size === 0 && this.buffer.length === 0) {
                     // all task done.
                     throttleLog(`async pool status: ${chalk_1.default.greenBright(this.taskMap.size)} tasks running, ${chalk_1.default.yellow(this.buffer.length)} tasks waiting, already processed ${chalk_1.default.blue(`${this.resultMap.size}/${this.taskCount}`)}.`);
-                    yield file_1.sleep(2000);
+                    yield sleep_1.sleep(2000);
                     console.log(chalk_1.default.green(`all tasks done.`));
                     break;
                 }
                 else {
                     // wait for all task done.
                     throttleLog(`async pool status: ${chalk_1.default.greenBright(this.taskMap.size)} tasks running, ${chalk_1.default.yellow(this.buffer.length)} tasks waiting, already processed ${chalk_1.default.blue(`${this.resultMap.size}/${this.taskCount}`)}.`);
-                    yield file_1.sleep(50);
+                    yield sleep_1.sleep(50);
                 }
             }
         });

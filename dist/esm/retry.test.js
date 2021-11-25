@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { sleep } from "./file";
-import { retry } from "./retry";
+import { sleep } from './sleep';
+import { retry } from './retry';
 test('retry1', () => __awaiter(void 0, void 0, void 0, function* () {
     const f1 = () => __awaiter(void 0, void 0, void 0, function* () {
         yield sleep(500);
@@ -18,7 +18,7 @@ test('retry1', () => __awaiter(void 0, void 0, void 0, function* () {
         func: f1,
         times: 3,
         errCb: (e) => console.log(e),
-        isAsync: true
+        isAsync: true,
     });
     const res1 = yield fRetry1();
     expect(res1).toBe(1);
@@ -30,7 +30,7 @@ test('retry1', () => __awaiter(void 0, void 0, void 0, function* () {
         func: f2,
         times: 3,
         errCb: (e) => console.log(`retrying...`),
-        isAsync: true
+        isAsync: true,
     });
     try {
         const res2 = yield fRetry2();
@@ -46,7 +46,7 @@ test('retry1', () => __awaiter(void 0, void 0, void 0, function* () {
         func: f3,
         times: 3,
         errCb: (e) => console.log(e),
-        isAsync: true
+        isAsync: true,
     });
     const res3 = yield fRetry3(3);
     expect(res3).toBe(4);
@@ -58,7 +58,7 @@ test('retry2', () => {
     const fRetry1 = retry({
         func: f1,
         times: 3,
-        errCb: (e) => console.log(e)
+        errCb: (e) => console.log(e),
     });
     const res1 = fRetry1();
     expect(res1).toBe(1);
@@ -68,7 +68,7 @@ test('retry2', () => {
     const fRetry2 = retry({
         func: f2,
         times: 3,
-        errCb: (e) => console.log(`retrying...`)
+        errCb: (e) => console.log(`retrying...`),
     });
     try {
         const res2 = fRetry2();
@@ -82,7 +82,7 @@ test('retry2', () => {
     const fRetry3 = retry({
         func: f3,
         times: 3,
-        errCb: (e) => console.log(e)
+        errCb: (e) => console.log(e),
     });
     const res3 = fRetry3(3);
     expect(res3).toBe(4);

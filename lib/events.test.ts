@@ -1,6 +1,6 @@
 import { Observer } from './events'
-import { sleep } from './file'
-import {copyFunc} from "./func-util";
+import { sleep } from './sleep'
+import { copyFunc } from './func-util'
 
 test('on & fire', () => {
   const observer = new Observer()
@@ -43,8 +43,7 @@ test('fire & fireAsync', async () => {
   // console.log(`test fire events`)
   // observer.fire('fire async and sync events')
   // console.log(`test fireAsync events`)
-  await observer
-    .fireAsync('fire async and sync events')
+  await observer.fireAsync('fire async and sync events')
 }, 10000)
 
 test('free', () => {
@@ -75,11 +74,19 @@ test('priority', () => {
   observer.on('test', () => {
     console.log(`event1`)
   })
-  observer.on('test', () => {
-    console.log(`event2`)
-  }, 2)
-  observer.on('test', () => {
-    console.log(`event3`)
-  }, 1)
+  observer.on(
+    'test',
+    () => {
+      console.log(`event2`)
+    },
+    2
+  )
+  observer.on(
+    'test',
+    () => {
+      console.log(`event3`)
+    },
+    1
+  )
   observer.fire('test')
 })

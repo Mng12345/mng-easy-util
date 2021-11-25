@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const file_1 = require("./file");
+const sleep_1 = require("./sleep");
 const promise_1 = require("./promise");
 test('withTimeout', () => __awaiter(void 0, void 0, void 0, function* () {
     const makePromise = () => __awaiter(void 0, void 0, void 0, function* () {
-        yield file_1.sleep(5000);
+        yield sleep_1.sleep(5000);
         return 1;
     });
     const promiseWithTimeout = promise_1.withTimeout(makePromise(), 6000);
@@ -29,7 +29,7 @@ test('promise', () => __awaiter(void 0, void 0, void 0, function* () {
     const f1 = () => 1;
     const f2 = () => Promise.resolve(1);
     const f3 = () => __awaiter(void 0, void 0, void 0, function* () {
-        yield file_1.sleep(1000);
+        yield sleep_1.sleep(1000);
         return 1;
     });
     const pf1 = promise_1.promisify(f1);
