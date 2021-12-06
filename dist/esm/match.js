@@ -1,3 +1,9 @@
+/**
+ * @deprecated
+ * @param value
+ * @param cases
+ * @returns
+ */
 export function match(value, cases) {
     for (const [validate, map] of cases) {
         if (validate(value)) {

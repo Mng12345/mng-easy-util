@@ -1,5 +1,5 @@
 export class Option<T> {
-  value: T | null = null
+  private value: T | null = null
   private constructor(v: T | null) {
     this.value = v
   }
@@ -26,5 +26,13 @@ export class Option<T> {
 
   get(): T | null {
     return this.value
+  }
+
+  isEmpty(): boolean {
+    return this.value === null
+  }
+
+  hasValue(): boolean {
+    return this.value !== null
   }
 }

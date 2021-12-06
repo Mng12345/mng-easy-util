@@ -23,4 +23,10 @@ export class Option {
     get() {
         return this.value;
     }
+    isEmpty() {
+        return this.value === null;
+    }
+    hasValue() {
+        return this.value !== null;
+    }
 }

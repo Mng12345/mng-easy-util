@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 export class Option<T> {
   constructor(public value: T | undefined | null) {}
   hasValue(): boolean {

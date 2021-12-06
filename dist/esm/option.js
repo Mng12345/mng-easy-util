@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 export class Option {
     constructor(value) {
         this.value = value;

@@ -1,3 +1,8 @@
+/**
+ * @deprecated
+ * @param value
+ * @param cases
+ */
 export declare function match<I1, R1, I2, R2, I = I1 | I2, R = R1 | R2>(value: I, cases: [
     [
         (v: I1) => boolean,
@@ -8,6 +13,11 @@ export declare function match<I1, R1, I2, R2, I = I1 | I2, R = R1 | R2>(value: I
         (v: I2) => R2
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param value
+ * @param cases
+ */
 export declare function match<I1, R1, I2, R2, I3, R3, I = I1 | I2 | I3, R = R1 | R2 | R3>(value: I, cases: [
     [
         (v: I1) => boolean,
@@ -22,6 +32,11 @@ export declare function match<I1, R1, I2, R2, I3, R3, I = I1 | I2 | I3, R = R1 |
         (v: I3) => R3
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param value
+ * @param cases
+ */
 export declare function match<I1, R1, I2, R2, I3, R3, I4, R4, I = I1 | I2 | I3 | I4, R = R1 | R2 | R3 | R4>(value: I, cases: [
     [
         (v: I1) => boolean,
@@ -40,6 +55,11 @@ export declare function match<I1, R1, I2, R2, I3, R3, I4, R4, I = I1 | I2 | I3 |
         (v: I4) => R4
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param value
+ * @param cases
+ */
 export declare function match<I1, R1, I2, R2, I3, R3, I4, R4, I5, R5, I = I1 | I2 | I3 | I4 | I5, R = R1 | R2 | R3 | R4 | R5>(value: I, cases: [
     [
         (v: I1) => boolean,
@@ -62,8 +82,23 @@ export declare function match<I1, R1, I2, R2, I3, R3, I4, R4, I5, R5, I = I1 | I
         (v: I5) => R5
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [[(v: I) => boolean, (v: I) => R], [(v: I) => boolean, (v: I) => R]]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [[(v: I) => boolean, (v: I) => R], [(v: I) => boolean, (v: I) => R]]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [
     [
         (v: I) => boolean,
@@ -78,29 +113,12 @@ export declare function match<I, R>(v: I, cases: [
         (v: I) => R
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ]
-]): R;
-export declare function match<I, R>(v: I, cases: [
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
     [
         (v: I) => boolean,
         (v: I) => R
@@ -118,11 +136,12 @@ export declare function match<I, R>(v: I, cases: [
         (v: I) => R
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
     [
         (v: I) => boolean,
         (v: I) => R
@@ -144,11 +163,12 @@ export declare function match<I, R>(v: I, cases: [
         (v: I) => R
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
     [
         (v: I) => boolean,
         (v: I) => R
@@ -174,11 +194,12 @@ export declare function match<I, R>(v: I, cases: [
         (v: I) => R
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
     [
         (v: I) => boolean,
         (v: I) => R
@@ -208,11 +229,12 @@ export declare function match<I, R>(v: I, cases: [
         (v: I) => R
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
     [
         (v: I) => boolean,
         (v: I) => R
@@ -246,11 +268,12 @@ export declare function match<I, R>(v: I, cases: [
         (v: I) => R
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
     [
         (v: I) => boolean,
         (v: I) => R
@@ -288,11 +311,12 @@ export declare function match<I, R>(v: I, cases: [
         (v: I) => R
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
     [
         (v: I) => boolean,
         (v: I) => R
@@ -334,11 +358,12 @@ export declare function match<I, R>(v: I, cases: [
         (v: I) => R
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [
-    [
-        (v: I) => boolean,
-        (v: I) => R
-    ],
     [
         (v: I) => boolean,
         (v: I) => R
@@ -384,6 +409,66 @@ export declare function match<I, R>(v: I, cases: [
         (v: I) => R
     ]
 ]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
+export declare function match<I, R>(v: I, cases: [
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ],
+    [
+        (v: I) => boolean,
+        (v: I) => R
+    ]
+]): R;
+/**
+ * @deprecated
+ * @param v
+ * @param cases
+ */
 export declare function match<I, R>(v: I, cases: [
     [
         (v: I) => boolean,

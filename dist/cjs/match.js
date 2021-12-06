@@ -1,6 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.match = void 0;
+/**
+ * @deprecated
+ * @param value
+ * @param cases
+ * @returns
+ */
 function match(value, cases) {
     for (const [validate, map] of cases) {
         if (validate(value)) {
